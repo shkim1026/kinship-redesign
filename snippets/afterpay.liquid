@@ -1,0 +1,76 @@
+<!-- BEGIN AFTERPAY-PRESENT -->
+<script type="application/javascript" src="https://static-us.afterpay.com/javascript/present-afterpay.js"></script>
+<script>
+  let amount = 0, priceSelector = "", locale = 'en_US';
+  let afterpayLogoColor = "black"; // ['black', 'white', or 'color']
+  let showUpperLimit = false;
+
+	{% case template.name %}
+	{% when "product" %}
+	  let productTitle = document.querySelector("body");
+	  let isSoldout = document.querySelector(".buystack__soldout").style.display;
+
+	  let apConfig = {
+	    afterpayLogoColor,
+	    priceSelector: ".product__form",
+	    locale,
+	    amount: {{product.selected_or_first_available_variant.price | json}},
+	    showUpperLimit,
+	    minMaxThreshold:{min: 100, max: 100000},
+	    mutationObserver: null,
+	    modalContent: "us-white",
+	    hideAfterpay: productTitle.id.includes("gift-card") || isSoldout != "none"
+	  };
+	  window.addEventListener("load", function() {
+      $('.afterpay-paragraph').remove();
+	    new presentAfterpay(apConfig).init();
+      $('.afterpay-paragraph').find('.afterpay-logo').attr({
+        width: '75px',
+        height: '100%'
+      });
+	  });
+
+	{% endcase %}
+</script>
+<style>
+    // .c-afterpay-info-modal-annotation__p{ margin-top: 3px; }
+    .afterpay-link{font-size: 12px; }
+    .afterpay-paragraph {
+        font-size: 12px;
+        color: #3c3c3c;
+        font-family: "Greycliff-CF",sans-serif !important;
+	    min-height: 40px;
+    }
+    .afterpay-logo {
+	    min-height: 15.75px;
+        width: 75px !important;
+        height: auto;
+    }
+    .disclaimer-link { font-size: 12px; }
+    .product__form + .afterpay-paragraph {
+        margin-top: 10px;
+    }
+    @media only screen and (max-width: 775px) {
+        .side-cart__subtotal + .afterpay-placement {
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .afterpay-paragraph {
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+	        min-height: 19px;
+        }
+    }
+    @media only screen and (min-width: 776px) {
+        .side-cart__subtotal + .afterpay-placement {
+            margin-top: -30px;
+            margin-bottom: 20px;
+        }
+        .afterpay-paragraph {
+            line-height: 1.67;
+            letter-spacing: 1px;
+        }
+    }
+
+</style>
+<!-- END AFTERPAY PRESENT -->

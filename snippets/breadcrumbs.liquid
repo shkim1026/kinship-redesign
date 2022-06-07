@@ -1,0 +1,123 @@
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' %}
+
+	{% assign breadcrumb_title_2 = '' %}
+	{% assign breadcrumb_url_2 = '' %}
+
+	{% assign breadcrumb_title_3 = '' %}
+	{% assign breadcrumb_url_3 = '' %}
+
+	<nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+		<div class="container">
+			<a href="/" title="Home">Home</a>
+			{% if template contains 'page' %}
+				<span aria-hidden="true">/</span>
+				<span>{{ page.title }}</span>
+				{% assign breadcrumb_title_2 = page.title %}
+				{% assign breadcrumb_url_2 = page.url %}
+
+			{% elsif template contains 'product' %}
+				{% if collection.url %}
+					<span aria-hidden="true">/</span>
+					{{ collection.title | link_to: collection.url }}
+				{% endif %}
+				<span aria-hidden="true">/</span>
+				<span>{{ product.title }}</span>
+
+				{% if collection.url %}
+					{% assign breadcrumb_title_2 = collection.title %}
+					{% assign breadcrumb_url_2 = collection.url %}
+
+					{% assign breadcrumb_title_3 = product.title %}
+					{% assign breadcrumb_url_3 = product.url %}
+				{% else %}
+					{% assign breadcrumb_title_2 = product.title %}
+					{% assign breadcrumb_url_2 = product.url %}
+				{% endif %}
+
+			{% elsif template contains 'collection' and collection.handle %}
+				<span aria-hidden="true">/</span>
+				{% if current_tags %}
+					{% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+					{{ collection.title | link_to: url }}
+					<span aria-hidden="true">/</span>
+					<span>{{ current_tags | join: " + " }}</span>
+				{% else %}
+					<span>{{ collection.title }}</span>
+				{% endif %}
+
+				{% assign breadcrumb_title_2 = collection.title %}
+				{% assign breadcrumb_url_2 = collection.url %}
+			{% elsif template == 'blog' %}
+				<span aria-hidden="true">/</span>
+				{% if current_tags %}
+					{{ blog.title | link_to: blog.url }}
+					<span aria-hidden="true">/</span>
+					<span>{{ current_tags | join: " + " }}</span>
+				{% else %}
+					<span>{{ blog.title }}</span>
+				{% endif %}
+
+				{% assign breadcrumb_title_2 = blog.title %}
+				{% assign breadcrumb_url_2 = blog.url %}
+			{% elsif template == 'article' %}
+				<span aria-hidden="true">/</span>
+				{{ blog.title | link_to: blog.url }}
+				<span aria-hidden="true">/</span>
+				<span>{{ article.title }}</span>
+
+				{% assign breadcrumb_title_2 = blog.title %}
+				{% assign breadcrumb_url_2 = blog.url %}
+
+				{% assign breadcrumb_title_3 = article.title %}
+				{% assign breadcrumb_url_3 = article.url %}
+			{% else %}
+				<span aria-hidden="true">/</span>
+				<span>{{ page_title }}</span>
+			{% endif %}
+		</div>
+	</nav>
+{% endunless %}
+
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement":
+		[
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"item":
+				{
+					"@id": "{{ shop.url }}/",
+					"name": "Home"
+				}
+			}
+			{% if breadcrumb_url_2 != blank and breadcrumb_title_2 != blank %}
+			,{
+				"@type": "ListItem",
+				"position": 2,
+				"item":
+				{
+					"@id": "{{ shop.url }}{{ breadcrumb_url_2 }}",
+					"name": "{{ breadcrumb_title_2 }}"
+				}
+			}
+			{% endif %}
+			{% if breadcrumb_url_3 != blank and breadcrumb_title_3 != blank %}
+			,{
+				"@type": "ListItem",
+				"position": 3,
+				"item":
+				{
+					"@id": "{{ shop.url }}{{ breadcrumb_url_3 }}",
+					"name": "{{ breadcrumb_title_3 }}"
+				}
+			}
+			{% endif %}
+		]
+	}
+</script>
+
+
+

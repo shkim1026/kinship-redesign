@@ -1,0 +1,72 @@
+{% assign clinical_results_order = product.metafields.clinical_results.section_order %}
+{% assign clinical_results_show = product.metafields.clinical_results.show_section %}
+{% assign clinical_results_image_desktop = product.metafields.clinical_results.image_desktop %}
+{% assign clinical_results_image_mobile = product.metafields.clinical_results.image_mobile %}
+{% assign clinical_results_image_alt = product.metafields.clinical_results.image_alt %}
+{% assign clinical_results_slide_heading = product.metafields.clinical_results.heading %}
+{% assign clinical_results_slide_text = product.metafields.clinical_results.text %}
+{% assign clinical_results_slide_disclaimer = product.metafields.clinical_results.disclaimer %}
+{% assign clinical_results_slide_color = product.metafields.clinical_results.heading_color %}
+
+{% if clinical_results_show %}
+	<div class="clinical-results" {% if clinical_results_order != blank %}style="order: {{ clinical_results_order }};" {% endif %}>
+		{% if clinical_results_image_desktop != blank %}
+			<div id="clinical-results-bg-slider" class="clinical-results__bg-slider">
+				{% for image_desktop in clinical_results_image_desktop %}
+					<div data-color="{{ clinical_results_slide_color }}">
+						<div class="clinical-results__bg-slider-image-wrapper">
+							<picture>
+								{% if clinical_results_image_mobile[forloop.index0] != blank %}
+									<source srcset="//images.accentuate.io?c_options=w_400&image={{ clinical_results_image_mobile[forloop.index0] }}&shop={{ shop.name }} 1x,
+													//images.accentuate.io?c_options=w_800&image={{ clinical_results_image_mobile[forloop.index0] }}&shop={{ shop.name }} 2x"
+											media="(max-width: 400px)">
+
+									<source srcset="//images.accentuate.io?c_options=w_767&image={{ clinical_results_image_mobile[forloop.index0] }}&shop={{ shop.name }} 1x,
+													//images.accentuate.io?c_options=w_1534&image={{ clinical_results_image_mobile[forloop.index0] }}&shop={{ shop.name }} 2x"
+											media="(max-width: 767px)">
+								{% else %}
+									<source srcset="//images.accentuate.io?c_options=w_400&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+									 				//images.accentuate.io?c_options=w_800&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+											media="(max-width: 400px)">
+
+									<source srcset="//images.accentuate.io?c_options=w_767&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+									 				//images.accentuate.io?c_options=w_1534&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+											media="(max-width: 767px)">
+								{% endif %}
+
+								<img src="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }}"
+									 srcset="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+											//images.accentuate.io?c_options=w_2840&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+									 class="clinical-results__bg-slider-image"
+									 alt="{{ clinical_results_image_alt[forloop.index0] }}">
+							</picture>
+						</div>
+
+						{% if clinical_results_slide_disclaimer[forloop.index0] != blank %}
+							<div class="clinical-results__bg-slider-disclaimer">
+								<p class="clinical-results__bg-slider-disclaimer-text">{{ clinical_results_slide_disclaimer[forloop.index0] }}</p>
+							</div>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if clinical_results_slide_heading != blank %}
+			<div id="clinical-results-slider" class="clinical-results__slider">
+				{% for title in clinical_results_slide_heading %}
+					<div data-color="{{ clinical_results_slide_color[forloop.index0] }}">
+						<div class="clinical-results__slider-slide">
+							<p class="clinical-results__slider-title" style="color: {{ clinical_results_slide_color[forloop.index0] }};">{{ title }}<sup>%</sup></p>
+
+							{% if clinical_results_slide_text[forloop.index0] != blank %}
+								<p class="clinical-results__slider-text">{{ clinical_results_slide_text[forloop.index0] }}</p>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endif %}
+

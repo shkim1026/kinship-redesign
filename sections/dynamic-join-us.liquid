@@ -1,0 +1,392 @@
+<section class="join-us">
+    {% assign background_desktop = section.settings.background_desktop %}
+    {% assign background_mobile = section.settings.background_mobile %}
+    {% assign heading = section.settings.heading %}
+    {% assign heading_success = section.settings.heading_success %}
+    {% assign heading_color = section.settings.heading_color %}
+    {% assign heading_text_size = section.settings.heading_text_size %}
+    {% assign subheading = section.settings.subheading %}
+    {% assign subheading_phone_success = section.settings.subheading_phone_success %}
+    {% assign subheading_email_success = section.settings.subheading_email_success %}
+    {% assign subheading_phone_and_email_success = section.settings.subheading_phone_and_email_success %}
+    {% assign subheading_color = section.settings.subheading_color %}
+    {% assign subheading_text_size = section.settings.subheading_text_size %}
+    {% assign enable_phone_input = section.settings.enable_phone_field %}
+    {% assign klaviyo_list_id = section.settings.klaviyo_list_id %}
+    {% assign klaviyo_form_id = section.settings.klaviyo_form_id %}
+    {% assign placeholder_phone = section.settings.placeholder_phone %}
+    {% assign placeholder_email = section.settings.placeholder_email %}
+    {% assign placeholder_color = section.settings.placeholder_color %}
+    {% assign input_color = section.settings.input_color %}
+    {% assign input_text_size = section.settings.input_text_size %}
+    {% assign or_text = section.settings.or_text %}
+    {% assign or_background_color = section.settings.or_background_color %}
+    {% assign or_color = section.settings.or_color %}
+    {% assign submit_text = section.settings.submit_text %}
+    {% assign error_color = section.settings.error_color %}
+    {% assign error_text_phone = section.settings.error_text_phone %}
+    {% assign error_text_email = section.settings.error_text_email %}
+    {% assign error_text_common = section.settings.error_text_common %}
+    {% assign disclaimer = section.settings.disclaimer %}
+    {% assign disclaimer_color = section.settings.disclaimer_color %}
+    {% assign disclaimer_text_size = section.settings.disclaimer_text_size %}
+
+    {% if background_desktop != blank %}
+        {% include 'picture', image_desk: background_desktop, image_mobile: background_mobile, class_name: 'join-us__background-image', image_attr: , pic_attr: , figcaption: %}
+
+        {% comment %}
+        <picture>
+            {% if background_mobile != blank %}
+                <source srcset="{{ background_mobile | img_url: '600x' }} 1x, {{ background_mobile | img_url: '1200x' }} 2x"
+                        media="(max-width: 600px)">
+            {% else %}
+                <source srcset="{{ background_desktop | img_url: '600x' }} 1x, {{ background_desktop | img_url: '1200x' }} 2x"
+                        media="(max-width: 600px)">
+            {% endif %}
+
+            <source srcset="{{ background_desktop | img_url: '991x' }} 1x, {{ background_desktop | img_url: '1982x' }} 2x"
+                    media="(max-width: 991px)">
+            <source srcset="{{ background_desktop | img_url: '1920x' }} 1x, {{ background_desktop | img_url: '3840x' }} 2x"
+                    media="(min-width: 1920px)">
+            <source srcset="{{ background_desktop | img_url: '1500x' }} 1x, {{ background_desktop | img_url: '3000x' }} 2x"
+                    media="(min-width: 1500px)">
+            <source srcset="{{ background_desktop | img_url: '1300x' }} 1x, {{ background_desktop | img_url: '2600x' }} 2x"
+                    media="(min-width: 1300px)">
+            <source srcset="{{ background_desktop | img_url: '992x' }} 1x, {{ background_desktop | img_url: '1984x' }} 2x"
+                    media="(min-width: 992px)">
+
+            <img src="{{ background_desktop | img_url: '1920x' }}"
+                 srcset="{{ background_desktop | img_url: '1920x' }} 1x, {{ background_desktop | img_url: '2840x' }} 2x"
+                 class="join-us__background-image"
+                 alt="{{ background_desktop.alt }}">
+        </picture>
+        {% endcomment %}
+
+    {% endif %}
+
+    <div class="join-us__k-letter">
+      {% if search %}
+        <img src="{{ 'icon-k.png' | asset_url }}" class="join-us__k-image"/>
+      {% else %}
+        {% include 'icon-k' %}
+      {% endif %}
+    </div>
+
+    <div class="join-us__container">
+        {% if heading != blank %}
+            <p class="join-us__heading js-join-heading"
+                style="color: {{ heading_color }}; font-size: {{ heading_text_size }}px"
+                data-success-text="{{ heading_success }}"
+                data-regular-text="{{ heading }}">
+
+                {{ heading }}
+            </p>
+        {% endif %}
+
+        {% if subheading != blank %}
+            <div class="join-us__subheading js-join-subheading"
+                style="color: {{ subheading_color }}; font-size: {{ subheading_text_size }}px"
+                data-regular-text="{{ subheading }}"
+                data-success-phone-text="{{ subheading_phone_success }}"
+                data-success-email-text="{{ subheading_email_success }}"
+                data-success-phone-and-email-text="{{ subheading_phone_and_email_success }}">
+
+                {{ subheading }}
+            </div>
+        {% endif %}
+
+        <form action=""
+              class="join-us__form js-subscribe-form"
+              data-klaviyo-list-id="{{ settings.klaviyo_list_id }}"
+              data-klaviyo-form-id="{{ settings.klaviyo_form_id }}">
+
+            <input type="hidden" name="contact[tags]" value="newsletter">
+
+            <div class="join-us__fields">
+                {% if enable_phone_input %}
+                    <div class="input-group">
+                        <input class="input input--transparent js-subscribe-phone" type="text" id="phone" maxlength="14"
+                               style="color: {{ input_color }}; font-size: {{ input_text_size }}px">
+                        <label for="phone" style="color: {{ placeholder_color }}; font-size: {{ input_text_size }}px">
+                            {{ placeholder_phone }}
+                        </label>
+                    </div>
+                {% endif %}
+
+                <div class="input-group {% unless enable_phone_input %}input-group--no-after{% endunless %}">
+                    <input class="input input--transparent js-subscribe-email" type="text" id="email"
+                           style="color: {{ input_color }}; font-size: {{ input_text_size }}px">
+                    <label for="email" style="color: {{ placeholder_color }}; font-size: {{ input_text_size }}px">
+                        {{ placeholder_email }}
+                    </label>
+                </div>
+
+                <button type="submit" class="button button--primary">
+                    {{ submit_text }}
+                </button>
+            </div>
+        </form>
+
+        <div style="display: none; width: 100%; max-width: 1200px; padding: 12px 15px; margin: 0 auto;"><div><script  type="text/javascript" src="https://dhv2ziothpgrr.cloudfront.net/403675/form_64101.js?ver=1631028647"></script></div></div>
+
+        <ul class="join-us__errors js-join-us-errors" style="border-color: {{ error_color }}; color: {{ error_color }}">
+            <li class="join-us__error" data-phone-error-message>
+                {% include 'icon-alert' %}
+                {{ error_text_phone }}
+            </li>
+
+            <li class="join-us__error" data-email-error-message>
+                {% include 'icon-alert' %}
+                {{ error_text_email }}
+            </li>
+
+            <li class="join-us__error" data-any-error-message>
+                {% include 'icon-alert' %}
+                <span></span>
+            </li>
+        </ul>
+
+        {% if disclaimer != blank %}
+            <div class="join-us__disclaimer"
+                 style="color: {{ disclaimer_color }}; font-size: {{ disclaimer_text_size }}px">
+                {{ disclaimer }}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    #shopify-section-{{ section.id }} .join-us__errors::before {
+        border-color: {{ error_color }};
+    }
+
+    #shopify-section-{{ section.id }} .join-us__fields .input-group:first-of-type::after {
+        content: '{{ or_text | default: 'OR' }}';
+        background-color: {{ or_background_color }};
+        color: {{ or_color }};
+    }
+
+    #shopify-section-{{ section.id }} .join-us__error path {
+        fill: {{ error_color }};
+    }
+</style>
+
+{% schema %}
+    {
+        "name": "Join Us",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Background"
+            },
+            {
+                "type": "image_picker",
+                "id": "background_desktop",
+                "label": "Desktop"
+            },
+            {
+                "type": "image_picker",
+                "id": "background_mobile",
+                "label": "Mobile"
+            },
+            {
+                "type": "header",
+                "content": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Text",
+                "default": "JOIN US"
+            },
+            {
+                "type": "text",
+                "id": "heading_success",
+                "label": "Text on successful form submit",
+                "default": "THANKS!"
+            },
+            {
+                "type": "color",
+                "id": "heading_color",
+                "label": "Color",
+                "default": "#002798"
+            },
+            {
+                "type":    "range",
+                "id":      "heading_text_size",
+                "min":     28,
+                "max":     40,
+                "step":    1,
+                "unit":    "px",
+                "label":   "Text size",
+                "default": 32
+            },
+            {
+                "type": "header",
+                "content": "Subheading"
+            },
+            {
+                "type": "richtext",
+                "id": "subheading",
+                "label": "Text",
+                "default": "<p>Punchy body copy goes here Lorem ipsum dolor.</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "subheading_phone_success",
+                "label": "Text for successful phone submit",
+                "default": "<p>Thanks! We have your digits! Sign up for email too.</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "subheading_email_success",
+                "label": "Text for successful email submit",
+                "default": "<p>Thanks! We have your email! Sign up for phone too.</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "subheading_phone_and_email_success",
+                "label": "Text for successful phone and email submit",
+                "default": "<p>Thanks! We have your digits and email!</p>"
+            },
+            {
+                "type": "color",
+                "id": "subheading_color",
+                "label": "Color",
+                "default": "#3c3c3c"
+            },
+            {
+                "type":    "range",
+                "id":      "subheading_text_size",
+                "min":     10,
+                "max":     20,
+                "step":    1,
+                "unit":    "px",
+                "label":   "Text size",
+                "default": 14
+            },
+            {
+                "type": "header",
+                "content": "Form"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_phone_field",
+                "label": "Enable phone field",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "placeholder_phone",
+                "label": "Placeholder for phone",
+                "default": "SMS/Phone"
+            },
+            {
+                "type": "text",
+                "id": "placeholder_email",
+                "label": "Placeholder for email",
+                "default": "email@address.com"
+            },
+            {
+                "type": "color",
+                "id": "placeholder_color",
+                "label": "Placeholder text color",
+                "default": "#7d7d7d"
+            },
+            {
+                "type": "color",
+                "id": "input_color",
+                "label": "Input text color",
+                "default": "#000000"
+            },
+            {
+                "type":    "range",
+                "id":      "input_text_size",
+                "min":     10,
+                "max":     20,
+                "step":    1,
+                "unit":    "px",
+                "label":   "Input text size",
+                "default": 14
+            },
+            {
+                "type": "text",
+                "id": "or_text",
+                "label": "\"Or\" Text",
+                "default": "OR"
+            },
+            {
+                "type": "color",
+                "id": "or_background_color",
+                "label": "\"Or\" Background color",
+                "default": "#002798"
+            },
+            {
+                "type": "color",
+                "id": "or_color",
+                "label": "\"Or\" Text color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "text",
+                "id": "submit_text",
+                "label": "Submit text",
+                "default": "submit"
+            },
+            {
+                "type": "header",
+                "content": "Errors"
+            },
+            {
+                "type": "color",
+                "id": "error_color",
+                "label": "Color",
+                "default": "#c01409"
+            },
+            {
+                "type": "richtext",
+                "id": "error_text_phone",
+                "label": "Text for phone field",
+                "default": "<p>Please enter in a valid phone number</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "error_text_email",
+                "label": "Text for email field",
+                "default": "<p>Please enter in a valid email address</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "error_text_common",
+                "label": "Text for both empty phone and email",
+                "default": "<p>Please enter your phone or email address first</p>"
+            },
+            {
+                "type": "header",
+                "content": "Disclaimer"
+            },
+            {
+                "type": "richtext",
+                "id": "disclaimer",
+                "label": "Text",
+                "default": "<p>Disclaimer text which can get long. Located underneath the submit button. Lorem ipsum dolor sit amet. <a href='#'>Privacy Policy</a></p>"
+            },
+            {
+                "type": "color",
+                "id": "disclaimer_color",
+                "label": "Text color",
+                "default": "#2d2d2d"
+            },
+            {
+                "type":    "range",
+                "id":      "disclaimer_text_size",
+                "min":     10,
+                "max":     20,
+                "step":    1,
+                "unit":    "px",
+                "label":   "Text size",
+                "default": 12
+            }
+        ]
+    }
+{% endschema %}

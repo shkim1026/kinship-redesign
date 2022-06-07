@@ -1,0 +1,32 @@
+{% assign features_icons_order = product.metafields.features_icons.section_order %}
+{% assign features_icons_show = product.metafields.features_icons.show_section %}
+{% assign features_icons = product.metafields.features_icons.icon %}
+{% assign features_icons_alt = product.metafields.features_icons.icon_alt %}
+{% assign features_icons_names = product.metafields.features_icons.icon_name %}
+
+{% if features_icons_show %}
+	<div class="product-features-icons" {% if features_icons_order != blank %}style="order: {{ features_icons_order }};" {% endif %}>
+		{% if features_icons != blank %}
+			<div class="container">
+				<div class="product-features-icons__list">
+					{% for icon in features_icons %}
+						<div class="product-features-icons__item js-animate animate-fade-in-up animate-delay-{{ forloop.index }}00" data-offset="0">
+							<img src="{{ icon }}"
+								 class="product-features-icons__icon lazyload"
+						     width="22px"
+						     height="22px"
+								 alt="{% if features_icons_alt[forloop.index0] != blank %}{{ features_icons_alt[forloop.index0] }}{% endif %}"
+							>
+							{% if features_icons_names[forloop.index0] != blank %}
+								<span class="product-features-icons__title">{{ features_icons_names[forloop.index0] }}</span>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+		<!-- Yotpo Product Gallery > snippets > pdp-features-icons.liquid -->
+		<div class="yotpo yotpo-pictures-widget" data-gallery-id="61144acd2cd55a0787e7c18e" data-product-id="{{ product.id }}"></div>
+		<!-- End Yotpo -->
+	</div>
+{% endif %}

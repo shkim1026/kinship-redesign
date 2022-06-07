@@ -1,0 +1,54 @@
+<!-- /templates/customers/register.liquid -->
+
+<section id="Register" class="center account">
+  <section class="col">
+    <div class="customer-register">
+      <h2 class="theme">{{ 'customer.register.title' | t }}</h2>
+      <p>Already have an account? <a href="/account/login">Sign in here</a>.</p>
+
+      {% form 'create_customer' %}
+      <div class="input-group">
+        {{ form.errors | default_errors }}
+      </div>
+
+      <div class="input-group">
+        <input type="text" value="{{ form.first_name }}" name="customer[first_name]" id="first_name" class="input" size="30" />
+        <label for="first_name">{{ 'customer.register.first_name' | t }}</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" value="{{ form.last_name }}" name="customer[last_name]" id="last_name" class="input{% if form.errors contains 'last_name' %} error{% endif %}" />
+        <label for="last_name">{{ 'customer.register.last_name' | t }}</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" value="{{ form.email }}" name="customer[email]" id="email" class="input{% if form.errors contains 'email' %} error{% endif %}" required />
+        <label for="email">{{ 'customer.register.email' | t }}</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" value="" name="customer[password]" id="password" class="input password{% if form.errors contains 'password' %} error{% endif %}" required />
+        <label for="password">{{ 'customer.register.password' | t }}</label>
+      </div>
+
+      <div class="action-bottom">
+        <button class="button button--primary" type="submit">{{ 'customer.register.submit' | t }}</button>
+      </div>
+      {% endform %}
+    </div>
+  </section>
+</section>
+
+<script>
+  document.querySelector('input[type="email"]').addEventListener('animationstart', function (evt) {
+    $('.input[type="email"]').parent().addClass('input-group--label-shifted');
+  });
+
+  document.querySelector('input[type="password"]').addEventListener('animationstart', function (evt) {
+    $('.input[type="password"]').parent().addClass('input-group--label-shifted');
+  });
+
+  document.querySelector('input[type="text"]').addEventListener('animationstart', function (evt) {
+    $('.input[type="email"]').parent().addClass('input-group--label-shifted');
+  });
+</script>

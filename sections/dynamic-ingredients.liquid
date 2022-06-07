@@ -1,0 +1,261 @@
+<section class="home-ingredients">
+	{% assign desktop_image = section.settings.image_desktop %}
+	{% assign mobile_image = section.settings.image_mobile %}
+
+	{% if desktop_image != blank %}
+		{% if section.settings.image_url != blank %}<a href="{{ section.settings.image_url }}">{% endif %}
+
+		{% include 'picture', image_desk: desktop_image, image_mobile: mobile_image, class_name: 'home-ingredients__bg', image_attr: , pic_attr: , figcaption: %}
+
+		{% comment %}
+		<picture>
+			{% if mobile_image != blank %}
+				<source srcset="{{ mobile_image | img_url: '767x' }} 1x, {{ mobile_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% else %}
+				<source srcset="{{ desktop_image | img_url: '767x' }} 1x, {{ desktop_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% endif %}
+
+			<img class="home-ingredients__bg"
+				 src="{{ desktop_image | img_url: '1920x' }}"
+				 srcset="{{ desktop_image | img_url: '1920x' }} 1x, {{ desktop_image | img_url: '3840x' }} 2x"
+				 alt="{{ desktop_image.alt }}">
+		</picture>
+		{% endcomment %}
+		{% if section.settings.image_url != blank %}</a>{% endif %}
+	{% endif %}
+
+	<div class="container">
+		{% if section.settings.heading != blank %}
+			<h2 class="home-ingredients__title">{{ section.settings.heading }}</h2>
+		{% endif %}
+
+		{% if section.blocks.size > 0 %}
+			<div class="home-ingredients__list js-ingredients-list">
+				{% for block in section.blocks %}
+					{% assign ingredient_icon = block.settings.title %}
+					{% assign ingredient_text = block.settings.text %}
+
+					{% if ingredient_icon != blank %}
+						<button class="home-ingredients__button {% if forloop.first %}active{% endif %} js-ingredient-button"
+								data-ingredient-index="ingredient-{{ forloop.index }}"
+								style="color: {{ section.settings.icons_color }};"
+						>
+							{% capture icon_name %}icon-{{ ingredient_icon }}{% endcapture %}
+							{% include icon_name %}
+						</button>
+					{% endif %}
+				{% endfor %}
+
+				<div class="home-ingredients__popup">
+					<span id="ingredient-triangle" class="home-ingredients__triangle"></span>
+
+					<div class="home-ingredients__popup-inner">
+						{% for block in section.blocks %}
+							<div class="home-ingredients__popup-text js-ingredient-text"
+								{% if forloop.index != 1 %}style="display: none;"{% endif %}
+								 id="ingredient-{{ forloop.index }}"
+							>
+								{{ block.settings.text }}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</section>
+
+<style>
+	#shopify-section-{{ section.id }} .home-ingredients__title {
+		color: {{ section.settings.title_color }};
+		font-size: {{ section.settings.title_fz }}px;
+	}
+</style>
+
+{% schema %}
+{
+	"name": "Ingredients",
+	"max_blocks": 5,
+	"settings": [
+		{
+			"type": "textarea",
+			"id": "heading",
+			"label": "Heading",
+			"default": "SAY HELLO TO GOOD-FOR-YOU INGREDIENTS"
+		},
+		{
+			"type": "color",
+			"id": "title_color",
+			"label": "Heading color",
+			"default": "#002798"
+		},
+		{
+			"type": "color",
+			"id": "icons_color",
+			"label": "Icons color",
+			"default": "#002798"
+		},
+		{
+			"type":   "range",
+			"id":     "title_fz",
+			"min":       30,
+			"max":       70,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Heading font size",
+			"default":   60
+		},
+		{
+			"type": "url",
+			"id": "image_url",
+			"label": "Image url"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_desktop",
+			"label": "Image desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_mobile",
+			"label": "Image mobile"
+		}
+	],
+	"blocks": [
+		{
+			"type": "ingredient",
+			"name": "Ingredient",
+			"settings": [
+				{
+					"type": "select",
+					"id": "title",
+					"label": "Icon",
+					"info": "[Icons list](https://trello-attachments.s3.amazonaws.com/5d95b85c1d270d553794e8f7/5d95d0aaaf0d4d7db7905280/b72a92778dc2160ad3e81cffaae68758/KINSHIP_INGREDIENT_ICONS_083019.pdf)",
+					"options": [
+						{
+							"value": "aloe",
+							"label": "Aloe"
+						},
+						{
+							"value": "bakuchoil",
+							"label": "Bakuchoil"
+						},
+						{
+							"value": "bentonite",
+							"label": "Bentonite"
+						},
+						{
+							"value": "coconut-oil",
+							"label": "Coconut-oil"
+						},
+						{
+							"value": "glycolic-acid",
+							"label": "Glycolic-acid"
+						},
+						{
+							"value": "honey",
+							"label": "Honey"
+						},
+						{
+							"value": "hyaluronic-acid",
+							"label": "Hyaluronic-acid"
+						},
+						{
+							"value": "lactic-acid",
+							"label": "Lactic-acid"
+						},
+						{
+							"value": "lavender",
+							"label": "Lavender"
+						},
+						{
+							"value": "lemon",
+							"label": "Lemon"
+						},
+						{
+							"value": "mango-seed-butter",
+							"label": "Mango-seed-butter"
+						},
+						{
+							"value": "marshmallow-root",
+							"label": "Marshmallow-root"
+						},
+						{
+							"value": "mint",
+							"label": "Mint"
+						},
+						{
+							"value": "moringa",
+							"label": "Moringa"
+						},
+						{
+							"value": "papaya",
+							"label": "Papaya"
+						},
+						{
+							"value": "pea-protein",
+							"label": "Pea-protein"
+						},
+						{
+							"value": "prebiotic",
+							"label": "Prebiotic"
+						},
+						{
+							"value": "raspnerry",
+							"label": "Raspnerry"
+						},
+						{
+							"value": "salicylic-acid",
+							"label": "Salicylic-acid"
+						},
+						{
+							"value": "spirulina",
+							"label": "Spirulina"
+						},
+						{
+							"value": "sunflower-seed-oil",
+							"label": "Sunflower-seed-oil"
+						},
+						{
+							"value": "tamanu-oil",
+							"label": "Tamanu-oil"
+						},
+						{
+							"value": "turmeric",
+							"label": "Turmeric"
+						},
+						{
+							"value": "vitamin-a",
+							"label": "Vitamin-a"
+						},
+						{
+							"value": "vitamin-c",
+							"label": "Vitamin-c"
+						},
+						{
+							"value": "willow-bark",
+							"label": "Willow-bark"
+						},
+						{
+							"value": "zinc-oxide",
+							"label": "Zinc-oxide"
+						}
+					]
+				},
+				{
+					"type": "richtext",
+					"id": "text",
+					"label": "Text",
+					"default": "<p><strong>Probiotic</strong> Plant-based probiotic supports clear skin + a strong skin barrier. <a href='#'>Learn more</a></p>"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Ingredients",
+			"category": "Content"
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{%- layout none -%}
+
+{% for item in cart.items %}
+  {% assign cart_items_handles = cart_items_handles | append: item.product.handle | append: ', ' %}
+  {% assign recommended_products = recommended_products | append: item.product.metafields.cart_recom_prod.product | replace: '|', ', ' | append: ', ' %}
+{% endfor %}
+{%- assign cart_items_handles = cart_items_handles | split: ', ' | uniq -%}
+{%- assign recommended_products = recommended_products | split: ', ' | uniq -%}
+
+{% assign recommended_products_limit = settings.cart_rec_prod_limit %}
+{% assign recommended_products_counter = 0 %}
+{% if cart.items.size > 0 %}
+  {%- if settings.cart_rec_prod_title != blank -%}
+    <h5 class="cart-recommended__title">
+      {{ settings.cart_rec_prod_title }}
+    </h5>
+  {%- endif -%}
+
+  <div id="cart-recommended-product" class="cart-recommended-product">
+    {% for product_handle in recommended_products %}
+      {%- if product_handle != blank -%}
+        {% unless cart_items_handles contains product_handle %}
+        {% assign this_recom_product = all_products[product_handle] %}
+          {% if this_recom_product.available
+            and recommended_products_counter < recommended_products_limit %}
+
+            {% assign recommended_products_counter = recommended_products_counter | plus: 1 %}
+            <div class="cart-rec-product">
+              {% include 'product-card-cart-rec', product: this_recom_product %}
+            </div>
+          {% endif %}
+        {% endunless %}
+      {%- endif -%}
+    {% endfor %}
+  </div>
+{% endif %}

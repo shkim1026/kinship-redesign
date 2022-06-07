@@ -1,0 +1,207 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="theme-color" content="{{ settings.color_primary }}">
+	<link rel="canonical" href="{{ canonical_url }}">
+
+	{% if settings.favicon != blank %}
+		<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+	{% endif %}
+
+	{% capture seo_title %}
+		{{ page_title }}
+		{% if current_tags %}
+			{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+		{% endif %}
+		{% if current_page != 1 %}
+			&ndash; {{ 'general.meta.page' | t: page: current_page }}
+		{% endif %}
+		{% unless page_title contains shop.name %}
+			&ndash; {{ shop.name }}
+		{% endunless %}
+	{% endcapture %}
+	<title>{{ seo_title }}</title>
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MHZRL3W');</script>
+	<!-- End Google Tag Manager -->
+
+
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Kinship",
+			"url": "https://lovekinship.com/",
+			{% if settings.logo_image != blank %}"logo": "{{ settings.logo_image | img_url: '240x' }}",{% endif %}
+			"sameAs": [
+				{% if settings.social_facebook_link != blank %}"{{- settings.social_facebook_link -}}"{% endif %}{% if settings.social_instagram_link != blank %},{% endif %}
+				{% if settings.social_instagram_link != blank %}"{{- settings.social_instagram_link -}}"{% endif %}{% if settings.social_youtube_link != blank %},{% endif %}
+				{% if settings.social_youtube_link != blank %}"{{- settings.social_youtube_link -}}"{% endif %}
+			]
+		}
+	</script>
+
+	{% if page_description %}
+		<meta name="description" content="{{ page_description | escape }}">
+	{% endif %}
+
+	{% include 'social-meta-tags' %}
+
+	<link rel="preload" href="{{ 'theme.scss.css' | asset_url }}" as="style">
+	{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+	<!-- Share a Sale -->
+	<script src="https://www.dwin1.com/19038.js" type="text/javascript" defer="defer"></script>
+	<script type="text/javascript">
+    var SHRSL_MERCHANT_ID='101310';
+    (function(a,b,c,d,e,f,g,h,i){a[b]={};a[b].q=[];a[b].t=new Date();a[c]=a[c]||function(){a[b].q.push(arguments)};g=d.createElement(e);i=d.getElementsByTagName(e)[0];g.async=1;g.src=f;i.parentNode.insertBefore(g,i);})(window,'SHRSL_ANALYTICS_RUNTIME','SHRSL_ANALYTICS_DISPATCH',document,'script','//stats.shareasale-analytics.com/a.js?v=1');
+	</script>
+	<!-- End Share a Sale -->
+
+	<!-- Hotjar Tracking Code for lovekinship.com -->
+	<script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:1519751,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
+
+	<script>
+		document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+		window.theme = {
+			strings: {
+				preOrder: {{ 'products.product.pre_order' | t | json }},
+				addToCart: {{ 'products.product.add_to_cart' | t | json }},
+				soldOut: {{ 'products.product.sold_out' | t | json }},
+				unavailable: {{ 'products.product.unavailable' | t | json }}
+			},
+			moneyFormat: {{ shop.money_format | json }}
+		};
+	</script>
+
+	{% if template.directory == 'customers' %}
+		<link rel="preload" href="{{ 'shopify_common.js' | asset_url }}" as="script">
+	<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
+	<!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
+	{% endif %}
+
+	<link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script">
+	<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+	<!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
+
+	<link rel="preload" href="{{ 'theme.js' | asset_url }}" as="script">
+	<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+	<!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+
+	<link rel="preload" href="{{ 'main.js' | asset_url }}" as="script">
+	<script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
+
+	{{ content_for_header }}
+
+	{%- comment -%}
+		{{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+		{{ shop.metafields.okendo.StyleCustomizations }}
+		{% if template contains 'product' %}
+			<link rel="preload" href="{{ 'okendo-reviews.js' | asset_url }}" as="script">
+			{{ 'okendo-reviews.js' | asset_url | script_tag }}
+		{% endif %}
+		{% if template contains 'product' and product.id == 4605222846544 %}
+			<link rel="preload" href="{{ 'okendo-reviews2.js' | asset_url }}" as="script">
+			{{ 'okendo-reviews2.js' | asset_url | script_tag }}
+		{% endif %}
+	{%- endcomment -%}
+
+  	{% comment %}
+  		If user reaches GWP product directly we need to make a redirect to the homepage
+	{% endcomment %}
+
+	{%- if template contains 'product' and product.type == 'GWP' or product.type == 'Evergreen GWP'-%}
+  		<script>
+    		window.location.href = '/';
+  		</script>
+	{%- endif -%}
+
+    <script src="https://js.afterpay.com/afterpay-1.x.js" async></script>
+
+		<!-- YOTPO JAVASCRIPT | theme.liquid  -->
+		<script type="text/javascript">
+			(function e(){
+				var e=document.createElement("script");
+				e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/Xfxjtw1in2fHagqoLhDXsUZUxxQUQEoQw4CeLHmO/widget.js";
+				var t=document.getElementsByTagName("script")[0];
+				t.parentNode.insertBefore(e,t)
+			})();
+		</script>
+		<!-- END | YOTPO JAVASCRIPT -->
+
+  {% render 'shogun-head' %}
+</head>
+
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if template.suffix != blank %}template-{{ template.suffix | handle }}{% endif %}">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHZRL3W"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+  {% include 'gwp-cart' %}
+
+  {% include 'blm-popup' %}
+
+	{% section 'header' %}
+
+	<main role="main" id="MainContent">
+		{{ content_for_layout }}
+	</main>
+	
+	{% comment %}
+		{% if template.name != 'collection' and template.suffix != 'about' and template.directory != 'customers' and template.name != 'product' and template != 'index' %}
+			{% section 'dynamic-instagram' %}
+		{% endif %}
+	{% endcomment %}
+
+	{% section 'dynamic-join-us' %}
+	{% section 'footer' %}
+	{% include 'side-cart' %}
+
+	{% if settings.klaviyo_public_api_key != blank %}
+		<script type="text/javascript" async
+				src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{- settings.klaviyo_public_api_key -}}"></script>
+	{% endif %}
+
+	<!-- Initialise Cart.js once the page has loaded -->
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			CartJS.init( {{ cart | json }}, {
+				"requestBodyClass": "minicart-loading"
+			} );
+		})
+	</script>
+
+  	{% if settings.cart_threshold_enable and settings.cart_threshold_amount != blank %}
+		<div id="cart-threshold-amount" data-threshold-amount="{{ settings.cart_threshold_amount }}"></div>
+	{% endif %}
+
+	{% render "afterpay" %}
+
+	{% include 'back-in-stock-helper' %}
+
+  	<!—Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}<script src="https://config.gorgias.io/production/30BVo7vjmv7rvzmQ/chat/984vj29KYDExPKGO.js" defer></script></div><!--Gorgias Chat Widget End-->
+
+	<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install">!function(_){_.GORGIAS_CHAT_APP_ID="1794",_.GORGIAS_CHAT_BASE_URL="us-east1-898b.production.gorgias.chat",_.GORGIAS_API_BASE_URL="config.gorgias.chat";var e=new XMLHttpRequest;e.open("GET","https://config.gorgias.chat/applications/1794",!0),e.onload=function(t){if(4===e.readyState)if(200===e.status){var n=JSON.parse(e.responseText);if(!n.application||!n.bundleVersion)throw new Error("Missing fields in the response body - https://config.gorgias.chat/applications/1794");if(_.GORGIAS_CHAT_APP=n.application,_.GORGIAS_CHAT_BUNDLE_VERSION=n.bundleVersion,n&&n.texts&&(_.GORGIAS_CHAT_TEXTS=n.texts),n&&n.sspTexts&&(_.GORGIAS_CHAT_SELF_SERVICE_PORTAL_TEXTS=n.sspTexts),!document.getElementById("gorgias-chat-container")){var o=document.createElement("div");o.id="gorgias-chat-container",document.body.appendChild(o);var r=document.createElement("script");r.setAttribute("defer",!0),r.src="https://storage.googleapis.com/gorgias-chat-production-client-builds/{bundleVersion}/static/js/main.js".replace("{bundleVersion}",n.bundleVersion),document.body.appendChild(r)}}else console.error("Failed request GET - https://config.gorgias.chat/applications/1794")},e.onerror=function(_){console.error(_)},e.send()}(window||{});</script><script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End--><!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install">!function(_){_.GORGIAS_CHAT_APP_ID="1794",_.GORGIAS_CHAT_BASE_URL="us-east1-898b.production.gorgias.chat",_.GORGIAS_API_BASE_URL="config.gorgias.chat";var e=new XMLHttpRequest;e.open("GET","https://config.gorgias.chat/applications/1794",!0),e.onload=function(t){if(4===e.readyState)if(200===e.status){var n=JSON.parse(e.responseText);if(!n.application||!n.bundleVersion)throw new Error("Missing fields in the response body - https://config.gorgias.chat/applications/1794");if(_.GORGIAS_CHAT_APP=n.application,_.GORGIAS_CHAT_BUNDLE_VERSION=n.bundleVersion,n&&n.texts&&(_.GORGIAS_CHAT_TEXTS=n.texts),n&&n.sspTexts&&(_.GORGIAS_CHAT_SELF_SERVICE_PORTAL_TEXTS=n.sspTexts),!document.getElementById("gorgias-chat-container")){var o=document.createElement("div");o.id="gorgias-chat-container",document.body.appendChild(o);var r=document.createElement("script");r.setAttribute("defer",!0),r.src="https://client-builds.production.gorgias.chat/{bundleVersion}/static/js/main.js".replace("{bundleVersion}",n.bundleVersion),document.body.appendChild(r)}}else console.error("Failed request GET - https://config.gorgias.chat/applications/1794")},e.onerror=function(_){console.error(_)},e.send()}(window||{});</script><script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% assign heading = collection.metafields.cta.heading %}
+{% assign subheading = collection.metafields.accentuate.subheading %}
+{% assign cta_title = collection.metafields.cta.cta_title %}
+{% assign cta_url = collection.metafields.cta.cta_url %}
+{% assign heading_size = collection.metafields.cta.heading_font_size %}
+{% assign text_size = collection.metafields.cta.text_font_size %}
+{% assign mobile_heading_size = collection.metafields.cta.mobile_heading_font_size | default: 32 %}
+{% assign mobile_text_size = collection.metafields.cta.mobile_text_font_size | default: 18 %}
+{% assign bg_color = collection.metafields.cta.background_color %}
+{% assign text_color = collection.metafields.cta.text_color %}
+{% assign desktop_image = collection.metafields.cta.background_image_desktop %}
+{% assign mobile_image = collection.metafields.cta.background_image_mobile %}
+
+{% if desktop_image != blank or heading != blank or subheading != blank or cta_title != blank %}
+  <section class="tonal-text plp__cta" style="background-color: {{ bg_color }}">
+    <a href="{% if cta_url != blank %}{{ cta_url }}{% else %}#{% endif %}">
+      {% if desktop_image != blank %}
+        <picture>
+          {% if mobile_image != blank %}
+            <source srcset="//images.accentuate.io?c_options=w_400&image={{ mobile_image }}&shop={{ shop.name }} 1x,
+								//images.accentuate.io?c_options=w_800&image={{ mobile_image }}&shop={{ shop.name }} 2x"
+              media="(max-width: 400px)">
+
+            <source srcset="//images.accentuate.io?c_options=w_767&image={{ mobile_image }}&shop={{ shop.name }} 1x,
+								//images.accentuate.io?c_options=w_1534&image={{ mobile_image }}&shop={{ shop.name }} 2x"
+              media="(max-width: 767px)">
+          {% else %}
+            <source srcset="//images.accentuate.io?c_options=w_400&image={{ desktop_image }}&shop={{ shop.name }} 1x,
+								//images.accentuate.io?c_options=w_800&image={{ desktop_image }}&shop={{ shop.name }} 2x"
+              media="(max-width: 400px)">
+
+            <source srcset="//images.accentuate.io?c_options=w_767&image={{ desktop_image }}&shop={{ shop.name }} 1x,
+								//images.accentuate.io?c_options=w_1534&image={{ desktop_image }}&shop={{ shop.name }} 2x"
+              media="(max-width: 767px)">
+          {% endif %}
+
+          <img class="tonal-text__bg lazyload"
+            src="//images.accentuate.io?c_options=w_1240&image={{ desktop_image }}&shop={{ shop.name }}"
+            srcset="//images.accentuate.io?c_options=w_1240&image={{ desktop_image }}&shop={{ shop.name }} 1x,
+						//images.accentuate.io?c_options=w_2480&image={{ desktop_image }}&shop={{ shop.name }} 2x"
+            alt="{{ desktop_image.alt }}">
+        </picture>
+      {% endif %}
+
+      <div class="container">
+        <div class="row">
+          <div class="offset-md-2 col-md-8">
+            {% if heading != blank %}
+              <h2 class="tonal-text__title">{{ heading }}</h2>
+            {% endif %}
+
+            {% if subheading != blank %}
+              <h3 class="tonal-text__subtitle">{{ subheading }}</h3>
+            {% endif %}
+
+            {% if cta_title != blank %}
+              <button class="button">{{ cta_title }}</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <style>
+    .plp__cta.tonal-text .tonal-text__title {
+      font-size: {{ heading_size }}px;
+      color: {{ text_color }};
+    }
+
+    .plp__cta.tonal-text .tonal-text__subtitle {
+      font-size: {{ text_size }}px;
+      color: {{ text_color }};
+    }
+
+    .plp__cta.tonal-text .button {
+      background-color: #fff;
+      color: {{ text_color }};
+      border-color: {{ text_color }};
+    }
+
+    .plp__cta.tonal-text .button:hover {
+      background-color: {{ text_color }};
+      color: #fff;
+    }
+
+    @media screen and (max-width: 767px) {
+      .plp__cta.tonal-text .tonal-text__title {
+        font-size: {{ mobile_heading_size }}px !important;
+      }
+
+      .plp__cta.tonal-text .tonal-text__subtitle {
+        font-size: {{ mobile_text_size }}px !important;
+      }
+    }
+  </style>
+{% endif %}

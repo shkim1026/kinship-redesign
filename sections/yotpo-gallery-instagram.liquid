@@ -1,0 +1,43 @@
+{% assign background_color = section.settings.background_color %}
+{% assign gallery_title = section.settings.gallery_title %}
+{% assign gallery_title_color = section.settings.gallery_title_color %}
+
+<section class="yotpo__inst" style="background-color: {{ background_color }}">
+  <h2 class="yotpo__inst-heading" style="color:{{ gallery_title_color }}">{{ gallery_title }}</h2>
+    <div
+      class="yotpo yotpo-pictures-widget"
+      data-gallery-id="611cb5cbd7695850c2ef0938">
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yotpo Instagram",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF4DF"
+    },
+    {
+      "type": "text",
+      "id": "gallery_title",
+      "label": "Gallery title",
+      "default": "Gallery"
+    },
+    {
+      "type": "color",
+      "id": "gallery_title_color",
+      "label": "Gallery title color"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Yotpo Instagram",
+      "category": "Instagram"
+    }
+  ]
+}
+{% endschema %}

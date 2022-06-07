@@ -1,0 +1,153 @@
+<div class="product-banner js-product-banner">
+	{% assign show_details_section = product.metafields.details.show_section %}
+	{% assign details_order = product.metafields.details.section_order %}
+
+	{% assign product_label = product.metafields.general.label_tag %}
+
+	{% if product.metafields.general.main_title != blank %}
+		{% assign product_title = product.metafields.general.main_title %}
+	{% else %}
+		{% assign product_title = product.title %}
+	{% endif %}
+
+	{% assign preorder_enable = product.metafields.general.preodrder_enable %}
+	{% assign preorder_text = product.metafields.general.preorder_text %}
+	{% assign sold_out_text = product.metafields.general.sold_out_text %}
+
+	{% assign anchor_link_text = product.metafields.buystack.anchor_link %}
+
+	{% assign desktop_images = product.metafields.images.image_desktop %}
+	{% assign mobile_images = product.metafields.images.image_mobile %}
+	{% assign image_alt = product.metafields.images.image_alt %}
+
+	{% assign buystack_bg_color = product.metafields.buystack.background_color %}
+	{% assign buystack_color = product.metafields.buystack.color %}
+	{% assign buystack_behind_bg_section = product.metafields.buystack.behind_section_bg %}
+
+	{% assign sid_color = product.metafields.general.sid_color %}
+	{% assign promo_color = product.metafields.general.promo_message_color %}
+	{% assign second_promo_color = product.metafields.general.second_promo_color %}
+
+	{% assign promo_text = product.metafields.general.promo_message %}
+	{% assign promo_icon = product.metafields.buystack.promo_icon %}
+	{% assign short_info = product.metafields.general.subtitle %}
+	{% assign product_weight = product.metafields.general.weight %}
+	{% assign short_description = product.metafields.general.short_description %}
+	{% assign addition_description = product.metafields.general.additional_description %}
+	{% assign second_promo_text = product.metafields.general.second_promo_message %}
+
+
+	{% if product_label != blank %}
+		<div class="product-banner__label-container">
+			<div class="container">
+				<span class="product-banner__label vertical-label">{{ product_label }}</span>
+			</div>
+		</div>
+	{% endif %}
+
+	<div id="product-slider" class="product-slider">
+		{% if desktop_images.size > 0 %}
+
+			{% for image in desktop_images %}
+				{% if image != blank %}
+					<div>
+						<div class="product-slider__slide">
+							<figure>
+								<link rel="preload" as="image" href="{{ image }}"
+								      imagesrcset="//images.accentuate.io?c_options=w_360&image={{ image }}&shop={{ shop.name }} 360w,
+											 //images.accentuate.io?c_options=w_540&image={{ image }}&shop={{ shop.name }} 540w,
+											 //images.accentuate.io?c_options=w_540&image={{ image }}&shop={{ shop.name }} 720w,
+											 //images.accentuate.io?c_options=w_720&image={{ image }}&shop={{ shop.name }} 900w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 1080w,
+											 //images.accentuate.io?c_options=w_1080&image={{ image }}&shop={{ shop.name }} 1296w,
+											 //images.accentuate.io?c_options=w_1512&image={{ image }}&shop={{ shop.name }} 1728w,
+											 //images.accentuate.io?c_options=w_1728&image={{ image }}&shop={{ shop.name }} 1920w,
+											 //images.accentuate.io?c_options=w_1920&image={{ image }}&shop={{ shop.name }} 2560w">
+								{% assign image_mobile = mobile_images[forloop.index0] %}
+
+								{% if image_mobile != blank %}
+									<link rel="preload" as="image" href="{{ image_mobile }}"
+									      imagesrcset="//images.accentuate.io?c_options=w_360&image={{ image_mobile }}&shop={{ shop.name }} 360w,
+											 //images.accentuate.io?c_options=w_540&image={{ image_mobile }}&shop={{ shop.name }} 540w">
+
+									<img class="product-slider__image lazyload medium-up--hide"
+									     src="//images.accentuate.io?c_options=w_1&image={{ image_mobile }}&shop={{ shop.name }}"
+									     data-sizes="auto"
+									     data-srcset="//images.accentuate.io?c_options=w_360&image={{ image_mobile }}&shop={{ shop.name }} 360w,
+											 //images.accentuate.io?c_options=w_540&image={{ image_mobile }}&shop={{ shop.name }} 540w,
+											 //images.accentuate.io?c_options=w_540&image={{ image_mobile }}&shop={{ shop.name }} 720w"
+									     alt="{{ image_alt[forloop.index0] | append: ' mobile image'}}">
+								{% endif %}
+
+								<img class="product-slider__image lazyload {% if image_mobile != blank %}small--hide{% endif %}"
+								     src="//images.accentuate.io?c_options=w_1&image={{ image }}&shop={{ shop.name }}"
+								     data-sizes="auto"
+									{% if image_mobile != blank %}
+								     data-srcset="//images.accentuate.io?c_options=w_360&image={{ image }}&shop={{ shop.name }} 360w,
+											 //images.accentuate.io?c_options=w_540&image={{ image }}&shop={{ shop.name }} 540w,
+											 //images.accentuate.io?c_options=w_540&image={{ image }}&shop={{ shop.name }} 720w,
+											 //images.accentuate.io?c_options=w_720&image={{ image }}&shop={{ shop.name }} 900w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 1080w,
+											 //images.accentuate.io?c_options=w_1080&image={{ image }}&shop={{ shop.name }} 1296w,
+											 //images.accentuate.io?c_options=w_1512&image={{ image }}&shop={{ shop.name }} 1728w,
+											 //images.accentuate.io?c_options=w_1728&image={{ image }}&shop={{ shop.name }} 1920w,
+											 //images.accentuate.io?c_options=w_1920&image={{ image }}&shop={{ shop.name }} 2560w"
+									{% else %}
+										data-srcset="//images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 360w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 540w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 720w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 900w,
+											 //images.accentuate.io?c_options=w_900&image={{ image }}&shop={{ shop.name }} 1080w,
+											 //images.accentuate.io?c_options=w_1080&image={{ image }}&shop={{ shop.name }} 1296w,
+											 //images.accentuate.io?c_options=w_1512&image={{ image }}&shop={{ shop.name }} 1728w,
+											 //images.accentuate.io?c_options=w_1728&image={{ image }}&shop={{ shop.name }} 1920w,
+											 //images.accentuate.io?c_options=w_1920&image={{ image }}&shop={{ shop.name }} 2560w"
+									{% endif %}
+								     alt="{{ image_alt[forloop.index0] }}">
+							</figure>
+
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% for image in product.images %}
+				<div>
+					<div class="product-slider__slide">
+						<picture>
+							<source data-srcset="{{ image | img_url: '400x' }} 1x, {{ image | img_url: '800x' }} 2x" media="(max-width: 400px);">
+							<source data-srcset="{{ image | img_url: '767x' }} 1x, {{ image | img_url: '1534x' }} 2x" media="(max-width: 767px);">
+
+							<img class="product-slider__image lazyload"
+								 data-srcset="{{ image | img_url: '1920x' }} 1x"
+								 alt="{{ image.alt }}">
+						</picture>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+
+	{% if show_details_section %}
+		{% if details_order == '0' or details_order == '1' or details_order == '-1' %}
+			{% assign banner_content_class = 'product-banner__content--less-padding' %}
+		{% endif %}
+	{% endif %}
+
+
+	<div class="product-banner__content {{ banner_content_class }}">
+		<div class="container">
+			<div id="product-slider-controls" class="product-banner__slider-controls"></div>
+			
+			{% include 'pdp-buystack' %}
+		</div>
+	</div>
+
+	<style>
+		@media (max-width: 991px) {
+			.product-banner .product-banner__content {
+				background-color: {{ buystack_behind_bg_section }};
+			}
+		}
+	</style>
+</div>

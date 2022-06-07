@@ -1,0 +1,48 @@
+{% assign full_video_order = product.metafields.full_video.section_order %}
+{% assign full_video_show = product.metafields.full_video.show_section %}
+{% assign full_video_image_desktop = product.metafields.full_video.image_desktop %}
+{% assign full_video_image_mobile = product.metafields.full_video.image_mobile %}
+{% assign full_video_image_alt = product.metafields.full_video.image_alt %}
+{% assign full_video_url = product.metafields.full_video.video_url %}
+{% assign full_video_poster = product.metafields.full_video.video_poster %}
+
+{% if full_video_show %}
+	<div class="product-video-wide js-animate animate-fade-in-up" data-offset="0" {% if full_video_order != blank %}style="order: {{ full_video_order }};" {% endif %}>
+    {% if full_video_url != blank %}
+      <div class="product-video-wide__wrapper">
+        <video src="{{ full_video_url }}"
+		  poster="{{ full_video_poster }}"
+          class="product-video-wide__video"
+          controls="1"
+        ></video>
+      </div>
+		{% elsif full_video_image_desktop != blank %}
+			<picture>
+				{% if full_video_image_mobile != blank %}
+					<source data-srcset="//images.accentuate.io?c_options=w_400&image={{ full_video_image_mobile }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_800&image={{ full_video_image_mobile }}&shop={{ shop.name }} 2x"
+							media="(max-width: 400px)">
+
+					<source data-srcset="//images.accentuate.io?c_options=w_767&image={{ full_video_image_mobile }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_1534&image={{ full_video_image_mobile }}&shop={{ shop.name }} 2x"
+							media="(max-width: 767px)">
+				{% else %}
+					<source data-srcset="//images.accentuate.io?c_options=w_400&image={{ full_video_image_desktop }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_800&image={{ full_video_image_desktop }}&shop={{ shop.name }} 2x"
+							media="(max-width: 400px)">
+
+					<source data-srcset="//images.accentuate.io?c_options=w_767&image={{ full_video_image_desktop }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_1534&image={{ full_video_image_desktop }}&shop={{ shop.name }} 2x"
+							media="(max-width: 767px)">
+				{% endif %}
+
+				<img data-srcset="//images.accentuate.io?c_options=w_1920&image={{ full_video_image_desktop }}&shop={{ shop.name }} 1x,
+							//images.accentuate.io?c_options=w_2840&image={{ full_video_image_desktop }}&shop={{ shop.name }} 2x"
+					 class="product-video-wide__image lazyload"
+			     width="100%"
+			     height="100%"
+					 alt="{{ full_video_image_alt }}">
+			</picture>
+		{% endif %}
+	</div>
+{% endif %}

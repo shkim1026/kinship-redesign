@@ -1,0 +1,121 @@
+<section class="instagram" data-section-type="instagram-feed">
+    {% assign sliding_speed = section.settings.sliding_speed %}
+    {% assign heading = section.settings.heading %}
+    {% assign username = section.settings.username %}
+    {% assign images_count = section.settings.images_count %}
+    {% assign link_text = section.settings.link_text %}
+
+    {% if heading != blank %}
+        <h3 class="instagram__title js-animate animate-fade-in-up animate-speed-800">
+            <a href="https://www.instagram.com/{{ username }}/" target="_blank">
+                {{ heading }}
+            </a>
+        </h3>
+    {% endif %}
+
+    <div class="instagram__images-wrapper js-animate animate-fade-in-up animate-speed-800">
+        <div class="instagram__images {% if section.settings.enable_animation %}instagram__images--animation{% endif %}"
+             id="instafeed"
+             data-images-count="{{ images_count }}"></div>
+    </div>
+
+    {%- if link_text != blank -%}
+        <div class="instagram__button-wrapper js-animate animate-fade-in-up animate-speed-800">
+            <a href="https://www.instagram.com/{{ username }}/" class="button button--primary" target="_blank">
+                {{ link_text }}
+            </a>
+        </div>
+    {%- endif -%}
+</section>
+
+<style>
+    {% assign background_color = section.settings.background_color %}
+    {% assign animationOffset = images_count | times: 12.75 %}
+    {% assign animationOffsetMobile = images_count | times: 25.5 %}
+    {% if background_color %}
+    #shopify-section-{{ section.id }} .instagram {
+        background-color: {{ background_color }};
+    }
+    {% endif %}
+    #shopify-section-{{ section.id }} .instagram__images.instagram__images--animation {
+        animation-duration: {{ sliding_speed }}s;
+        animation-name: shiftInstagramImagesDesktop;
+    }
+    @media (max-width: 767px) {
+        #shopify-section-{{ section.id }} .instagram__images.instagram__images--animation {
+            animation-name: shiftInstagramImagesMobile;
+        }
+    }
+    @keyframes shiftInstagramImagesDesktop {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-{{ animationOffset }}vw);
+        }
+    }
+    @keyframes shiftInstagramImagesMobile {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-{{ animationOffsetMobile }}vw);
+        }
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Instagram",
+    "settings": [
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color",
+            "default": "transparent"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_animation",
+            "label": "Enable animation",
+            "default": true
+        },
+        {
+            "type":    "range",
+            "id":      "sliding_speed",
+            "min":     30,
+            "max":     200,
+            "step":    5,
+            "unit":    "s",
+            "label":   "Slide speed",
+            "info":    "Time (in seconds) to fully scroll through all images.",
+            "default": 60
+        },
+        {
+            "type":    "range",
+            "id":      "images_count",
+            "min":     6,
+            "max":     20,
+            "step":    1,
+            "label":   "Images count",
+            "default": 12
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "username",
+            "label": "User Name"
+        },
+        {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link text",
+            "default": "follow us"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+{%- assign show_popup = settings.blm_show -%}
+{%- assign heading = settings.blm_heading -%}
+{%- assign text = settings.blm_text -%}
+{%- assign image = settings.blm_image -%}
+
+{%- if show_popup -%}
+  {%- if heading != blank or text != blank -%}
+    <div class="blm-popup">
+      <div class="blm-popup__container">
+        {%- if heading != blank -%}
+          <h2 class="blm-popup__heading">{{ heading }}</h2>
+        {%- endif -%}
+
+        {%- if text != blank -%}
+          <div class="blm-popup__text">{{ text }}</div>
+        {%- endif -%}
+
+        {%- if image != blank -%}
+          <img src="{{ image.src | img_url: '400x' }}" class="blm-popup__image"/>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

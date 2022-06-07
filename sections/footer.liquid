@@ -1,0 +1,250 @@
+<footer class="footer">
+	<div class="container">
+		<div class="footer__guarantee">
+			{% if section.settings.guarantee_icon != blank %}
+				<img src="{{ section.settings.guarantee_icon | img_url: '42x' }}"
+					 class="footer__guarantee-icon"
+				   width="21px"
+				   height="21px"
+					 alt="{{ section.settings.guarantee_icon.alt }}">
+			{% endif %}
+
+			{% if section.settings.guarantee_label != blank %}
+				<span class="footer__guarantee-label">{{ section.settings.guarantee_label }}</span>
+			{% endif %}
+
+			{% if section.settings.guarantee_text != blank %}
+				{{ section.settings.guarantee_text }}
+			{% endif %}
+		</div>
+
+		<div class="footer__main">
+			{%- assign footer_linklist = section.settings.footer_linklist -%}
+			{%- assign footer_linklist_2 = section.settings.footer_linklist_2 -%}
+			{%- assign footer_linklist_3 = section.settings.footer_linklist_3 -%}
+
+			<div class="row">
+				<div class="col-lg-3 self-center">
+					{% if section.settings.footer_logo != blank %}
+						<a href="/" class="footer__logo">
+							{% include 'picture', image_desk: section.settings.footer_logo, image_mobile: , class_name: 'footer__logo-image', image_attr: , pic_attr: , figcaption: %}
+
+							{% comment %}
+							<img src="{{ section.settings.footer_logo | img_url: '248x' }}"
+								 srcset="{{ section.settings.footer_logo | img_url: '248x' }} 1x, {{ section.settings.footer_logo | img_url: '496x' }} 2x"
+								 class="footer__logo-image"
+								 alt="{{ section.settings.footer_logo.alt | default: shop.name }}">
+							{% endcomment %}
+						</a>
+					{% endif %}
+				</div>
+
+				<div class="col-lg-2 footer__col-menu text-center">
+					{% if section.settings.menu_url_1 != blank and linklists[footer_linklist].links.size < 1 %}
+						<div class="footer__title">
+							<a href="{{ section.settings.menu_url_1 }}">{{ section.settings.menu_title_1 }}</a>
+						</div>
+					{% else %}
+						<div class="footer__title footer__title--chevron js-footer-toggle">
+							{{ section.settings.menu_title_1 }}
+							<span class="footer__title-icon"></span>
+						</div>
+					{% endif %}
+
+					{% if linklists[footer_linklist].links.size > 0 %}
+						<div class="footer__accordion-content js-footer-accordion-content">
+							<ul class="footer__linklist">
+								{% for link in linklists[footer_linklist].links %}
+									<li class="footer__linklist-item">
+										<a href="{{ link.url }}" class="footer__linklist-link">{{ link.title }}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+
+				<div class="col-lg-2 footer__col-menu text-center">
+					{% if section.settings.menu_url_2 != blank and linklists[footer_linklist_2].links.size < 1 %}
+						<div class="footer__title">
+							<a href="{{ section.settings.menu_url_2 }}">{{- section.settings.menu_title_2 -}}</a>
+						</div>
+					{% else %}
+						<div class="footer__title footer__title--chevron js-footer-toggle">
+							{{- section.settings.menu_title_2 -}}
+							<span class="footer__title-icon"></span>
+						</div>
+					{% endif %}
+
+					{% if linklists[footer_linklist_2].links.size > 0 %}
+					<div class="footer__accordion-content js-footer-accordion-content">
+						<ul class="footer__linklist">
+							{% for link in linklists[footer_linklist_2].links %}
+								<li class="footer__linklist-item">
+									<a href="{{ link.url }}" class="footer__linklist-link">{{- link.title -}}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+
+				<div class="col-lg-2 footer__col-menu text-center">
+					{% if section.settings.menu_url_3 != blank and linklists[footer_linklist_3].links.size < 1 %}
+						<div class="footer__title">
+							<a href="{{ section.settings.menu_url_3 }}">{{- section.settings.menu_title_3 -}}</a>
+						</div>
+					{% else %}
+						<div class="footer__title footer__title--chevron js-footer-toggle">
+							{{- section.settings.menu_title_3 -}}
+							<span class="footer__title-icon"></span>
+						</div>
+					{% endif %}
+
+					{% if linklists[footer_linklist_3].links.size > 0 %}
+					<div class="footer__accordion-content js-footer-accordion-content">
+						<ul class="footer__linklist">
+							{% for link in linklists[footer_linklist_3].links %}
+								<li class="footer__linklist-item">
+									<a href="{{ link.url }}" class="footer__linklist-link">{{ link.title }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+
+				<div class="col-lg-3 self-center">
+					<div class="footer__socials">
+						{% include 'social-icons' %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="footer__bottom">
+		<span class="footer__copyright">© {{ 'now' | date: "%Y" }}, {{ section.settings.copyright_text }}</span>
+
+		{% assign support_menu = section.settings.support_menu %}
+		{% if linklists[support_menu].links.size > 0 %}
+			{% for link in linklists[support_menu].links %}
+				<a href="{{ link.url }}" class="footer__support-link">{{ link.title }}</a>
+			{% endfor %}
+		{% endif %}
+	</div>
+</footer>
+
+{% schema %}
+{
+	"name": "Footer",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "footer_logo",
+			"label": "Logo image"
+		},
+		{
+			"type": "header",
+			"content": "Guarantee block"
+		},
+		{
+			"type": "image_picker",
+			"id": "guarantee_icon",
+			"label": "Icon"
+		},
+		{
+			"type": "text",
+			"id": "guarantee_label",
+			"label": "Label text",
+			"default": "Feel Good Guarantee"
+		},
+		{
+			"type": "richtext",
+			"id": "guarantee_text",
+			"label": "Text",
+			"default": "<p>If you're not totally happy with Kinship in 30 days, no worries. We'll make it right, no questions asked. <a href=''>See details</a></p>"
+		},
+		{
+			"type": "header",
+			"content": "Menu 1"
+		},
+		{
+			"type": "text",
+			"id": "menu_title_1",
+			"label": "Menu heading",
+			"default": "shop"
+		},
+		{
+			"type": "url",
+			"id": "menu_url_1",
+			"label": "Menu url",
+			"info": "If menu list not set or menu list is empty - than link appear on menu heading"
+		},
+		{
+			"type": "link_list",
+			"id": "footer_linklist",
+			"label": "Menu"
+		},
+		{
+			"type": "header",
+			"content": "Menu 2"
+		},
+		{
+			"type": "text",
+			"id": "menu_title_2",
+			"label": "Menu heading",
+			"default": "learn"
+		},
+		{
+			"type": "url",
+			"id": "menu_url_2",
+			"label": "Menu url",
+			"info": "If menu list not set or menu list is empty - than link appear on menu heading"
+		},
+		{
+			"type": "link_list",
+			"id": "footer_linklist_2",
+			"label": "Menu"
+		},
+		{
+			"type": "header",
+			"content": "Menu 3"
+		},
+		{
+			"type": "text",
+			"id": "menu_title_3",
+			"label": "Menu heading",
+			"default": "help"
+		},
+		{
+			"type": "url",
+			"id": "menu_url_3",
+			"label": "Menu url",
+			"info": "If menu list not set or menu list is empty - than link appear on menu heading"
+		},
+		{
+			"type": "link_list",
+			"id": "footer_linklist_3",
+			"label": "Menu"
+		},
+		{
+			"type": "header",
+			"content": "copyright"
+		},
+		{
+			"type": "text",
+			"id": "copyright_text",
+			"label": "Copyright text",
+			"default": "Kinship, Inc. All rights reserved."
+		},
+		{
+			"type": "link_list",
+			"id": "support_menu",
+			"label": "Menu"
+		}
+	]
+}
+
+{% endschema %}

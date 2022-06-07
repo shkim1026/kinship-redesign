@@ -1,0 +1,35 @@
+{% assign tagline_show = product.metafields.tagline.show_section %}
+{% assign tagline_order = product.metafields.tagline.section_order %}
+{% assign tagline_title = product.metafields.tagline.title %}
+{% assign tagline_color = product.metafields.tagline.color %}
+{% assign tagline_image_desktop = product.metafields.tagline.image_desktop %}
+{% assign tagline_image_mobile = product.metafields.tagline.image_mobile %}
+{% assign tagline_image_alt = product.metafields.tagline.bg_image_alt %}
+
+{% if tagline_show %}
+	<section class="tagline" {% if tagline_order != blank %}style="order: {{ tagline_order }};"{% endif %}>
+		{% if tagline_image_desktop != blank %}
+			<picture>
+				{% if tagline_image_mobile != blank %}
+					<source srcset="//images.accentuate.io?c_options=w_375&image={{ tagline_image_mobile }}&shop={{ shop.name }}" media="(max-width: 375px)">
+					<source srcset="//images.accentuate.io?c_options=w_767&image={{ tagline_image_mobile }}&shop={{ shop.name }}" media="(max-width: 767px)">
+				{% else %}
+					<source srcset="//images.accentuate.io?c_options=w_375&image={{ tagline_image_desktop }}&shop={{ shop.name }}" media="(max-width: 375px)">
+					<source srcset="//images.accentuate.io?c_options=w_767&image={{ tagline_image_desktop }}&shop={{ shop.name }}" media="(max-width: 767px)">
+				{% endif %}
+
+				<img src="//images.accentuate.io?c_options=w_1920&image={{ tagline_image_desktop }}&shop={{ shop.name }}"
+					 srcset="//images.accentuate.io?c_options=w_1920&image={{ tagline_image_desktop }}&shop={{ shop.name }} 1x,
+							//images.accentuate.io?c_options=w_2840&image={{ tagline_image_desktop }}&shop={{ shop.name }} 2x"
+					 class="tagline__image lazyload"
+					 alt="{{ tagline_image_alt }}">
+			</picture>
+		{% endif %}
+
+		<div class="js-animate animate-fade-in-up" data-offset="50">
+			{% if tagline_title != blank %}
+				<h3 class="tagline__title" style="color: {{ tagline_color }};">{{ tagline_title }}</h3>
+			{% endif %}
+		</div>
+	</section>
+{% endif %}

@@ -1,0 +1,16 @@
+{% assign background_color = product.metafields.yotpo_inst.background_color %}
+{% assign gallery_title = product.metafields.yotpo_inst.gallery_title %}
+{% assign gallery_title_color = product.metafields.yotpo_inst.color_gallery_title %}
+
+<section class="yotpo__inst" style="background-color: {{ background_color }}">
+
+  {%- if gallery_title != blank -%}
+    <h2 class="yotpo__inst-heading" style="color:{{ gallery_title_color }}">{{ gallery_title }}</h2>
+  {%- endif -%}
+
+  <div
+    class="yotpo yotpo-pictures-widget"
+    data-gallery-id="61144acd2cd55a0787e7c18e"
+    data-product-id="{{ product.id }}">
+  </div>
+</section>

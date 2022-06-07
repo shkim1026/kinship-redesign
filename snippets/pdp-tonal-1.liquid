@@ -1,0 +1,77 @@
+{% assign tonal_order = product.metafields.tonal_1.section_order %}
+{% assign tonal_show = product.metafields.tonal_1.show_section %}
+{% assign tonal_bg_desktop = product.metafields.tonal_1.bg_desktop %}
+{% assign tonal_bg_mobile = product.metafields.tonal_1.bg_mobile %}
+{% assign tonal_bg_alt = product.metafields.tonal_1.bg_image_alt %}
+
+{% assign tonal_content_position = product.metafields.tonal_1.content_position %}
+{% assign tonal_label = product.metafields.tonal_1.label %}
+{% assign tonal_heading = product.metafields.tonal_1.heading %}
+{% assign tonal_author_name = product.metafields.tonal_1.author_name %}
+{% assign tonal_text_color = product.metafields.tonal_1.text_color %}
+{% assign tonal_cta_text = product.metafields.tonal_1.cta_text %}
+{% assign tonal_cta_url = product.metafields.tonal_1.cta_url %}
+{% assign tonal_cta_color = product.metafields.tonal_1.cta_color %}
+{% assign tonal_cta_bg = product.metafields.tonal_1.cta_bg %}
+
+{% if tonal_show %}
+	<section class="product-tonal-text" style="color: {{ tonal_text_color }}; {% if tonal_order != blank %}order: {{ tonal_order }};{% endif %}">
+		{% if tonal_bg_desktop != blank %}
+			<picture>
+				{% if tonal_bg_mobile != blank %}
+					<source srcset="//images.accentuate.io?c_options=w_400&image={{ tonal_bg_mobile }}&shop={{ shop.name }}" media="(max-width: 400px)">
+					<source srcset="//images.accentuate.io?c_options=w_1920&image={{ tonal_bg_mobile }}&shop={{ shop.name }}" media="(max-width: 767px)">
+				{% else %}
+					<source srcset="//images.accentuate.io?c_options=w_400&image={{ tonal_bg_desktop }}&shop={{ shop.name }}" media="(max-width: 400px)">
+					<source srcset="//images.accentuate.io?c_options=w_767&image={{ tonal_bg_desktop }}&shop={{ shop.name }}" media="(max-width: 767px)">
+				{% endif %}
+
+				<img src="//images.accentuate.io?c_options=w_1920&image={{ tonal_bg_desktop }}&shop={{ shop.name }}"
+					 srcset="//images.accentuate.io?c_options=w_1920&image={{ tonal_bg_desktop }}&shop={{ shop.name }} 1x,
+							//images.accentuate.io?c_options=w_2840&image={{ tonal_bg_desktop }}&shop={{ shop.name }} 2x"
+					 class="product-tonal-text__image lazyload"
+					 alt="{{ tonal_bg_alt }}">
+			</picture>
+		{% endif %}
+
+		<div class="js-animate animate-fade-in-up" data-offset="100">
+
+			{% if tonal_content_position == 'left' %}
+				{% assign col_class = '' %}
+			{% elsif tonal_content_position == 'center' %}
+				{% assign col_class = 'product-tonal-text__container--center' %}
+			{% endif %}
+
+			<div class="product-tonal-text__container {{ col_class }}">
+				{% if tonal_label != blank %}
+					<p class="product-tonal-text__label">{{ tonal_label }}</p>
+				{% endif %}
+
+				{% if tonal_heading != blank %}
+					<p class="product-tonal-text__title">{{ tonal_heading }}</p>
+				{% endif %}
+
+				{% if tonal_author_name != blank %}
+					<p class="product-tonal-text__author">{{ tonal_author_name }}</p>
+				{% endif %}
+
+				{% if tonal_cta_text != blank and tonal_cta_url != blank %}
+					<a href="{{ tonal_cta_url }}" class="button">{{ tonal_cta_text }}</a>
+				{% endif %}
+			</div>
+		</div>
+
+		<style>
+			.product-tonal-text .button {
+				background-color: {{ tonal_cta_bg }};
+				color: {{ tonal_cta_color }};
+				border-color: {{ tonal_cta_color }};
+			}
+
+			.product-tonal-text .button:hover {
+				background-color: {{ tonal_cta_color }};
+				color: {{ tonal_cta_bg }};
+			}
+		</style>
+	</section>
+{% endif %}

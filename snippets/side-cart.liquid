@@ -1,0 +1,219 @@
+<div id="SideCartCont" class="side-cart"></div>
+
+{%- assign cart_threshold_enable = settings.cart_threshold_enable -%}
+{%- assign cart_threshold_amount = settings.cart_threshold_amount -%}
+{%- assign cart_threshold_message = settings.cart_threshold_message -%}
+{%- assign cart_threshold_free_message = settings.cart_threshold_free_message -%}
+{%- assign cart_threshold_text_color = settings.cart_threshold_text_color -%}
+
+{% comment %}
+{%- if cart.items.size > 0 -%}
+  {%- for item in cart.items -%}
+    {%- assign this_product = item.product -%}
+
+    {% include 'gwp-product', product: this_product %}
+  {%- endfor -%}
+{%- endif -%}
+{% endcomment %}
+
+<script id="SideCart" type="text/x-handlebars-template">
+  <span class="close">{% include 'icon-close' %}</span>
+  <div class="product__add__notification">
+    <div class="product__add__success">
+      {% raw %}
+        <h4 class="product__add__success__title">
+          your bag {{#if item_count }}({{ item_count }}){{/if}}
+        </h4>
+
+        <p class="product__gift-promotion-sold-out"></p>
+
+        {{#if products.length}}
+        <ul class="product__add__success__list">
+
+          {% endraw %}
+            {% if cart_threshold_enable and cart_threshold_amount != blank %}
+              <li class="cart-threshold">
+                {% if cart_threshold_message != blank and cart_threshold_free_message != blank %}
+                  <h5 class="cart-threshold__message" style="color: {{ cart_threshold_text_color }};">
+                  {% raw %}
+                  {{#if threshold_free_message}}
+                  {% endraw %}
+                  {{ cart_threshold_free_message }}
+                  {% raw %}
+                  {{ else }}
+                  {% endraw %}
+                  Add {% raw %}{{ threshold_difference }}{% endraw %} {{ cart_threshold_message }}
+                  {% raw %}
+                  {{/if}}
+                  {% endraw %}
+                  </h5>
+                {% endif %}
+                <div class="cart-threshold__wrapper"
+                style="border-color: {{ settings.cart_threshold_border_color }}; background-color: {{ settings.cart_threshold_color }};">
+                  <div class="cart-threshold__line"
+                  style="{% raw %}width: {{ threshold_percentage }}%;{% endraw %} background-color: {{ settings.cart_threshold_line_color }};"></div>
+                </div>
+              </li>
+            {% endif %}
+            {% raw %}
+
+          {{#each products}}
+          <li class="product__add__success__item {{#if free_product}}unclickable{{/if}}">
+            <div class="product__add__success__image">
+              <a href="{{#if free_product}}#{{else}}{{ url }}{{/if}}">
+                <picture class="product__add__success__image-bg">
+                  <img data-srcset="{{ image }}" srcset="{{ image }}" alt="{{ image.alt }}">
+                </picture>
+              </a>
+            </div>
+
+            <div class="product__add__success__content">
+              <div class="product__meta">
+                <div class="product__meta-info">
+                  <h3 class="product__title">
+                  {{#if properties.subscription_id }}
+                    <a href="{{ properties._original_handle }}">{{ title }} </a>
+                  {{else}}
+                    <a href="{{#if free_product}}#{{else}}{{ url }}{{/if}}">{{ title }} </a>
+                  {{/if}}
+                  </h3>
+                  {{#if variant_title }}
+                  <h4 class="product__variant-title">
+                    {{ variant_title }}
+                  </h4>
+                  {{/if}}
+                </div>
+                <p class="product__price">
+                  {{#if free_product}}
+                    Free
+                  {{else}}
+                    {{ price_formatted }}
+                    {{#if properties._compare_price }}
+                      <s>{{ properties._compare_price }}</s>
+                    {{/if}}
+                  {{/if}}
+                </p>
+              </div>
+              {{#if free_product}}
+               <div class="product__quantity product__quantity--free">
+                <span class="js-qty__text">qty: {{ item_count }}</span>
+              </div>
+              {{else}}
+              <div class="product__quantity">
+                <div class="js-qty quantity-selector">
+                  <span class="js-qty__text">qty</span>
+                  <span class="js-qty__adjust js-qty__adjust--minus quantity__minus" data-variant-id="{{ id }}" data-line-item="{{math @index '+' 1}}">
+                   -
+                  </span>
+                  <input class="text quantity js-qty__num quantity__input" type="number" min="1" size="4" pattern="[0-9]*" value="{{ item_count }}"/>
+                  <span class="js-qty__adjust js-qty__adjust--plus quantity__plus" data-variant-id="{{ id }}" data-line-item="{{math @index '+' 1}}">
+                    +
+                  </span>
+                </div>
+                <button class="js-item__remove" data-variant-id="{{ id }}" data-line-item="{{math @index '+' 1}}">
+                  remove {% endraw %}{% include 'icon-close' %} {% raw %}
+                </button>
+              </div>
+              {{/if}}
+              {{#if properties._promo }}
+              <div class="product__promo">
+                <p>
+                  {{properties._promo}}
+                </p>
+              </div>
+              {{/if}}
+              {{#if properties.subscription_id }}
+              <div class="product__subscription">
+                <p>
+                  Delivered Every {{ properties.shipping_interval_frequency }} {{ properties.shipping_interval_unit_type }}
+                </p>
+              </div>
+              {{/if}}
+            </div>
+          </li>
+          {{/each}}
+          <li class="product__add__success__item" style="display: none; border-bottom: unset;"><div id="cart-recommended-container" class="cart-recommended-container" ></div></li>
+        </ul>
+
+        <div class="side-cart__footer hr">
+        {% endraw %}
+        {% if settings.cart_promo != blank %}
+          <div class="side-cart__promo-message">
+            <p style="color: {{ settings.cart_promo_color }}">{{ settings.cart_promo }}</p>
+          </div>
+          {% endif %}
+
+        {% raw %}
+          <div class="side-cart__subtotal">
+            <span class="side-cart__subtotal-title">
+              subtotal:
+            </span>
+            <span class="side-cart__subtotal-price"> {{ total_price_formatted }}</span>
+          </div>
+        {% endraw %}
+
+          {%- for item in cart.items -%}
+            {%- if item.gift_card -%}
+              {%- assign GiftCard = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if GiftCard -%}
+            {%- assign noGiftCard = false -%}
+          {%- else -%}
+            {%- assign noGiftCard = true -%}
+          {%- endif -%}
+
+      {% raw %}
+
+        {{#if show_afterpay}}
+        {% endraw %}
+          <afterpay-placement
+          	data-locale="en_US"
+            data-currency="USD"
+            data-amount="{% raw %}{{total_price_formatted}}{% endraw %}"
+            data-is-eligible="{{noGiftCard}}"
+            data-logo-type="lockup"
+            data-size="xs"
+            style="color: #3c3c3c; line-height: 1; letter-spacing: 1px"
+            data-modal-theme="white"
+            >
+  		  </afterpay-placement>
+  		  {% raw %}
+  		  {{/if}}
+
+          {{#if discount}}
+            <div class="side-cart__discount">
+              <span class="side-cart__discount-title">
+                {{ discount.title }}:
+              </span>
+              <span class="side-cart__discount-price"> ${{ discount.value }}</span>
+            </div>
+          {{/if}}
+
+          <a href="/checkout" class="btn buttons-wrap__link js-button-checkout">
+            <span>checkout</span>
+          </a>
+        </div>
+        {{else}}
+          <p class="side-cart__empty">Your bag is currently empty</p>
+        {{/if}}
+      {% endraw %}
+    </div>
+  </div>
+</script>
+
+<style>
+
+  @media only screen and (max-width: 775px) {
+      afterpay-placement {
+      margin-top: -10px;
+  	}
+  }
+  @media only screen and (min-width: 776px) {
+      afterpay-placement {
+      margin-top: -35px;
+  	}
+  }
+
+</style>

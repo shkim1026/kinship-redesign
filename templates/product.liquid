@@ -1,0 +1,106 @@
+<div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" itemscope>
+
+	{%- assign current_variant = product.selected_or_first_available_variant -%}
+	{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+	{% if page_description != blank %}
+		{% assign seo_description = page_description %}
+	{% else %}
+		{% assign seo_description = product.metafields.general.short_description %}
+	{% endif %}
+
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org/",
+			"@type": "Product",
+			"name": "{{ product.title }}",
+			"image": "{{ featured_image | img_url: '800x800' }}",
+			"url": "{{ shop.url }}{{ product.url }}",
+			"description": "{{ seo_description }}",
+			"offers": {
+				"@type": "Offer",
+				"priceCurrency": "USD",
+				"price": "{{ current_variant.price | money_without_currency  }}",
+				"url": "{{ shop.url }}{{ product.url }}",
+				"itemCondition": "https://schema.org/NewCondition",
+				"availability": "https://schema.org/InStock",
+				"seller": {
+					"@type": "Organization",
+					"name": "Kinship",
+					"url": "{{ shop.url }}"
+				}
+			}
+		{%- comment -%}
+		{% if product.metafields.okendo.ReviewCount > 0 %}
+            ,"aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "{{ product.metafields.okendo.ReviewAverageValue }}",
+              "ratingCount": "{{ product.metafields.okendo.ReviewCount }}"
+            }
+        	{% endif %}
+		{%- endcomment -%}
+		}
+	</script>
+
+	{% assign product_color = product.metafields.general.main_color %}
+	{% assign show_instagram_section = product.metafields.instagram.show_section %}
+	{% assign show_newsletter_section = product.metafields.newsletter.show_section %}
+
+	{% include 'breadcrumbs' %}
+
+	{% include 'pdp-slider' %}
+
+	<div class="product-order-container js-buystack-container">
+		{% render 'pdp-kit' %}
+
+		{% include 'pdp-details' %}
+
+		{% include 'pdp-features-icons' %}
+
+		{% include 'pdp-tonal-1' %}
+
+		{% include 'pdp-clinical-results' %}
+	</div>
+
+	{% include 'pdp-video-full-width' %}
+
+	{% include 'pdp-tagline' %}
+
+	{% section 'pdp-recommendations' %}
+
+	{%- if product.metafields.yotpo_inst.enable_section == 'true' -%}
+		{% include 'pdp-yotpo-instagram' %}
+	{%- endif -%}
+
+	<!-- YOTPO REVIEWS WIDGET | templated > product.liquid -->
+	<div class="yotpo yotpo-main-widget"
+			 data-product-id="{{ product.id }}"
+			 data-name="{{ product.title | escape }}"
+			 data-url="{{ shop.url }}{{ product.url }}"
+			 data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+			 data-price="{{ variant.price | money_without_currency }}"
+			 data-currency="{{ shop.currency }}"
+			 data-description="{{ product.description | escape }}">
+	</div>
+	<!-- END | YOTPO REVIEWS WIDGET  -->
+
+	{%- comment -%}
+		{% if product.metafields.okendo.ReviewCount > 0 %}
+			{% include 'okendo-reviews-widget' %}
+		{% endif %}
+	{%- endcomment -%}
+
+	{% include 'pdp-press' %}
+
+	{% unless product == empty %}
+		<script type="application/json" data-product-json>
+      		{{ product | json }}
+		</script>
+	{% endunless %}
+
+  {% include 'klaviyo-product-tracking' %}
+
+	{% comment %}
+    {% include 'gwp-product' %}
+	{% endcomment %}
+</div>

@@ -1,0 +1,63 @@
+{% assign recommendations_background_color = product.metafields.recommendations.background_color %}
+{% assign recommendations_title = product.metafields.recommendations.title %}
+{% assign recommendations_title_color = product.metafields.recommendations.title_color %}
+{% assign recommendations_products = product.metafields.recommendations.product_to_show %}
+
+<div class="product-recommendations">
+    <div class="container">
+        {% if recommendations_title %}
+            <p class="product-recommendations__title">
+                {{ recommendations_title }}
+            </p>
+        {% endif %}
+
+        {% assign productsAreSet = false %}
+        {% for product_handle in recommendations_products limit: 6 %}
+            {% if product_handle != blank %}
+                {% assign productsAreSet = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if recommendations_products.size > 0 and productsAreSet %}
+            <div class="product-recommendations__row js-product-recommendations-slider">
+                {% for product_handle in recommendations_products limit: 6 %}
+                    {% assign product = all_products[product_handle] %}
+
+                    {% if product != blank and product.type != 'GWP' and product.type != 'Evergreen GWP' %}
+                        <div class="product-recommendations__product js-animate animate-fade-in-up animate-delay-{{ forloop.index }}00">
+                            {% include 'product-card' %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="product-recommendations-list product-recommendations__row js-product-recommendations-slider"
+                 data-product-id="{{ product.id }}"
+                 data-limit="6"
+                 data-section-type="product-recommendations">
+
+                {% for product in recommendations.products %}
+                  {% if product.type != 'GWP' and product.type != 'Evergreen GWP' %}
+                    <div class="product-recommendations__product js-animate animate-fade-in-up animate-delay-{{ forloop.index }}00">
+                        {% include 'product-card' %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    {% if recommendations_background_color %}
+        .product-recommendations {
+            background-color: {{ recommendations_background_color }};
+        }
+    {% endif %}
+
+    {% if recommendations_background_color %}
+        .product-recommendations .product-recommendations__title {
+            color: {{ recommendations_title_color }};
+        }
+    {% endif %}
+</style>

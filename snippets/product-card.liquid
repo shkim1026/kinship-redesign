@@ -1,0 +1,174 @@
+{% comment %}
+	Metafields product information
+{% endcomment %}
+
+{% assign preorder_enable = product.metafields.general.preodrder_enable %}
+{% assign short_info = product.metafields.general.subtitle %}
+{% assign product_icons = product.metafields.product.plp_icon %}
+{% assign product_label = product.metafields.general.label_tag %}
+{% assign product_color = product.metafields.general.main_color %}
+{% assign product_hover_img = product.metafields.general.hover_image %}
+{% capture croped_hover_img %}//images.accentuate.io?c_options=w_1000&image={{ product_hover_img }}&shop={{ shop.name }}{% endcapture %}
+
+{% comment %}
+	Variables that can be passed like 'product-card' snippet parameters
+{% endcomment %}
+
+{% assign custom_image = custom_image %}
+{% assign extra_class = class %}
+{% assign is_big_card = is_big_card %} {% comment %}It's can be used on homepage (featured products) for NOT to crop image{% endcomment %}
+
+{% if custom_image != blank %}
+	{% assign main_image = custom_image %}
+{% else %}
+	{% assign main_image = product.featured_image %}
+{% endif %}
+
+{% if product.metafields.general.main_title != blank %}
+	{% assign product_title = product.metafields.general.main_title %}
+{% else %}
+	{% assign product_title = product.title %}
+{% endif %}
+
+
+<div class="product-card {{ extra_class }}" {% if is_big_card %}data-big="{{ is_big_card }}"{% endif %}>
+	{% comment %}
+		{% include 'gwp-product' %}
+	{% endcomment %}
+
+	<a href="{{ product.url | within: collection }}" class="product-card__link-wrapper"></a>
+
+	{% if product_label != blank %}
+		<span class="product-card__label">{{ product_label }}</span>
+	{% endif %}
+
+	{% if product_icons != blank or collection or search %}
+		<div class="product-card__icons">
+			{% for icon in product_icons %}
+				<span class="product-card__icon">
+          <img data-src="{{ icon }}" class="lazyload" width="34px" height="34px"/>
+        </span>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{%- assign pic_style = 'style="padding-bottom: calc(' | append: main_image.height | append: ' / ' | append: main_image.width | append: ' * 100%)"' -%}
+	{% include 'picture', image_desk: main_image, image_mobile: , class_name: 'product-card__image', image_attr: , pic_attr: pic_style, figcaption: figcaption %}
+
+	{% comment %}
+	<picture>
+		<source
+				{% unless is_big_card %}
+					srcset="{{ main_image | img_url: '400x400', crop: 'center' }} 1x,
+							{{ main_image | img_url: '800x800', crop: 'center' }} 2x"
+				{% else %}
+					srcset="{{ main_image | img_url: '400x' }} 1x,
+					{{ main_image | img_url: '800x' }} 2x"
+				{% endunless %}
+				media="(max-width: 400px)">
+
+		<img
+			 class="product-card__image"
+			{% unless is_big_card %}
+				src="{{ main_image | img_url: '500x500', crop: 'center' }}"
+				srcset="{{ main_image | img_url: '500x500', crop: 'center' }} 1x, {{ main_image | img_url: '1000x1000', crop: 'center' }} 2x"
+			{% else %}
+				src="{{ main_image | img_url: '700x' }}"
+				srcset="{{ main_image | img_url: '700x' }} 1x, {{ main_image | img_url: '1400x' }} 2x"
+			{% endunless %}
+			 alt="{{ main_image.alt }}">
+	</picture>
+	{% endcomment %}
+
+	<h4 class="product-card__title">{{ product_title }}
+		{% unless product.type == 'Gift Card' %}/
+			{% if product.selected_or_first_available_variant.price_varies %}
+				<span class="price">
+					{{ product.price_min | money_without_trailing_zeros  }}
+				</span>
+			{% else %}
+				{% if product.compare_at_price_max > product.price %}
+					<span class="compare-price"><s>{{ product.compare_at_price_max | money_without_trailing_zeros }}</s></span>
+					<span class="price">
+						{{ product.price | money_without_trailing_zeros  }}
+					</span>
+				{% else %}
+					<span class="price">
+						{{ product.price | money_without_trailing_zeros  }}
+					</span>
+				{% endif %}
+			{% endif %}
+		{% endunless %}
+	</h4>
+
+	{% if short_info != blank %}
+		<p class="product-card__info">{{ short_info }}</p>
+	{% endif %}
+
+	<div class="product-card__reviews">
+		{% comment %}
+			{% include 'okendo-reviews-product-rating-summary' %}
+		{% endcomment %}
+
+		<!-- YOTPO STAR RATING | snippets > product-card.liquid -->
+		<a href="{{ product.url }}">
+			<div style="text-align: center">
+				<div class="yotpo bottomLine" style="display:inline-block;"
+						 data-product-id="{{ product.id }}"></div>
+			</div>
+		</a>
+
+		<style>
+			.yotpo .text-m { padding-left: 4px; } /* optional middle padding */
+		</style>
+		<!-- END | YOTPO STAR RATING -->
+
+	</div>
+
+		{% if product.available and preorder_enable %}
+			<span class="inventory-status preorder">{{ 'products.product.pre_order' | t }}</span>
+		{% else %}
+			{% unless product.available %}
+				<span class="inventory-status sold-out">{{ 'products.product.sold_out' | t }}</span>
+			{% endunless %}
+		{% endif %}
+		<div class="product-card__hover {% unless product_hover_img %} without-hover-image{% endunless %}" {% if product_hover_img %}style="background-image: url({{croped_hover_img}})" {% endif %}>
+			<a href="{{ product.url | within: collection }}" class="product-card__link-wrapper"></a>
+
+			{% if product.available and preorder_enable %}
+				<a href="{{ product.url | within: collection }}" class="round-btn preorder">{{ 'products.product.pre_order' | t }} <span class="price"> {{ product.price | money_without_trailing_zeros  }}</span></a>
+			{% elsif product.available %}
+				<a href="{{ product.url | within: collection }}" class="round-btn add-to-cart"
+				   data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+					 {% if product.metafields.subscriptions.subscription_id %}
+						 data-recharge-original-handle="{{ product.handle | prepend: '/products/' }}"
+					 {% endif %}
+						{% if product.compare_at_price_max > product.price %}
+							data-compare-price="{{ product.compare_at_price_max | money_without_trailing_zeros }}"
+						{% endif %}
+				   data-promo="{{ product.metafields.general.promo_message }}">{{ 'products.product.add_to_cart' | t }}
+
+					{% if product.selected_or_first_available_variant.price_varies %}
+						<span class="price">
+							{{ product.price_min | money_without_trailing_zeros }}
+						</span>
+					{% else %}
+						{% if product.compare_at_price_max > product.price %}
+							{%- comment -%}
+								<span class="compare-price"><s>{{ product.compare_at_price_max | money_without_trailing_zeros }}</s></span>
+							{%- endcomment -%}
+							<span class="price">
+								{{ product.price | money_without_trailing_zeros  }}
+							</span>
+						{% else %}
+							<span class="price">
+								{{ product.price | money_without_trailing_zeros  }}
+							</span>
+						{% endif %}
+					{% endif %}
+				</a>
+			{% else %}
+				<a href="#" class="round-btn disabled">sold out</a>
+			{% endif %}
+		</div>
+</div>

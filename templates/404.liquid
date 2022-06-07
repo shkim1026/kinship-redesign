@@ -1,0 +1,19 @@
+<!-- /templates/404.liquid -->
+
+<section class="page-404">
+  <h2 class="theme">{{ 'general.404.title' | t }}</h2>
+
+  <div class="search-results-text">
+    <p>{{ 'general.404.subtext_html' | t }}</p>
+  </div>
+
+  <div class="search-outer">
+    <form action="/search" class="search-form">
+      <input type="hidden" name="type" value="product"/>
+      <input type="text" name="q" class="input" placeholder="{{ 'general.search.title' | t }}" value="{{ search.terms }}"/>
+      <button type="submit" class="btn">
+        {% include 'icon-submit-arrow' %}
+      </button>
+    </form>
+  </div>
+</section>

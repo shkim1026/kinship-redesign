@@ -1,0 +1,106 @@
+{% comment %}
+	Metafields product information
+{% endcomment %}
+
+{% assign preorder_enable = product.metafields.general.preodrder_enable %}
+{% assign short_info = product.metafields.general.subtitle %}
+{% assign product_icons = product.metafields.product.plp_icon %}
+{% assign product_label = product.metafields.general.label_tag %}
+{% assign product_color = product.metafields.general.main_color %}
+{% assign product_hover_img = product.metafields.general.hover_image %}
+{% capture croped_hover_img %}//images.accentuate.io?c_options=w_1000&image={{ product_hover_img }}&shop={{ shop.name }}{% endcapture %}
+
+{% comment %}
+	Variables that can be passed like 'product-card' snippet parameters
+{% endcomment %}
+
+{% assign custom_image = custom_image %}
+{% assign extra_class = class %}
+{% assign is_big_card = is_big_card %} {% comment %}It's can be used on homepage (featured products) for NOT to crop image{% endcomment %}
+
+{% if custom_image != blank %}
+	{% assign main_image = custom_image %}
+{% else %}
+	{% assign main_image = product.featured_image %}
+{% endif %}
+
+{% if product.metafields.general.main_title != blank %}
+	{% assign product_title = product.metafields.general.main_title %}
+{% else %}
+	{% assign product_title = product.title %}
+{% endif %}
+
+
+<div class="product-card {{ extra_class }}" {% if is_big_card %}data-big="{{ is_big_card }}"{% endif %}>
+  {% comment %}
+		{% include 'gwp-product' %}
+	{% endcomment %}
+
+	<a href="{{ product.url | within: collection }}" class="product-card__link-wrapper"></a>
+
+	<picture>
+		<source
+				{% unless is_big_card %}
+					srcset="{{ main_image | img_url: '400x400', crop: 'center' }} 1x,
+							{{ main_image | img_url: '800x800', crop: 'center' }} 2x"
+				{% else %}
+					srcset="{{ main_image | img_url: '400x' }} 1x,
+					{{ main_image | img_url: '800x' }} 2x"
+				{% endunless %}
+				media="(max-width: 400px)">
+
+		<img
+			 class="product-card__image"
+			{% unless is_big_card %}
+				src="{{ main_image | img_url: '500x500', crop: 'center' }}"
+				srcset="{{ main_image | img_url: '500x500', crop: 'center' }} 1x, {{ main_image | img_url: '1000x1000', crop: 'center' }} 2x"
+			{% else %}
+				src="{{ main_image | img_url: '700x' }}"
+				srcset="{{ main_image | img_url: '700x' }} 1x, {{ main_image | img_url: '1400x' }} 2x"
+			{% endunless %}
+			 alt="{{ main_image.alt }}">
+	</picture>
+
+	{% capture price %}
+		{% if product.price_varies %}
+			{{ product.price_min | money_without_trailing_zeros }}
+		{% else %}
+			{% if product.compare_at_price_max > product.price %}
+				<s>{{ product.compare_at_price_max | money_without_trailing_zeros }}</s> {{ product.price | money_without_trailing_zeros  }}
+			{% else %}
+				{{ product.price | money_without_trailing_zeros  }}
+			{% endif %}
+		{% endif %}
+	{% endcapture %}
+
+	<h4 class="product-card__title">{{ product_title }} / {{ price  }}</h4>
+
+	{% if short_info != blank %}
+		<p class="product-card__info">{{ short_info }}</p>
+	{% endif %}
+
+	{% unless template == 'index' %}
+		{% if product.available and preorder_enable %}
+			<span class="inventory-status preorder">{{ 'products.product.pre_order' | t }}</span>
+		{% else %}
+			{% unless product.available %}
+				<span class="inventory-status sold-out">{{ 'products.product.sold_out' | t }}</span>
+			{% endunless %}
+		{% endif %}
+    {% if product.available and preorder_enable %}
+      <a href="{{ product.url | within: collection }}" class="round-btn preorder">{{ 'products.product.pre_order' | t }}</a>
+      {% elsif product.available %}
+      <a href="{{ product.url | within: collection }}" class="round-btn add-to-cart"
+         data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+         {% if product.metafields.subscriptions.subscription_id %}
+	        data-recharge-original-handle="{{ product.handle | prepend: '/products/' }}"
+	       {% endif %}
+					{% if product.compare_at_price_max > product.price %}
+						data-compare-price="{{ product.compare_at_price_max | money_without_trailing_zeros }}"
+					{% endif %}
+         data-promo="{{ product.metafields.general.promo_message }}">{{ 'products.product.add_to_cart' | t }}</a>
+    {% else %}
+      <a href="#" class="round-btn disabled">sold out</a>
+    {% endif %}
+	{% endunless %}
+</div>

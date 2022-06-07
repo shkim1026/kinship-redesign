@@ -1,0 +1,31 @@
+{%- assign gwp_enabled = product.metafields.gwp.enable -%}
+{%- assign gwp_product = all_products[product.metafields.gwp.free_product] -%}
+{%- assign gwp_customer_groups = product.metafields.gwp.customer_group | split: ',' -%}
+{%- assign today_date = 'now' | date: '%s' -%}
+{%- assign start_date = product.metafields.gwp.start_date | date: '%s' -%}
+{%- assign end_date = product.metafields.gwp.end_date | date: '%s' -%}
+{%- assign buy_x_products = product.metafields.gwp.buy_x_products  -%}
+{%- assign get_free_y_products = product.metafields.gwp.get_y_free_products -%}
+{%- assign promo_tag = product.metafields.gwp.free_product_promo_tag -%}
+{%- assign gwp_product_max_per_order = product.metafields.gwp.free_product_max_per_order | default: -1 -%}
+{%- assign gwp_allowed = true -%}
+
+{%- if gwp_customer_groups.size > 0 -%}
+  {%- assign gwp_allowed = false -%}
+
+  {%- if customer -%}
+    {%- for gwp_customer_group in gwp_customer_groups -%}
+      {%- if customer.tags contains gwp_customer_group -%}
+        {%- assign gwp_allowed = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if gwp_enabled and gwp_product != blank and today_date >= start_date and today_date < end_date and gwp_allowed -%}
+  <div id="gwp-product" data-max-free-products="{{ gwp_product_max_per_order }}" data-promo-tag="{{ promo_tag }}" data-main-product-id="{{ product.selected_or_first_available_variant.id }}" data-id="{{ gwp_product.selected_or_first_available_variant.id }}" data-error-message="{{ product.metafields.gwp.soldout_message }}">
+    {%- for x in buy_x_products -%}
+      <span class="gwp-product__ruleset" data-quantity-needed="{{ x }}" data-quantity-get="{{ get_free_y_products[forloop.index0] }}"></span>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

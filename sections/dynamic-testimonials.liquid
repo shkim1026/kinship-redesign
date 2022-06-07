@@ -1,0 +1,118 @@
+{% if section.blocks.size > 0 %}
+    {% comment %}
+        <!-- Yotpo Homepage Gallery > snippets > pdp-press.liquid -->
+        <div class="yotpo yotpo-pictures-widget" data-gallery-id="61144870bfce571938406b8e" style="padding: 20px 0"></div>
+        <!-- End Yotpo -->
+    {% endcomment %}
+
+    <section class="fashion-testimonials">
+        <div class="container">
+            {% assign testimonial_text_color = section.settings.testimonial_text_color %}
+            {% assign testimonial_text_size = section.settings.testimonial_text_size %}
+
+            <div class="fashion-testimonials__content js-fashion-testimonials-slider">
+                {% for block in section.blocks %}
+                    {% assign text = block.settings.text %}
+                    {% assign brand_name = block.settings.brand_name %}
+                    {% assign brand_icon = block.settings.brand_icon %}
+                    {% assign brand_icon_width = block.settings.brand_icon_width %}
+
+                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800">
+                        {% if text != blank %}
+                            <div class="testimonial-card__content"
+                                 style="color: {{ testimonial_text_color }}; font-size: {{ testimonial_text_size }}px">
+                                {{ text }}
+                            </div>
+                        {% endif %}
+
+                        {% if brand_icon != blank or brand_name != blank %}
+                            <div class="testimonial-card__label">
+                                {% if brand_icon != blank %}
+
+                                    {%- assign icon_style = 'style="max-width: ' | append: brand_icon_width | append: 'px"' -%}
+                                    {% include 'picture', image_desk: brand_icon, image_mobile: , class_name: 'testimonial-card__label-image', image_attr: icon_style, pic_attr: , figcaption: %}
+
+                                    {% comment %}
+                                    <img src="{{ brand_icon | img_url: '230x' }}"
+                                         alt="{{ brand_icon.alt | escape }}"
+                                         class="testimonial-card__label-image"
+                                         style="max-width: {{ brand_icon_width }}px"
+                                    >
+                                    {% endcomment %}
+                                {% else %}
+                                    {{ brand_name }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+
+{% schema %}
+{
+    "name": "Testimonials",
+    "max_blocks": 3,
+    "settings": [
+        {
+            "type": "color",
+            "id": "testimonial_text_color",
+            "label": "Text color",
+            "default": "#3c3c3c"
+        },
+        {
+            "type":    "range",
+            "id":      "testimonial_text_size",
+            "min":     12,
+            "max":     17,
+            "step":    1,
+            "unit":    "px",
+            "label":   "Text size",
+            "default": 14
+        }
+    ],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "label": "Text",
+                    "id": "text"
+                },
+                {
+                    "type": "text",
+                    "label": "Brand name",
+                    "id": "brand_name"
+                },
+                {
+                    "type": "image_picker",
+                    "label": "Brand logo",
+                    "id": "brand_icon",
+                    "info": "If icon does not set, Brand name will be used instead."
+                },
+                {
+                    "type":    "range",
+                    "id":      "brand_icon_width",
+                    "min":     100,
+                    "max":     200,
+                    "step":    1,
+                    "unit":    "px",
+                    "label":   "Brand logo max width",
+                    "default": 100
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Testimonials",
+            "category": "Content"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,165 @@
+<section class="main-banner">
+
+    {% if section.settings.show_label %}
+        {% if section.settings.label_text != blank and section.settings.label_url != blank %}
+            <a href="{{ section.settings.label_url }}" class="main-banner__label main-banner__label--link">{{ section.settings.label_text }}</a>
+            {% elsif section.settings.label_text != blank and section.settings.label_url == blank %}
+            <span class="main-banner__label">{{ section.settings.label_text }}</span>
+        {% endif %}
+    {% endif %}
+
+	{% if section.settings.banner_type == 'image' %}
+        {% assign image_desktop = section.settings.image_desktop %}
+        {% assign image_mobile = section.settings.image_mobile %}
+
+		{% if image_desktop != blank %}
+
+            {% if section.settings.image_url != blank %}
+                <a href="{{ section.settings.image_url }}" class="main-banner__link-wrapper">
+            {% endif %}
+
+        {% include 'picture', image_desk: image_desktop, image_mobile: image_mobile, class_name: 'main-banner__image', image_attr: , pic_attr: , figcaption:  %}
+
+            {% if section.settings.image_url != blank %}
+                </a>
+            {% endif %}
+		{% endif %}
+
+    {% elsif section.settings.banner_type == 'video' %}
+        {% if section.settings.html_video_url != blank %}
+            {% if section.settings.image_url != blank %}
+                <a href="{{ section.settings.image_url }}" class="main-banner__link-wrapper">
+            {% endif %}
+                <div class="main-banner__video-wrapper">
+                    {% if section.settings.html_video_url != blank %}
+                        <video src="{{ section.settings.html_video_url }}"
+                               class="main-banner__video"
+                               autoplay
+                               loop
+                               muted
+                               playsinline
+                        ></video>
+                    {% endif %}
+                </div>
+            {% if section.settings.image_url != blank %}
+                </a>
+            {% endif %}
+        {% endif %}
+	{% endif %}
+</section>
+
+<style>
+    #shopify-section-{{ section.id }} .main-banner__label {
+        background-color: {{ section.settings.label_bg }};
+        color: {{ section.settings.label_color }};
+        font-size: {{ section.settings.label_fz }}px;
+    }
+
+    #shopify-section-{{ section.id }} .main-banner__label.main-banner__label--link:hover {
+        background-color: {{ section.settings.label_color }};
+        color: {{ section.settings.label_bg }};
+    }
+</style>
+
+
+{% schema %}
+{
+    "name": "Main banner",
+    "settings": [
+        {
+            "type": "select",
+            "id": "banner_type",
+            "label": "Hero type",
+            "options": [
+                {
+                    "value": "image",
+                    "label": "Image"
+                },
+                {
+                    "value": "video",
+                    "label": "Video"
+                }
+            ],
+            "default": "image"
+        },
+        {
+            "type": "header",
+            "content": "Banner label"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_label",
+            "label": "Show label",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "label_text",
+            "label": "Label text",
+            "default": "Spring Sale"
+        },
+        {
+            "type": "url",
+            "id": "label_url",
+            "label": "Label url"
+        },
+        {
+            "type":   "range",
+            "id":     "label_fz",
+            "min":       12,
+            "max":       24,
+            "step":      1,
+            "unit":      "px",
+            "label":     "Label font size",
+            "default":   16
+        },
+        {
+            "type": "color",
+            "id": "label_color",
+            "label": "Label color",
+            "default": "#19a2c6"
+        },
+        {
+            "type": "color",
+            "id": "label_bg",
+            "label": "Label background color",
+            "default": "#ccf6ff"
+        },
+        {
+            "type": "header",
+            "content": "Image (or GIF) hero"
+        },
+        {
+            "type": "url",
+            "id": "image_url",
+            "label": "Image url"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_desktop",
+            "label": "Image desktop"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Image mobile"
+        },
+        {
+            "type": "header",
+            "content": "Video hero"
+        },
+        {
+            "type": "text",
+            "id": "html_video_url",
+            "label": "HTML 5 video url",
+            "info": "Upload file in the admin panel/settings/files and copy link here"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Main banner",
+            "category": "Image"
+        }
+    ]
+}
+{% endschema %}

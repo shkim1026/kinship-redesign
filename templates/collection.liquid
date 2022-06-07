@@ -1,0 +1,86 @@
+{% assign desktop_image = collection.metafields.hero.desktop_image %}
+{% assign mobile_image = collection.metafields.hero.mobile_image | default: desktop_image %}
+{% assign heading = collection.metafields.heading.heading_text %}
+{% assign nav_tags = collection.metafields.tags_nav.tags | split: '|' %}
+{% assign plp_bg = collection.metafields.plp.background_color %}
+{% assign color_scheme = collection.metafields.general.header_color_scheme %}
+{% assign nav_tags_hide = collection.metafields.tags_nav.show_navigation %}
+
+{% if color_scheme == 'light' %}
+<style>
+	@media screen and (max-width: 767px) {
+		.breadcrumbs a, .breadcrumbs span {
+			color: #fff !important;
+		}
+	}
+</style>
+{% endif %}
+
+<div class="plp" {% if plp_bg %} style="background-color: {{ plp_bg }}"{% endif %}>
+	<header role="banner" class="plp__header">
+    {% if desktop_image != blank %}
+      <img class="plp__desktop-image" src="//images.accentuate.io?c_options=w_1920&image={{ desktop_image }}&shop={{ shop.name }}" alt="{{ collection.title }}">
+      <img class="plp__mobile-image" src="//images.accentuate.io?c_options=w_767&image={{ mobile_image }}&shop={{ shop.name }}" alt="{{ collection.title }}">
+    {% endif %}
+
+    <div class="plp__heading-wrapper">
+      <h1 class="plp__heading">
+        {{ heading }}
+      </h1>
+    </div>
+	</header>
+
+	{% include 'breadcrumbs' %}
+
+	{% if nav_tags != blank %}
+		{% unless nav_tags_hide %}
+		<nav class="plp__nav js-animate animate-fade-in-up animate-speed-800">
+			<a data-handle="{{collection.url | split: '/collections/'}}" href="{{ collection.url }}">ALL</a>
+			{% for item in nav_tags %}
+				<a data-handle="{{ item | handleize }}" href="{{ collection.url }}/{{ item | handleize }}">{{ item }}</a>
+			{% endfor %}
+		</nav>
+		{% endunless %}
+	{% endif %}
+
+	<div class="container plp__product-grid">
+		{% paginate collection.products by 48 %}
+
+			<div class="row">
+				{% for product in collection.products %}
+          {% if product.type != 'GWP' and product.type != 'Evergreen GWP' %}
+					  <div class="col-sm-6 col-md-4 plp__product js-animate animate-fade-in-up animate-speed-800">
+						  {% include 'product-card' %}
+					  </div>
+          {% endif %}
+				{% else %}
+					{% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+						{% for i in (1..8) %}
+							<a href="#">
+								{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+								{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+							</a>
+
+							<p>
+								<a href="#">{{ 'homepage.onboarding.product_title' | t }}</a>
+							</p>
+
+							<p>
+								{{ 1999 | money }}
+							</p>
+						{% endfor %}
+					{% else %}
+						<p style="text-align: center;width: 100%; margin: 40px auto">{{ 'collections.general.no_matches' | t }}</p>
+					{% endif %}
+
+				{% endfor %}
+			</div>
+
+			{% if paginate.pages > 1 %}
+				{% include 'pagination' %}
+			{% endif %}
+		{% endpaginate %}
+
+		{% include 'cta-module' %}
+	</div>
+</div>

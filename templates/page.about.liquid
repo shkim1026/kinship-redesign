@@ -1,0 +1,716 @@
+{% assign banner_section_order = page.metafields.about.banner_section_order %}
+{% assign who_we_are_section_order = page.metafields.about.who_we_are_section_order %}
+{% assign hero_section_order = page.metafields.about.hero_section_order %}
+{% assign our_beliefs_section_order = page.metafields.about.our_beliefs_section_order %}
+{% assign cards_section_order = page.metafields.about.cards_section_order %}
+{% assign faq_section_order = page.metafields.about.faq_section_order %}
+{% assign rich_text_section_order = page.metafields.about.rich_text_section_order %}
+{% assign rich_text_section2_order = page.metafields.about.rich_text_section2_order %}
+{% assign headline1_section_order = page.metafields.about.headline1_section_order %}
+{% assign headline2_section_order = page.metafields.about.headline2_section_order %}
+
+
+<div class="about about--gradient-wrapper">
+    <!-- Start banner -->
+
+    {% assign show_banner = page.metafields.about.show_banner %}
+    {% assign show_anchor_links = page.metafields.about.show_anchor_links %}
+
+    {% if show_banner %}
+        <section class="about-banner {% if show_anchor_links %}about-banner--with-anchors{% endif %} js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if banner_section_order %}style="order: {{ banner_section_order }}"{% endif %}>
+            {% assign image_desktop = page.metafields.about.banner_image_desktop %}
+            {% assign image_mobile = page.metafields.about.banner_image_mobile %}
+
+            {% assign image_alt = page.metafields.about.banner_image_alt %}
+
+            {% assign heading_text = page.metafields.about.banner_heading %}
+            {% assign heading_color = page.metafields.about.banner_heading_color %}
+
+            {% assign subheading_text = page.metafields.about.banner_subheading %}
+            {% assign subheading_color = page.metafields.about.banner_subheading_color %}
+
+            <div class="about-banner__overlay"></div>
+
+            <picture>
+                {% if image_mobile != blank %}
+                    <source srcset="//images.accentuate.io?c_options=w_400&image={{ image_mobile }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_960&image={{ image_mobile }}&shop={{ shop.name }} 2x"
+                            media="(max-width: 400px)">
+
+                    <source srcset="//images.accentuate.io?c_options=w_767&image={{ image_mobile }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_1534&image={{ image_mobile }}&shop={{ shop.name }} 2x"
+                            media="(max-width: 767px)">
+
+                    <source srcset="//images.accentuate.io?c_options=w_991&image={{ image_mobile }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_1982&image={{ image_mobile }}&shop={{ shop.name }} 2x"
+                            media="(max-width: 991px)">
+                {% else %}
+                    <source srcset="//images.accentuate.io?c_options=w_400&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_960&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+                            media="max-width: 400px">
+                    <source srcset="//images.accentuate.io?c_options=w_767&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_1534&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+                            media="max-width: 767px">
+
+                    <source srcset="//images.accentuate.io?c_options=w_991&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+                                    //images.accentuate.io?c_options=w_1982&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+                            media="max-width: 991px">
+                {% endif %}
+
+                <img class="about-banner__bg"
+                     src="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }}"
+                     srcset="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+                            //images.accentuate.io?c_options=w_2840&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+                     alt="{{ image_alt }}"
+                     {% unless banner_section_order == '0' or banner_section_order == '1' %}style="padding-top: 0"{% endunless %}>
+            </picture>
+
+            <div class="about-banner__text">
+                <h1 class="about-banner__heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" style="color: {{ heading_color }}">{{ heading_text }}</h1>
+                <h3 class="about-banner__subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-300" data-offset="100" style="color: {{ subheading_color }}">{{ subheading_text }}</h3>
+            </div>
+
+            <!-- Start anchor links -->
+
+
+            {% assign anchor_link_titles = page.metafields.about.anchor_link_title %}
+
+            {% if show_anchor_links %}
+                <div class="container--anchor-links-wrapper">
+                    <div class="about-anchor-links">
+                        <div class="about-anchor-links-wrapper">
+                            <ul class="about-anchor-links__list">
+                                {% for anchor_title in anchor_link_titles %}
+                                    {% assign anchor_link = page.metafields.about.anchor_link[forloop.index0] %}
+
+                                    <li class="about-anchor-links__item">
+                                        <a class="about-anchor-links__item-link js-anchor-link" href="{% if anchor_link != blank %}#{{ anchor_link }}{% endif %}">
+                                            {{ anchor_title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <!-- End anchor links -->
+        </section>
+    {% endif %}
+
+    <!-- End banner -->
+
+    {% assign first_background_color = page.metafields.about.first_background_color %}
+    {% assign second_background_color = page.metafields.about.second_background_color %}
+    <!-- Rich text start -->
+
+    {% assign about_rich_text = page.metafields.about.about_rich_text %}
+    {% assign rich_text_show_section = page.metafields.about.rich_text_show_section %}
+
+    {% if rich_text_show_section %}
+        {% if about_rich_text %}
+            <div class="about-rich-text js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if rich_text_section_order %}style="order: {{ rich_text_section_order }}"{% endif %}>
+                {% assign section_id = page.metafields.about.rich_text_section_id %}
+
+                <div class="rich-text-container" {% if section_id %}id="{{ section_id }}"{% endif %}>
+                    {{ about_rich_text }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <!-- Rich text end -->
+
+  <!-- Rich text 2 start -->
+
+    {% assign about_rich_text2 = page.metafields.about.about_rich_text2 %}
+    {% assign rich_text2_show_section = page.metafields.about.rich_text2_show_section %}
+
+    {% if rich_text2_show_section %}
+        {% if about_rich_text2 %}
+            <div class="about-rich-text js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if rich_text_section2_order %}style="order: {{ rich_text_section2_order }}"{% endif %}>
+                {% assign section_id = page.metafields.about.rich_text2_section_id %}
+
+                <div class="rich-text-container" {% if section_id %}id="{{ section_id }}"{% endif %}>
+                    {{ about_rich_text2 }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <!-- Rich text end -->
+
+    {% assign show_who_we_are = page.metafields.about.who_we_are_show_section %}
+    {% assign show_hero_statement = page.metafields.about.hero_show_section %}
+    {% assign show_our_beliefs = page.metafields.about.our_beliefs_show_section %}
+    {% assign show_headline1 = page.metafields.about.headline1_section_show %}
+    {% assign show_headline2 = page.metafields.about.headline2_section_show %}
+
+    {% if show_who_we_are %}
+        <div class="container js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if who_we_are_section_order %}style="order: {{ who_we_are_section_order }}"{% endif %}>
+            <!-- Start Who we are section -->
+
+            {% assign section_id = page.metafields.about.who_we_are_section_id %}
+
+            <section class="image-with-text" {% if section_id %}id="{{ section_id }}"{% endif %}>
+                {% assign heading = page.metafields.about.who_we_are_heading %}
+                {% assign subheading = page.metafields.about.who_we_are_subheading %}
+                {% assign body_text = page.metafields.about.who_we_are_text %}
+
+                {% assign image = page.metafields.about.who_we_are_image %}
+                {% assign image_alt = page.metafields.about.who_we_are_image_alt %}
+
+                {% if heading or subheading or body_text %}
+                    <div class="image-with-text__text image-with-text__text--right-align">
+                        {% if heading %}
+                            <h2 class="image-with-text__heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ heading }}</h2>
+                        {% endif %}
+
+                        {% if subheading %}
+                            <h3 class="image-with-text__subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ subheading }}</h3>
+                        {% endif %}
+
+                        {% if body_text %}
+                            <div class="image-with-text__body-text js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+                                {{ body_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <img class="image-with-text__image"
+                     src="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }}"
+                     srcset="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }} 1x,
+                            //images.accentuate.io?c_options=w_1200&image={{ image }}&shop={{ shop.name }} 2x"
+                     alt="{{ image_alt }}">
+            </section>
+
+            <!-- End Who we are section -->
+        </div>
+    {% endif %}
+
+    {% if show_our_beliefs %}
+        <div class="container js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if our_beliefs_section_order %}style="order: {{ our_beliefs_section_order }}"{% endif %}>
+            <!-- Start We believe that... section -->
+
+            {% assign section_id = page.metafields.about.our_beliefs_section_id %}
+
+            <section class="image-with-text" {% if section_id %}id="{{ section_id }}"{% endif %}>
+                {% assign heading = page.metafields.about.our_beliefs_heading %}
+                {% assign subheading = page.metafields.about.our_beliefs_subheading %}
+
+                {% assign list = page.metafields.about.our_beliefs_list_item_text %}
+
+                {% assign image = page.metafields.about.our_beliefs_image %}
+                {% assign image_alt = page.metafields.about.our_beliefs_image_alt %}
+
+                {% if heading or subheading or list %}
+                    <div class="image-with-text__text">
+                        {% if heading %}
+                            <h2 class="image-with-text__heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ heading }}</h2>
+                        {% endif %}
+
+                        {% if subheading %}
+                            <h3 class="image-with-text__subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ subheading }}</h3>
+                        {% endif %}
+
+                        {% if page.metafields.about.our_beliefs_list_item_text %}
+                            <ul class="image-with-text__list image-with-text__body-text js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+                                {% for list_item in list %}
+                                    {% assign list_item_marker = page.metafields.about.our_beliefs_list_item_marker[forloop.index0] %}
+
+                                    <li class="image-with-text__list-item js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+                                        {% if list_item_marker != blank %}
+                                            <img src="//images.accentuate.io?c_options=w_240&image={{ list_item_marker }}&shop={{ shop.name }}" class="image-with-text__list-item-marker">
+                                        {% endif %}
+                                        <p>{{ list_item }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <img class="image-with-text__image image-with-text__image--left-align"
+                     src="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }}"
+                     srcset="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }} 1x,
+                            //images.accentuate.io?c_options=w_1200&image={{ image }}&shop={{ shop.name }} 2x"
+                     alt="{{ image_alt }}">
+            </section>
+
+            <!-- End We believe that... section -->
+        </div>
+    {% endif %}
+
+
+    {% if show_hero_statement %}
+        <div class="container js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if hero_section_order %}style="order: {{ hero_section_order }}"{% endif %}>
+            <!-- Start Hero Statement... section -->
+
+            {% assign section_id = page.metafields.about.hero_section_id %}
+
+            <section class="image-with-text" {% if section_id %}id="{{ section_id }}"{% endif %}>
+                {% assign heading = page.metafields.about.hero_heading %}
+                {% assign subheading = page.metafields.about.hero_subheading %}
+                {% assign body_text = page.metafields.about.hero_text %}
+
+                {% assign image = page.metafields.about.hero_image %}
+                {% assign image_alt = page.metafields.about.hero_image_alt %}
+
+                {% if heading or subheading or body_text %}
+                    <div class="image-with-text__text">
+                        {% if heading %}
+                            <h2 class="image-with-text__heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ heading }}</h2>
+                        {% endif %}
+
+                        {% if subheading %}
+                            <h3 class="image-with-text__subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ subheading }}</h3>
+                        {% endif %}
+
+                        {% if body_text %}
+                            <div class="image-with-text__body-text js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+                                {{ body_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                 <img class="image-with-text__image image-with-text__image--left-align"
+                     src="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }}"
+                     srcset="//images.accentuate.io?c_options=w_600&image={{ image }}&shop={{ shop.name }} 1x,
+                            //images.accentuate.io?c_options=w_1200&image={{ image }}&shop={{ shop.name }} 2x"
+                     alt="{{ image_alt }}">
+          </section>
+
+            <!-- End Hero Statement section -->
+              </div>
+    {% endif %}
+
+
+    <!-- Start Headline 1 section -->
+{% assign headline1_section_id = page.metafields.about.headline1_section_id %}
+{% assign headline1_section_show = page.metafields.about.headline1_section_show %}
+{% assign headline1_heading = page.metafields.about.headline1_heading %}
+{% assign headline1_subheading = page.metafields.about.headline1_subheading %}
+{% if headline1_section_show %}
+      <div class="container js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if headline1_section_order %}style="order: {{ headline1_section_order }}"{% endif %}>
+      <section {% if headline1_section_id %} id="{{ headline1_section_id }}" {% endif %} class="about-moduleC" >
+        <h1 class="about-moduleC-heading">{{ headline1_heading }}</h1>
+        <h3 class="about-moduleC-subheading">{{ headline1_subheading }}</h3>
+        </section>
+   </div>
+
+<style>
+    .about-moduleC-heading {
+       color: {{ page.metafields.about.headline1_heading_color }};
+    }
+    .about-moduleC-subheading {
+       color: {{ page.metafields.about.headline1_subheading_color }};
+    }
+</style>
+  {% endif %}
+              <!-- End Headline1 section -->
+
+
+    <!-- Start Headline 2 section -->
+{% assign headline2_section_id = page.metafields.about.headline2_section_id %}
+{% assign headline2_section_show = page.metafields.about.headline2_section_show %}
+{% assign headline2_heading = page.metafields.about.headline2_heading %}
+{% assign headline2_subheading = page.metafields.about.headline2_subheading %}
+{% if headline2_section_show %}
+      <div class="container js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100" {% if headline2_section_order %}style="order: {{ headline2_section_order }}"{% endif %}>
+      <section {% if headline2_section_id %} id="{{ headline2_section_id }}" {% endif %} class="about-moduleC" >
+        <h1 class="about-moduleC-heading">{{ headline2_heading }}</h1>
+        <h3 class="about-moduleC-subheading">{{ headline2_subheading }}</h3>
+        </section>
+  </div>
+
+<style>
+    .about-moduleC-heading {
+       color: {{ page.metafields.about.headline2_heading_color }};
+    }
+    .about-moduleC-subheading {
+       color: {{ page.metafields.about.headline2_subheading_color }};
+    }
+</style>
+  {% endif %}
+              <!-- End Headline2 section -->
+
+
+
+    <!-- *************************************************************************************************************** -->
+
+    <!-- Change for the good start-->
+    {% assign module_c_section_id = page.metafields.about.module_c_section_id %}
+    {% assign cards_section_show = page.metafields.about.cards_section_show %}
+
+    {% assign section_card_heading = page.metafields.about.module_c_heading %}
+    {% assign section_card_heading_color = page.metafields.about.module_c_heading_color %}
+
+    {% assign card_alt_text = page.metafields.about.card_alt_text %}
+    {% assign card_background_image = page.metafields.about.card_background_image %}
+    {% assign card_icon = page.metafields.about.card_icon %}
+    {% assign card_heading = page.metafields.about.card_heading %}
+    {% assign card_text = page.metafields.about.card_text %}
+    {% assign card_text_color = page.metafields.about.card_text_color %}
+
+
+    {% assign card_heading_fz_desktop = page.metafields.about.card_heading_size_desktop %}
+    {% assign card_heading_fz_mobile = page.metafields.about.card_heading_size_mobile %}
+    {% assign card_text_fz_desktop = page.metafields.about.card_text_size_desktop %}
+    {% assign card_text_fz_mobile = page.metafields.about.card_text_size_mobile %}
+    {% assign card_padding = page.metafields.about.card_padding %}
+
+
+    {% if cards_section_show != blank %}
+
+    <section {% if module_c_section_id %} id="{{ module_c_section_id }}" {% endif %}
+            class="about-moduleC" {% if cards_section_order %}style="order: {{ cards_section_order }}"{% endif %}>
+        <h1 class="about-moduleC-heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ section_card_heading }}</h1>
+
+        <div class="container">
+            <div class="about-moduleC-fields__row">
+                {% for card_alt in card_alt_text limit: 3 %}
+                    {% assign card_background_color = page.metafields.about.card_background_color[forloop.index0] %}
+
+                    <div class="about-moduleC-field
+                                about-moduleC-field--{{ forloop.index }}
+                                {% if card_padding == 'Small' %}
+                                about-moduleC-field--small
+                                {% endif %}
+                                js-animate animate-fade-in-up
+                                animate-speed-800
+                                animate-delay-200"
+                         data-padding="{{ card_padding }}"
+                         data-offset="100"
+                    >
+                        {% if card_background_image[forloop.index0] != blank %}
+                            <picture>
+                                <source srcset="//images.accentuate.io?c_options=w_800&image={{ card_background_image[forloop.index0] }}&shop={{ shop.name }}" media="(max-width: 767px)">
+
+                                <img class="about-moduleC-background"
+                                     src="//images.accentuate.io?c_options=w_800&image={{ card_background_image[forloop.index0] }}&shop={{ shop.name }}"
+                                     srcset="//images.accentuate.io?c_options=w_800&image={{ card_background_image[forloop.index0] }}&shop={{ shop.name }} 1x,
+                                            //images.accentuate.io?c_options=w_1600&image={{ card_background_image[forloop.index0] }}&shop={{ shop.name }} 2x"
+                                     alt="{{ card_alt }}">
+                            </picture>
+                        {% else %}
+                            <div class="background-color-field"
+                                 style="background-color: {{ card_background_color }}"></div>
+                        {% endif %}
+
+                        {% if card_icon[forloop.index0] != blank %}
+                            <img class="about-moduleC-icon"
+                                 src="//images.accentuate.io?c_options=w_280&image={{ card_icon[forloop.index0] }}&shop={{ shop.name }}"
+                                 alt="{{ card_alt }}">
+                        {% endif %}
+
+                        {% if card_heading[forloop.index0] != blank %}
+                            <p class="about-moduleC-filed-heading"
+                               style="color: {{ card_text_color[forloop.index0] }};">{{ card_heading[forloop.index0] }}</p>
+                        {% endif %}
+
+                        {% if card_text[forloop.index0] != blank %}
+                            <p class="about-moduleC-filed-text"
+                               style="color: {{ card_text_color[forloop.index0] }};">{{ card_text[forloop.index0] }}</p>
+                        {% endif %}
+                    </div>
+
+
+                    <style>
+                        @media (min-width: 768px) {
+                            .about-moduleC-field.about-moduleC-field--{{ forloop.index }} .about-moduleC-filed-heading {
+                                font-size: {{ card_heading_fz_desktop[forloop.index0] }}px;
+                            }
+
+                            .about-moduleC-field.about-moduleC-field--{{ forloop.index }} .about-moduleC-filed-text {
+                                font-size: {{ card_text_fz_desktop[forloop.index0] }}px;
+                            }
+                        }
+
+                        @media (max-width: 767px) {
+                            .about-moduleC-field.about-moduleC-field--{{ forloop.index }} .about-moduleC-filed-heading {
+                                font-size: {{ card_heading_fz_mobile[forloop.index0] }}px;
+                            }
+
+                            .about-moduleC-field.about-moduleC-field--{{ forloop.index }} .about-moduleC-filed-text {
+                                font-size: {{ card_text_fz_mobile[forloop.index0]  }}px;
+                            }
+                        }
+                    </style>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Change for the good icons end -->
+        {% assign icons_grid_subheading = page.metafields.about.icons_grid_subheading %}
+        {% assign icons_grid_subheading_show = page.metafields.about.icons_grid_subheading_show %}
+        {% assign icons_gridsubheading_color = page.metafields.about.icons_gridsubheading_color %}
+
+        {% assign icons_grid_icon = page.metafields.about.icons_grid_icon %}
+        {% assign icons_grid_icon_alt = page.metafields.about.icons_grid_icon_alt %}
+        {% assign icons_grid_text = page.metafields.about.icons_grid_text %}
+        {% assign icons_grid_text_color = page.metafields.about.icons_grid_text_color %}
+
+        <section class="about-moduleC-icons-grid js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+            <div class="container">
+                <div class="icons-grid-wrapper">
+                    <div class="icons-grid__row">
+
+                        <!-- forloop icons grid start -->
+                        {% for grid_item in icons_grid_icon %}
+
+                            {% if icons_grid_icon_alt[forloop.index0] != blank and icons_grid_text[forloop.index0] != blank %}
+                                <div class="icons-grid__item">
+                                    <div class="icon-wrapper">
+                                        <img class="about-moduleC-icons-grid-icon"
+                                             src="//images.accentuate.io?c_options=w_220&image={{ grid_item }}&shop={{ shop.name }}"
+                                             alt="{{ icons_grid_icon_alt[forloop.index0] }}">
+                                    </div>
+
+                                    {% if icons_grid_text[forloop.index0] != blank %}
+                                        <div class="about-moduleC-icons-grid-text"> {{ icons_grid_text[forloop.index0] }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <!-- forloop icons grid end -->
+                    </div>
+
+                    {% if icons_grid_subheading_show != blank %}
+                        <h3 class="about-moduleC-subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ icons_grid_subheading }}</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <style>
+            .about-moduleC-icons-grid-text {
+                color: {{ icons_grid_text_color }}
+            }
+
+            .about-moduleC-icons-grid-text a {
+                color: {{ icons_grid_text_color }};
+            }
+
+            .about-moduleC-icons-grid-text a:hover {
+                text-decoration: none;
+            }
+
+            .about-moduleC-subheading {
+                color: {{ icons_gridsubheading_color }};
+            }
+        </style>
+        <!-- Change for the good end -->
+
+        <style>
+            .about-moduleC-heading {
+                color: {{ section_card_heading_color }};
+            }
+        </style>
+    </section>
+    <!-- Change for the good icons start -->
+
+    {% assign show_faq = page.metafields.about.faq_show_section %}
+
+    {% if show_faq %}
+        <!-- Start FAQ section -->
+
+        {% assign section_id = page.metafields.about.faq_section_id %}
+
+        {% assign questions = page.metafields.about.faq_question %}
+
+        <section class="about-faq container" {% if section_id %}id="{{ section_id }}"{% endif %} {% if faq_section_order %}style="order: {{ faq_section_order }}"{% endif %}>
+            {% assign heading = page.metafields.about.faq_heading %}
+            {% assign subheading = page.metafields.about.faq_subheading %}
+
+            {% if heading %}
+                <h2 class="about-faq__heading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ heading }}</h2>
+            {% endif %}
+
+            {% if subheading %}
+                <h3 class="about-faq__subheading js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">{{ subheading }}</h3>
+            {% endif %}
+
+            {% if questions %}
+                <ul class="about-faq__list js-accordion-container">
+                    {% for question in questions %}
+                        {% assign answer = page.metafields.about.faq_answer[forloop.index0] %}
+                        {% assign anchor = page.metafields.about.faq_anchor[forloop.index0] %}
+
+                        <li class="about-faq__list-item js-accordion js-animate animate-fade-in-up animate-speed-800 animate-delay-200" data-offset="100">
+                            <div {% if anchor != blank %}data-id="{{ anchor | handle }}"{% endif %} class="about-faq__question js-accordion-toggler">
+                                <p>{{ question }}</p>
+                                <div class="about-faq__toggler-icon js-accordion-toggler-icon">
+                                    <span></span><span></span></div>
+                            </div>
+                            <div class="about-faq__answer js-accordion-content">{{ answer }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+
+        <!-- End FAQ section -->
+    {% endif %}
+
+
+    <!-- Add padding to about content if banner is not shown on the page or if banner is not the first to appear on the page -->
+
+    {% if show_banner %}
+        {% unless banner_section_order == '0' or banner_section_order == '1' %}
+            <style>
+                /* If the banner doesn't have the first position on the page, add padding to the content */
+                .about {
+                    padding-top: 200px;
+                }
+
+                @media (max-width: 1200px) {
+                    .about {
+                        padding-top: 180px;
+                    }
+                }
+
+                @media (max-width: 991px) {
+                    .about {
+                        padding-top: 230px;
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    .about {
+                        padding-top: 160px;
+                    }
+                }
+            </style>
+        {% endunless %}
+    {% else %}
+        <style>
+            /* If the page has no banner, add padding to the content */
+            .about {
+                padding-top: 200px;
+            }
+
+            @media (max-width: 1200px) {
+                .about {
+                    padding-top: 180px;
+                }
+            }
+
+            @media (max-width: 991px) {
+                .about {
+                    padding-top: 200px;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .about {
+                    padding-top: 140px;
+                }
+            }
+        </style>
+    {% endif %}
+
+    <style>
+        {% if first_background_color and second_background_color %}
+        .about--gradient-wrapper {
+            background: linear-gradient(to bottom, {{ first_background_color }}, {{ second_background_color }});
+        }
+
+        {% elsif first_background_color and second_background_color == blank %}
+        .about--gradient-wrapper {
+            background: {{ first_background_color }};
+        }
+
+        {% elsif first_background_color == blank and second_background_color %}
+        .about--gradient-wrapper {
+            background: {{ second_background_color }};
+        }
+
+        {% elsif first_background_color == blank and second_background_color == blank %}
+        .about--gradient-wrapper {
+            background: linear-gradient(to bottom, rgba(231, 251, 255, 0.36), rgba(10, 134, 160, 0.16));
+        }
+        {% endif %}
+
+    </style>
+</div>
+
+
+<!-- Get started start-->
+{% assign shop_section_id = page.metafields.about.shop_section_id %}
+{% assign get_started_section_show = page.metafields.about.get_started_section_show %}
+
+{% assign shop_background_image_desktop = page.metafields.about.shop_background_image_desktop %}
+{% assign shop_background_image_mobile = page.metafields.about.shop_background_image_mobile %}
+{% assign shop_background_image_alt = page.metafields.about.background_image_alt %}
+{% assign shop_heading = page.metafields.about.shop_heading %}
+{% assign shop_button_text = page.metafields.about.shop_button_text %}
+{% assign shop_button_link = page.metafields.about.shop_button_link %}
+{% assign shop_button_text_color = page.metafields.about.shop_button_text_color %}
+{% assign button_background_color = page.metafields.about.button_background_color %}
+
+{% if get_started_section_show != blank %}
+
+    <section {% if shop_section_id %} id="{{ shop_section_id }}" {% endif %} class="about-moduleD" >
+        <h1 class="about-moduleD-heading">{{ shop_heading }}</h1>
+        <a class="button button--primary"
+           href="{{ shop_button_link }}">{{ shop_button_text }}</a>
+
+        <picture>
+            {% if shop_background_image_mobile != blank %}
+                <source srcset="//images.accentuate.io?c_options=w_400&image={{ shop_background_image_mobile }}&shop={{ shop.name }} 1x,
+                                //images.accentuate.io?c_options=w_400&image={{ shop_background_image_mobile }}&shop={{ shop.name }} 2x"
+                        media="(max-width: 400px)">
+
+                <source srcset="//images.accentuate.io?c_options=w_767&image={{ shop_background_image_mobile }}&shop={{ shop.name }} 1x,
+                                //images.accentuate.io?c_options=w_767&image={{ shop_background_image_mobile }}&shop={{ shop.name }} 2x"
+                        media="(max-width: 767px)">
+            {% else %}
+                <source srcset="//images.accentuate.io?c_options=w_400&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 1x,
+                                //images.accentuate.io?c_options=w_400&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 2x"
+                        media="(max-width: 400px)">
+
+                <source srcset="//images.accentuate.io?c_options=w_767&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 1x,
+                                //images.accentuate.io?c_options=w_767&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 2x"
+                        media="(max-width: 767px)">
+            {% endif %}
+
+            <img class="about-moduleD-background"
+                 src="//images.accentuate.io?c_options=w_1920&image={{ shop_background_image_desktop }}&shop={{ shop.name }}"
+                 srcset="//images.accentuate.io?c_options=w_1920&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 1x,
+                        //images.accentuate.io?c_options=w_2840&image={{ shop_background_image_desktop }}&shop={{ shop.name }} 2x"
+                 alt="{{ shop_background_image_alt }}">
+        </picture>
+    </section>
+{% endif %}
+
+<style>
+    .about-moduleD-heading {
+        color: {{ page.metafields.about.shop_heading_color }};
+    }
+
+    .about-moduleD .button {
+        color: {{ shop_button_text_color }};
+        border: 3px solid{{ shop_button_text_color }};
+        background-color: {{ button_background_color }};
+    }
+
+    .about-moduleD .button:hover {
+        color: {{ button_background_color }};
+        background-color: {{ shop_button_text_color }};
+    }
+
+</style>
+
+<!-- Get started end -->
+
+{% unless show_banner or show_who_we_are or show_our_beliefs or show_hero_statement or headline1_section_show or headline2_section_show or cards_section_show or get_started_section_show or show_faq or rich_text_show_section or rich_text2_show_section %}
+    <style>
+        .join-us {
+            padding-top: 60px;
+        }
+    </style>
+{% endunless %}

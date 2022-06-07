@@ -1,0 +1,47 @@
+{% comment %}
+{% include 'picture-metafields', image_desk: , image_mobile: , class_name: , pic_attr: , image_attr: , figcaption:  %}
+{% endcomment %}
+
+{%- assign alt = image_desk.alt -%}
+{%- assign img_mob_url = image_mobile.cloudinary_src | append: 'w_1,h_1' -%}
+{%- assign img_desk_url = image_desk.cloudinary_src | append: 'w_1,h_1' -%}
+
+<figure {% if class_name != blank %} class="{{ class_name }}" {% endif %} {{ pic_attr }}>
+
+  {%- if image_mobile != blank -%}
+    <img
+      src="{{ img_mob_url }}"
+      data-sizes="auto"
+      data-src="{{ img_mob_url }}"
+      data-parent-fit="contain"
+      data-srcset="{{ image_mobile.cloudinary_src | append: 'w_360' }} 360w,
+    {{ image_mobile.cloudinary_src | append: 'w_540' }} 540w,
+    {{ image_mobile.cloudinary_src | append: 'w_540' }} 720w" class="lazyload medium-up--hide"
+      alt="{{ alt }}"
+      {{ image_attr }}/>
+  {%- endif -%}
+
+  <img
+    src="{{ img_desk_url }}"
+    data-sizes="auto"
+    data-src="{{ img_desk_url }}"
+    data-parent-fit="contain"
+    data-srcset="{{ image_desk.cloudinary_src | append: 'w_360' }} 360w,
+    {{ image_desk.cloudinary_src | append: 'w_540' }} 540w,
+    {{ image_desk.cloudinary_src | append: 'w_540' }} 720w,
+    {{ image_desk.cloudinary_src | append: 'w_720' }} 900w,
+    {{ image_desk.cloudinary_src | append: 'w_900' }} 1080w,
+    {{ image_desk.cloudinary_src | append: 'w_1080' }} 1296w,
+    {{ image_desk.cloudinary_src | append: 'w_1296' }} 1512w,
+    {{ image_desk.cloudinary_src | append: 'w_1512' }} 1728w,
+    {{ image_desk.cloudinary_src | append: 'w_1728' }} 1920w,
+    {{ image_desk.cloudinary_src | append: 'w_1920' }} 2560w" class="lazyload {% if image_mobile != blank %}small--hide{% endif %}"
+    alt="{{ alt }}"
+    {{ image_attr }}/>
+
+  {%- if figcaption != blank -%}
+    <figcaption>
+      {{ figcaption }}
+    </figcaption>
+  {%- endif -%}
+</figure>

@@ -1,0 +1,45 @@
+{% assign press_show = product.metafields.press.show_section %}
+{% assign press_quote = product.metafields.press.quote %}
+{% assign press_brand_logo = product.metafields.press.brand_logo %}
+{% assign press_brand_logo_alt = product.metafields.press.brand_logo_alt %}
+{% assign press_brand_logo_max_width = product.metafields.press.brand_logo_width %}
+
+{% if press_show %}
+	<div class="fashion-testimonials">
+		<div class="container">
+			<div class="fashion-testimonials__content js-fashion-testimonials-slider">
+				{% for quote in press_quote %}
+					{% assign brand_name = block.settings.brand_name %}
+					{% assign brand_icon = press_brand_logo[forloop.index0] %}
+					{% assign brand_icon_alt = press_brand_logo_alt[forloop.index0] %}
+					{% assign brand_icon_width = press_brand_logo_max_width[forloop.index0] %}
+
+					<div class="testimonial-card js-animate animate-fade-in-up animate-speed-800">
+						{% if quote != blank %}
+							<div class="testimonial-card__content">
+								{{ quote }}
+							</div>
+						{% endif %}
+
+						{% if brand_icon != blank or brand_name != blank %}
+							<div class="testimonial-card__label">
+								{% if brand_icon != blank %}
+									<img src="{{ brand_icon }}"
+										 alt="{{ brand_icon_alt | default: brand_name }}"
+										 style="max-width: {{ brand_icon_width }}px"
+										 class="testimonial-card__label-image"
+									>
+								{% else %}
+									{{ brand_name }}
+								{% endif %}
+							</div>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<!-- Yotpo Product Gallery > snippets > pdp-features-icons.liquid -->
+		<div class="yotpo yotpo-pictures-widget" data-gallery-id="61144acd2cd55a0787e7c18e" data-product-id="{{ product.id }}"></div>
+		<!-- End Yotpo -->
+	</div>
+{% endif %}

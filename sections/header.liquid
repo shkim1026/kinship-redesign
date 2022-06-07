@@ -1,0 +1,656 @@
+{% case template.name %}
+    {% when 'index' %}
+        {% assign color_scheme = section.settings.color_scheme %}
+    {% when 'page' %}
+        {% assign color_scheme = page.metafields.general.header_color_scheme %}
+    {% when 'product' %}
+        {% assign color_scheme = product.metafields.general.header_color_scheme | default: 'dark' %}
+    {% when 'collection' %}
+        {% assign color_scheme = collection.metafields.general.header_color_scheme %}
+    {% when 'blog' %}
+        {% assign color_scheme = blog.metafields.general.header_color_scheme %}
+    {% when 'article' %}
+        {% assign color_scheme = article.metafields.general.header_color_scheme %}
+    {% when 'search' %}
+        {% assign color_scheme = shop.metafields.header.header_color_scheme_search %}
+    {% when 'cart' %}
+        {% assign color_scheme = 'dark' %}
+    {% when 'login' or 'account' or 'order' or 'register' or 'addresses' or 'reset_password' %}
+        {% assign color_scheme = shop.metafields.header.header_color_scheme_account %}
+{% endcase %}
+
+{% if color_scheme == 'dark' or template.name == '404' or template.name == null %}
+    {% assign header_color_class = 'header--dark' %}
+{% endif %}
+
+{%- assign show_promo_banner = section.settings.show_promo_banner -%}
+{%- assign promo_banner_height = section.settings.promo_banner_height -%}
+{%- assign promo_banner_bg_color = section.settings.promo_banner_bg_color -%}
+{%- assign promo_banner_bg_color_type = section.settings.promo_banner_bg_color_type -%}
+{%- assign promo_banner_color = section.settings.promo_banner_color | default: '#000000' -%}
+{%- assign promo_banner_heading = section.settings.promo_banner_heading -%}
+{%- assign promo_banner_heading_size = section.settings.promo_banner_heading_size -%}
+{%- assign promo_banner_text = section.settings.promo_banner_text -%}
+{%- assign promo_banner_text_size = section.settings.promo_banner_text_size -%}
+{%- assign promo_banner_icon = section.settings.promo_banner_icon -%}
+{%- assign promo_banner_icon_right = section.settings.promo_banner_icon_right -%}
+{%- assign promo_section_blocks = section.blocks | where: 'type', 'promo-bar-blocks' -%}
+{%- assign menu_images_items_section_blocks = section.blocks | where: 'type', 'menu-item-image' -%}
+{%- assign menu_linklists_items_section_blocks = section.blocks | where: 'type', 'menu-item-linklist' -%}
+
+<header id="header" class="header {{ header_color_class }}">
+    {%- if section.settings.show_promo_bar and promo_section_blocks.size > 0 -%}
+        <input type="hidden" id="slider-settings" value="{{ section.settings.text_timer }}" data-arrows="{{ section.settings.show_arrows }}"/>
+        <div id="promo-bar" class="promobar {% if section.settings.promobar_type == 'gradient' %}promobar--gradient{% endif %}">
+
+            {%- for block in promo_section_blocks -%}
+                <div class="promobar__content">
+                    {%- assign text = block.settings.promobar_text -%}
+                    {%- assign image = block.settings.promobar_icon -%}
+
+                    {% if image != blank %}
+                        <img class="promobar__icon"
+                             height="24px"
+                             width="24px"
+                             src="{{ image | img_url: '24x' }}"
+                             srcset="{{ image | img_url: '24x' }} 1x, {{ image | img_url: '48x' }} 2x"
+                             alt="">
+                    {% endif %}
+                    <div>{{ text }}</div>
+                </div>
+            {%- endfor -%}
+        </div>
+        <script>
+            document.documentElement.style.setProperty('--promo-bar', document.getElementById('promo-bar').offsetHeight + 'px');
+        </script>
+    {% else %}
+        <script>
+            document.documentElement.style.setProperty('--promo-bar', 0 + 'px');
+        </script>
+    {% endif %}
+
+    {%- if show_promo_banner and template == 'index' -%}
+        <div id="promo-banner" class="promo-banner {% if promo_banner_bg_color_type == 'gradient' %} promo-banner--gradient {% endif %}"
+             style="
+             {% if promo_banner_bg_color != blank and promo_banner_bg_color_type == 'color' %}background-color: {{ promo_banner_bg_color }};{% endif %}
+                 min-height: {{ promo_banner_height | append: 'px' }};">
+            <div class="promo-banner__wrapper" style="color: {{ promo_banner_color }};">
+                {%- if promo_banner_heading != blank -%}
+                    <h3 class="promo-banner__heading {% if promo_banner_icon_right %} promo-banner__heading--reverse {% endif %}"
+                        style="font-size: {{ promo_banner_heading_size | append: 'px'  }}">
+                        {% if promo_banner_icon != blank %}
+                            <img class="promo-banner__icon"
+                                 src="{{ promo_banner_icon | img_url: 'x22' }}"
+                                 srcset="{{ promo_banner_icon | img_url: 'x22' }} 1x, {{ promo_banner_icon | img_url: 'x44' }} 2x"
+                                 alt="{{ promo_banner_icon.alt }}"
+                                 style="height: {{ promo_banner_heading_size | plus: 4 | append: 'px'  }}">
+                        {% endif %}
+                        {{ promo_banner_heading }}
+                    </h3>
+                {%- endif -%}
+                {%- if promo_banner_text != blank -%}
+                    <div class="promo-banner__text"
+                         style="font-size: {{ promo_banner_text_size | append: 'px'  }}">
+                        {{ promo_banner_text | newline_to_br }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+        <script>
+            document.documentElement.style.setProperty('--promo-banner', document.getElementById('promo-banner').offsetHeight + 'px');
+        </script>
+    {% else %}
+        <script>
+            document.documentElement.style.setProperty('--promo-banner', 0 + 'px');
+        </script>
+    {%- endif -%}
+
+    <div id="header-overlay" class="header__overlay"></div>
+
+    <div class="header__container">
+        <div class="header__row">
+            <div class="header__col">
+                <button id="menu-button" class="menu-button {% if section.settings.desktop_main_linklist != blank %}large-up--hide{% endif %}" aria-label="menu-button">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+
+            {% if section.settings.desktop_main_linklist != blank %}
+                {% for link in linklists[section.settings.desktop_main_linklist].links %}
+                    {%- assign menu_list_image_1 = blank -%}
+                    {%- assign menu_list_url_1 = blank -%}
+                    {%- assign menu_list_label_1 = blank -%}
+                    {%- assign menu_list_image_2 = blank -%}
+                    {%- assign menu_list_url_2 = blank -%}
+                    {%- assign menu_list_label_2 = blank -%}
+
+                    {% if link.links != blank %}
+                        {%- assign link_list = link.links -%}
+                        {%- assign menu_row = 'true' -%}
+
+                        {%- for block in menu_linklists_items_section_blocks -%}
+                            {%- assign menu_item_handle = block.settings.menu-linklist-item | handleize -%}
+                            {%- assign link_title_handle = link.title | handleize -%}
+
+                            {%- if menu_item_handle == link_title_handle -%}
+                                {%- assign menu_row = 'false' -%}
+                                {%- assign submenu = block.settings.submenu -%}
+                                {%- assign menu_list_image_1 = block.settings.menu-list-image_1 -%}
+                                {%- assign menu_list_url_1 = block.settings.menu-list-url_1 -%}
+                                {%- assign menu_list_label_1 = block.settings.menu-list-label_1 -%}
+                                {%- assign menu_list_image_2 = block.settings.menu-list-image_2 -%}
+                                {%- assign menu_list_url_2 = block.settings.menu-list-url_2 -%}
+                                {%- assign menu_list_label_2 = block.settings.menu-list-label_2 -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+
+                        <div class="menu__submenu-container small--hide
+                            {% if menu_row == 'true' %}
+                                menu__submenu--row
+                            {% elsif menu_list_image_1 != blank or menu_list_image_2 != blank or submenu != blank %}
+                                menu__submenu--linklist-image
+                            {% else %}
+                                menu__submenu--linklist
+                            {% endif %}"
+                             id="{{ link.title | append: link.levels | append: forloop.index0 | handleize }}">
+                            {%- if menu_row == 'true' -%}
+                                <ul class="menu__submenu">
+                                    {% for childlink in link_list %}
+                                        <li class="menu__item">
+                                            <a href="{{ childlink.url }}" class="menu__link">
+                                                {%- if menu_row == 'true' and menu_images_items_section_blocks.size > 0 -%}
+                                                    {%- for block in menu_images_items_section_blocks -%}
+                                                        {%- assign menu_item_handle = block.settings.menu-image-item | handleize -%}
+                                                        {%- assign childlink_title_handle = childlink.title | handleize -%}
+                                                        {%- assign menu_item_image = block.settings.menu-item-image -%}
+
+                                                        {%- if menu_item_handle == childlink_title_handle and menu_item_image != blank -%}
+                                                            {%- assign pic_style = 'style="padding-bottom: calc(' | append: menu_item_image.height | append: ' / ' | append: menu_item_image.width | append: ' * 100%)"' -%}
+                                                            {% include 'picture', image_desk: menu_item_image, class_name: 'menu__image', pic_attr: pic_style %}
+                                                        {%- endif -%}
+                                                    {% endfor %}
+                                                {%- endif -%}
+                                                <span>{{ childlink.title }}</span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {%- else -%}
+                                {%- for block in menu_linklists_items_section_blocks -%}
+                                    {%- assign menu_item_handle = block.settings.menu-linklist-item | handleize -%}
+                                    {%- assign link_title_handle = link.title | handleize -%}
+                                    {%- if menu_item_handle == link_title_handle -%}
+                                        {%- assign link_list = linklists[block.settings.submenu].links -%}
+                                        {%- if link_list != blank -%}
+                                            {% for childlink in link_list %}
+                                                {%- if childlink.levels != 0 -%}
+                                                    <ul class="menu__submenu" style="padding-right: 15px;">
+                                                        <li class="menu__item">
+                                                            <span class="menu__link menu__childlink-title">{{ childlink.title | escape }}</span>
+                                                        </li>
+                                                        {% for sublink in childlink.links %}
+                                                            <li class="menu__item">
+                                                                <a href="{{ sublink.url }}" class="menu__link">
+                                                                    <span>{{ sublink.title }}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {%- else -%}
+                                                    <ul class="menu__submenu" style="padding-right: 15px;">
+                                                        <li class="menu__item">
+                                                            <a href="{{ childlink.url }}" class="menu__link">
+                                                                <span>{{ childlink.title }}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                {%- endif -%}
+                                            {% endfor %}
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            {%- endif -%}
+
+                            {% if menu_list_image_1 != blank and menu_row == 'false' %}
+                                {%- if menu_list_url_1 != blank and menu_list_label_1 != blank -%}
+                                    <a href="{{ menu_list_url_1 }}" class="menu__item-image">
+
+                                        {%- assign pic_style = 'style="padding-bottom: calc(' | append: menu_list_image_1.height | append: ' / ' | append: menu_list_image_1.width | append: ' * 100%)"' -%}
+                                        {% include 'picture', image_desk: menu_list_image_1, class_name: 'menu__image', pic_attr: pic_style %}
+
+                                        <span>
+                                            {{ menu_list_label_1 }}
+                                        </span>
+                                    </a>
+                                {% else %}
+                                    <div class="menu__item-image">
+
+                                        {%- assign pic_style = 'style="padding-bottom: calc(' | append: menu_list_image_1.height | append: ' / ' | append: menu_list_image_1.width | append: ' * 100%)"' -%}
+                                        {% include 'picture', image_desk: menu_list_image_1, class_name: 'menu__image', pic_attr: pic_style %}
+                                    </div>
+                                {%- endif -%}
+                            {% endif %}
+
+                            {% if menu_list_image_2 != blank and menu_row == 'false' %}
+                                {%- if menu_list_url_2 != blank and menu_list_label_2 != blank -%}
+                                    <a href="{{ menu_list_url_2 }}" class="menu__item-image">
+
+                                        {%- assign pic_style = 'style="padding-bottom: calc(' | append: menu_list_image_2.height | append: ' / ' | append: menu_list_image_2.width | append: ' * 100%)"' -%}
+                                        {% include 'picture', image_desk: menu_list_image_2, class_name: 'menu__image', pic_attr: pic_style %}
+
+                                        <span>
+                                            {{ menu_list_label_2 }}
+                                        </span>
+                                    </a>
+                                {% else %}
+                                    <div class="menu__item-image">
+
+                                        {%- assign pic_style = 'style="padding-bottom: calc(' | append: menu_list_image_2.height | append: ' / ' | append: menu_list_image_2.width | append: ' * 100%)"' -%}
+                                        {% include 'picture', image_desk: menu_list_image_2, class_name: 'menu__image', pic_attr: pic_style %}
+                                    </div>
+                                {%- endif -%}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <div class="header__col header__col--logo">
+                {% if section.settings.logo != blank %}
+                    {%- assign logo_style = 'style="padding-bottom: calc(' | append: section.settings.logo.height | append: ' / ' | append: section.settings.logo.width | append: ' * 100%)"' -%}
+
+                    <a href="/" class="header__logo" {{ logo_style }}>
+                        <img class="header__logo-image"
+                             src="{{ section.settings.logo | img_url: '270x' }}"
+                             srcset="{{ section.settings.logo | img_url: '270x' }} 1x, {{ section.settings.logo | img_url: '540x' }} 2x"
+                             alt="{{ section.settings.logo.alt | default: shop.name }}">
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="header__col header__col--right">
+                <a href="{{ routes.search_url }}" class="header__icon header__icon--search js-toggle-search medium-down--hide">
+                    {% include 'icon-search-1' %}
+                    {% include 'icon-close-1' %}
+                </a>
+                {% if customer %}
+                    <a href="{{ routes.account_url }}" class="header__icon header__icon--account medium-down--hide">{% include 'icon-account' %}</a>
+                {% else %}
+                    <a href="{{ routes.account_login_url }}" class="header__icon header__icon--account medium-down--hide">{% include 'icon-account' %}</a>
+                {% endif %}
+                <a href="{{ routes.cart_url }}" class="header__icon cart-open">
+                    {% include 'icon-minicart' %}
+                    <span class="header__cart-count js-cart-count">
+                        {%- if cart.item_count > 99 -%}
+                            99+
+                        {% elsif cart.item_count > 0 %}
+                            {{- cart.item_count -}}
+                        {%- endif -%}
+                    </span>
+                </a>
+            </div>
+            {% if section.settings.desktop_main_linklist != blank %}
+                <ul class="menu medium-down--hide">
+                    {% for link in linklists[section.settings.desktop_main_linklist].links %}
+                        <li class="menu__item">
+                            <a href="{{ link.url }}" class="menu__link" {% if link.links != blank %}aria-controls="{{ link.title | append: link.levels | append: forloop.index0 | handleize }}"{% endif %}>{{ link.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <div id="search-bar" class="search-bar">
+        <form action="/search" method="get" class="search-bar__form" role="search">
+            <input type="hidden" name="type" value="product">
+
+            <input type="search"
+                   class="search-bar__input"
+                   name="q"
+                   value=""
+                   required
+                   autocomplete="off"
+                   placeholder="{{ 'general.search.title' | t }}"
+            >
+            <button class="search-bar__button" type="submit">
+                {% include 'icon-search-1' %}
+            </button>
+        </form>
+    </div>
+    <!-- Search bar end -->
+
+    <!-- Navigation -->
+    <nav id="main-menu" class="navigation">
+        <button id="menu-close" class="navigation__close-button">{% include 'icon-close-menu' %}</button>
+
+        <form action="/search" method="get" class="navigation__form" role="search">
+            <input type="hidden" name="type" value="product">
+
+            <input type="search"
+                   class="navigation__form-input"
+                   name="q"
+                   value="{{ search.terms | escape }}"
+                   required
+                   autocomplete="off"
+                   placeholder="{{ 'general.search.title' | t }}"
+            >
+            <button class="navigation__form-button" type="submit">
+                {% include 'icon-search-1' %}
+            </button>
+        </form>
+
+        {% assign links_length = linklists[section.settings.mobile_main_linklist].links.size %}
+
+        {% if section.settings.mobile_main_linklist != blank %}
+            <ul class="nav-menu">
+                {% for link in linklists[section.settings.mobile_main_linklist].links %}
+                    {% if link.links != blank %}
+                        <li class="nav-menu__item">
+                            <a href="{{ link.url }}" class="nav-menu__link"><span class="nav-menu__text">{{ link.title | escape }}</span></a>
+                            <ul class="nav-menu__submenu">
+                                {% for childlink in link.links %}
+                                    {% if childlink.links != blank %}
+                                        <li class="nav-menu__item">
+                                            <a href="{{ childlink.url }}" class="nav-menu__link">{{ childlink.title | escape }}</a>
+                                            <ul class="nav-menu__submenu">
+                                                {% for grandchildlink in childlink.links %}
+                                                    <li class="nav-menu__item">
+                                                        <a href="{{ grandchildlink.url }}" class="nav-menu__link">{{ grandchildlink.title | escape }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-menu__item">
+                                            <a href="{{ childlink.url }}" class="nav-menu__link">{{ childlink.title | escape }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-menu__item">
+                            <a href="{{ link.url }}" class="nav-menu__link"><span class="nav-menu__text">{{ link.title | escape }}</span></a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="navigation__secondary-menu">
+            {% if customer %}
+                <a href="{{ routes.account_url }}" class="navigation__button delay-{{ links_length }}">{% include 'icon-account' %} {{ 'customer.account.title' | t }}</a>
+            {% else %}
+                <a href="{{ routes.account_login_url }}" class="navigation__button delay-{{ links_length }}">{% include 'icon-account' %} {{ 'customer.login.title' | t }}</a>
+            {% endif %}
+        </div>
+
+        {% include 'social-icons' %}
+    </nav>
+    <!-- Navigation end -->
+</header>
+
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "select",
+            "id": "color_scheme",
+            "label": "Color scheme",
+            "options": [
+                {
+                    "value": "light",
+                    "label": "Light"
+                },
+                {
+                    "value": "dark",
+                    "label": "Dark"
+                }
+            ],
+            "default": "light",
+            "info": "Home page only. For other pages, go to the Accentuate app."
+        },
+        {
+            "type": "header",
+            "content": "Promo bar"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_promo_bar",
+            "label": "Show promo bar"
+        },
+        {
+            "type": "text",
+            "id": "text_timer",
+            "label": "Autoplay timer",
+            "info": "Time Should be in mileseconds and must be number"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_arrows",
+            "label": "Enable slider arrows",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "promobar_type",
+            "label": "Promo bar style",
+            "options": [
+                {
+                    "value": "blue",
+                    "label": "Blue"
+                },
+                {
+                    "value": "gradient",
+                    "label": "Rainbow gradient"
+                }
+            ],
+            "default": "blue"
+        },
+        {
+            "type":      "header",
+            "content":   "Promo banner"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_promo_banner",
+            "label": "Show section",
+            "default": true
+        },
+        {
+            "type":   "range",
+            "id":     "promo_banner_height",
+            "min":       50,
+            "max":       250,
+            "step":      10,
+            "unit":      "px",
+            "label":     "Height",
+            "default":   50
+        },
+        {
+            "type": "select",
+            "id": "promo_banner_bg_color_type",
+            "label": "Background type",
+            "options": [
+                {
+                    "value": "color",
+                    "label": "Color"
+                },
+                {
+                    "value": "gradient",
+                    "label": "Rainbow gradient"
+                }
+            ],
+            "default": "color"
+        },
+        {
+            "type": "color",
+            "id": "promo_banner_bg_color",
+            "label": "Background color",
+            "default": "#B2FCE4"
+        },
+        {
+            "type": "color",
+            "id": "promo_banner_color",
+            "label": "Text color",
+            "default": "#000000"
+        },
+        {
+            "type": "textarea",
+            "id": "promo_banner_heading",
+            "label": "Heading"
+        },
+        {
+            "type":   "range",
+            "id":     "promo_banner_heading_size",
+            "min":       10,
+            "max":       30,
+            "step":      1,
+            "unit":      "px",
+            "label":     "Heading size",
+            "default":   16
+        },
+        {
+            "type": "richtext",
+            "id": "promo_banner_text",
+            "label": "Text"
+        },
+        {
+            "type":   "range",
+            "id":     "promo_banner_text_size",
+            "min":       10,
+            "max":       30,
+            "step":      1,
+            "unit":      "px",
+            "label":     "Text size",
+            "default":   16
+        },
+        {
+            "type": "image_picker",
+            "id": "promo_banner_icon",
+            "label": "Promo banner icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "promo_banner_icon_right",
+            "label": "Promo banner icon right",
+            "default": false
+        },
+        {
+            "type": "header",
+            "content": "Header"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo image"
+        },
+        {
+            "type": "link_list",
+            "id": "desktop_main_linklist",
+            "label": "Menu desktop",
+            "default": "main-menu"
+        },
+        {
+            "type": "link_list",
+            "id": "mobile_main_linklist",
+            "label": "Menu mobile",
+            "default": "main-menu"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Promo message",
+            "type": "promo-bar-blocks",
+            "limit": 5,
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "promobar_text",
+                    "label": "Promo bar text",
+                    "default": "<p>Announce something here</p>"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "promobar_icon",
+                    "label": "Promo bar icon"
+                }
+            ]
+        },
+        {
+            "name": "Menu item image",
+            "type": "menu-item-image",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "menu-image-item",
+                    "label": "Menu item"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "menu-item-image",
+                    "label": "Image"
+                }
+            ]
+        },
+        {
+            "name": "Menu item linklist",
+            "type": "menu-item-linklist",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "Menu settings"
+                },
+                {
+                    "type": "text",
+                    "id": "menu-linklist-item",
+                    "label": "Menu main item"
+                },
+                {
+                    "type": "link_list",
+                    "id": "submenu",
+                    "label": "Submenu"
+                },
+                {
+                    "type": "header",
+                    "content": "Image settings"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "menu-list-image_1",
+                    "label": "First Image"
+                },
+                {
+                    "type": "text",
+                    "id": "menu-list-url_1",
+                    "label": "First Image URL"
+                },
+                {
+                    "type": "text",
+                    "id": "menu-list-label_1",
+                    "label": "First Image label"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "menu-list-image_2",
+                    "label": "Second Image"
+                },
+                {
+                    "type": "text",
+                    "id": "menu-list-url_2",
+                    "label": "Second Image URL"
+                },
+                {
+                    "type": "text",
+                    "id": "menu-list-label_2",
+                    "label": "Second Image label"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

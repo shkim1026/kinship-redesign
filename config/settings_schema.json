@@ -1,0 +1,644 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kinship",
+    "theme_version": "1.0.0",
+    "theme_author": "Presidio Creative",
+    "theme_documentation_url": "https:\/\/docs.google.com\/document\/d\/1NihI4h_FOsYUqrJE5nqyV5KplNBTFrmNj5BoXw0JO0U\/edit?usp=sharing",
+    "theme_support_url": "https:\/\/presidiocreative.com"
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo image"
+      }
+    ]
+  },
+  {
+    "name": "ReCharge Integration",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_recharge",
+        "label": "Enable ReCharge",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Klaviyo Integration",
+    "settings": [
+      {
+        "type": "text",
+        "id": "klaviyo_public_api_key",
+        "label": "Public API Key \/ Site ID",
+        "info": "Copy Public API key (not Private API) in this field. [Screenshot](https:\/\/www.klaviyo.com\/account#api-keys-tab)"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "Klaviyo list id",
+        "info": "Open list and copy ID from URL. [Screenshot](http:\/\/prntscr.com\/m4teyg)"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_form_id",
+        "label": "Klaviyo form id",
+        "info": "Open form and copy ID from URL. [Screenshot](http:\/\/prntscr.com\/m4tho4)"
+      }
+    ]
+  },
+  {
+    "name": "Afterpay message",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product page"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_pdp_afterpay",
+        "label": "Show afterpay"
+      },
+      {
+        "type": "color",
+        "id": "pdp_afterpay_color",
+        "label": "Text color",
+        "default": "#000000"
+      },
+      {
+        "type": "textarea",
+        "id": "pdp_afterpay_text",
+        "label": "Text"
+      },
+      {
+        "type": "range",
+        "id": "pdp_afterpay_text_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Text size",
+        "default": 16
+      },
+      {
+        "type": "image_picker",
+        "id": "pdp_afterpay_icon",
+        "label": "Icon"
+      },
+      {
+        "type": "checkbox",
+        "id": "pdp_afterpay_icon_right",
+        "label": "Icon right",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Cart"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_afterpay",
+        "label": "Show afterpay"
+      },
+      {
+        "type": "color",
+        "id": "cart_afterpay_color",
+        "label": "Text color",
+        "default": "#000000"
+      },
+      {
+        "type": "textarea",
+        "id": "cart_afterpay_text",
+        "label": "Text"
+      },
+      {
+        "type": "range",
+        "id": "cart_afterpay_text_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Text size",
+        "default": 16
+      },
+      {
+        "type": "image_picker",
+        "id": "cart_afterpay_icon",
+        "label": "Icon"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_afterpay_icon_right",
+        "label": "Icon right",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing image"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Share image"
+      },
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_sharing_blog",
+        "label": "Enable sharing for blog articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "Tik tok link"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat link"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr link"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo link"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "text",
+        "id": "cart_promo",
+        "label": "Cart Promotional Text",
+        "default": "Cart-wide promotional text goes here"
+      },
+      {
+        "type": "color",
+        "id": "cart_promo_color",
+        "label": "Cart Promotional Text Color",
+        "default": "#18a1c3"
+      },
+      {
+        "type": "header",
+        "content": "Cart Threshold"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_threshold_enable",
+        "label": "Cart Threshold Enable",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "cart_threshold_text_color",
+        "label": "Cart Threshold Text Color",
+        "default": "#002798"
+      },
+      {
+        "type": "color",
+        "id": "cart_threshold_border_color",
+        "label": "Cart Threshold Border Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "cart_threshold_color",
+        "label": "Cart Threshold Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "cart_threshold_line_color",
+        "label": "Cart Threshold Line Color",
+        "default": "#002798"
+      },
+      {
+        "type": "text",
+        "id": "cart_threshold_amount",
+        "label": "Cart Threshold Amount"
+      },
+      {
+        "type": "text",
+        "id": "cart_threshold_message",
+        "label": "Cart Threshold Message < Amount"
+      },
+      {
+        "type": "text",
+        "id": "cart_threshold_free_message",
+        "label": "Cart Threshold Message > Amount"
+      },
+      {
+        "type": "header",
+        "content": "Cart Recommended Products"
+      },
+      {
+        "type": "text",
+        "id": "cart_rec_prod_title",
+        "label": "Cart Recommended Products Title"
+      },
+      {
+        "type": "number",
+        "id": "cart_rec_prod_limit",
+        "label": "Cart Recommended Products Limit",
+        "default": 10
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Gift Card",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "giftcard_show_qrcode",
+        "label": "Show QR code",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "giftcard_show_apple_wallet",
+        "label": "Show Apple wallet & print",
+        "default": true
+      },
+      {
+        "type": "richtext",
+        "id": "giftcard__disclaimer",
+        "label": "Disclaimer copy"
+      }
+    ]
+  },
+  {
+    "name": "Evergreen GWP",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_evergreen_gwp_subtotal",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "evergreen_gwp_subtotal_start_date",
+        "label": "Start date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "text",
+        "id": "evergreen_gwp_subtotal_end_date",
+        "label": "End date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "number",
+        "id": "evergreen_gwp_subtotal_amount_1",
+        "label": "Min subtotal amount",
+        "default": 20
+      },
+      {
+        "type": "product",
+        "id": "evergreen_gwp_subtotal_product_1",
+        "label": "Gift product"
+      },
+      {
+        "type": "textarea",
+        "id": "evergreen_gwp_subtotal_message",
+        "label": "Soldout message"
+      },
+      {
+        "type": "text",
+        "id": "evergreen_gwp_subtotal_customer_group",
+        "label": "Limit for customers with tags",
+        "info": "Case sensitive, divided by comma without spaces! Example: tag1,tag2,tag3"
+      },
+      {
+        "type": "text",
+        "id": "evergreen_gwp_subtotal_exclude_types",
+        "label": "Exclude product types",
+        "info": "Case sensitive, divided by comma without spaces! Example: type,type 2,type_3"
+      }
+    ]
+  },
+  {
+    "name": "Gift with purchase(Subtotal)",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_gwp_subtotal",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gwp_subtotal_start_date",
+        "label": "Start date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "text",
+        "id": "gwp_subtotal_end_date",
+        "label": "End date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "number",
+        "id": "gwp_subtotal_amount_1",
+        "label": "Min subtotal amount 1",
+        "default": 50
+      },
+      {
+        "type": "product",
+        "id": "gwp_subtotal_product_1",
+        "label": "Gift product 1"
+      },
+      {
+        "type": "number",
+        "id": "gwp_subtotal_amount_2",
+        "label": "Min subtotal amount 2",
+        "default": 75
+      },
+      {
+        "type": "product",
+        "id": "gwp_subtotal_product_2",
+        "label": "Gift product 2"
+      },
+      {
+        "type": "number",
+        "id": "gwp_subtotal_amount_3",
+        "label": "Min subtotal amount 3",
+        "default": 100
+      },
+      {
+        "type": "product",
+        "id": "gwp_subtotal_product_3",
+        "label": "Gift product 3"
+      },
+      {
+        "type": "number",
+        "id": "gwp_subtotal_amount_4",
+        "label": "Min subtotal amount 4",
+        "default": 125
+      },
+      {
+        "type": "product",
+        "id": "gwp_subtotal_product_4",
+        "label": "Gift product 4"
+      },
+      {
+        "type": "textarea",
+        "id": "gwp_subtotal_message",
+        "label": "Soldout message"
+      },
+      {
+        "type": "text",
+        "id": "gwp_subtotal_customer_group",
+        "label": "Limit for customers with tags",
+        "info": "Case sensitive, divided by comma without spaces! Example: tag1,tag2,tag3"
+      },
+      {
+        "type": "text",
+        "id": "gwp_subtotal_exclude_types",
+        "label": "Exclude product types",
+        "info": "Case sensitive, divided by comma without spaces! Example: type,type 2,type_3"
+      }
+    ]
+  },
+  {
+    "name": "Gift with purchase(Qty)",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_gwp_qty",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gwp_qty_start_date",
+        "label": "Start date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "text",
+        "id": "gwp_qty_end_date",
+        "label": "End date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "number",
+        "id": "gwp_qty_amount_1",
+        "label": "Min cart items quantity 1",
+        "default": 2
+      },
+      {
+        "type": "product",
+        "id": "gwp_qty_product_1",
+        "label": "Gift product 1"
+      },
+      {
+        "type": "number",
+        "id": "gwp_qty_amount_2",
+        "label": "Min cart items quantity 2",
+        "default": 3
+      },
+      {
+        "type": "product",
+        "id": "gwp_qty_product_2",
+        "label": "Gift product 2"
+      },
+      {
+        "type": "number",
+        "id": "gwp_qty_amount_3",
+        "label": "Min cart items quantity 3",
+        "default": 4
+      },
+      {
+        "type": "product",
+        "id": "gwp_qty_product_3",
+        "label": "Gift product 3"
+      },
+      {
+        "type": "textarea",
+        "id": "gwp_qty_message",
+        "label": "Soldout message"
+      },
+      {
+        "type": "text",
+        "id": "gwp_qty_customer_group",
+        "label": "Limit for customers with tags",
+        "info": "Case sensitive, divided by comma without spaces! Example: tag1,tag2,tag3"
+      },
+      {
+        "type": "text",
+        "id": "gwp_qty_exclude_types_group",
+        "label": "Exclude product types",
+        "info": "Case sensitive, divided by comma without spaces! Example: type,type 2,type_3"
+      }
+    ]
+  },
+  {
+    "name": "Gift with purchase(Buy\/Get)",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_gwp_buy_get",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gwp_buy_get_start_date",
+        "label": "Start date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "text",
+        "id": "gwp_buy_get_end_date",
+        "label": "End date",
+        "info": "Date format yyyy-mm-dd hh:mm, example - 2020-03-22 18:15"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_has_product_1",
+        "label": "Product BUY 1"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_has_product_2",
+        "label": "Product BUY 2"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_has_product_3",
+        "label": "Product BUY 3"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_product_1",
+        "label": "Product GET 1"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_product_2",
+        "label": "Product GET 2"
+      },
+      {
+        "type": "product",
+        "id": "gwp_buy_get_product_3",
+        "label": "Product GET 3"
+      },
+      {
+        "type": "textarea",
+        "id": "gwp_buy_get_message",
+        "label": "Soldout message"
+      },
+      {
+        "type": "text",
+        "id": "gwp_buy_get_customer_group",
+        "label": "Limit for customers with tags",
+        "info": "Case sensitive, divided by comma without spaces! Example: tag1,tag2,tag3"
+      }
+    ]
+  },
+  {
+    "name": "BLM popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "blm_show",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "blm_heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "blm_text",
+        "label": "Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "blm_image",
+        "label": "Logo"
+      }
+    ]
+  }
+]

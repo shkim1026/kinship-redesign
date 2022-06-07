@@ -1,0 +1,164 @@
+{%- assign evergreen_gwp_enabled = settings.enable_evergreen_gwp_subtotal -%}
+{%- assign evergreen_gwp_amount_1 = settings.evergreen_gwp_subtotal_amount_1 -%}
+{%- assign evergreen_gwp_product_1 = all_products[settings.evergreen_gwp_subtotal_product_1] -%}
+{%- assign evergreen_gwp_customer_groups = settings.evergreen_gwp_subtotal_customer_group | split: ',' -%}
+{%- assign evergreen_gwp_exclude_types = settings.evergreen_gwp_subtotal_exclude_types | downcase | split: ',' | json -%}
+{%- assign evergreen_today_date = 'now' | date: '%s' -%}
+{%- assign evergreen_start_date = settings.evergreen_gwp_subtotal_start_date | date: '%s' -%}
+{%- assign evergreen_end_date = settings.evergreen_gwp_subtotal_end_date | date: '%s' -%}
+{%- assign evergreen_gwp_allowed = true -%}
+
+{%- if evergreen_gwp_customer_groups.size > 0 -%}
+  {%- assign evergreen_gwp_allowed = false -%}
+
+  {%- if customer -%}
+    {%- for evergreen_gwp_customer_group in evergreen_gwp_customer_groups -%}
+      {%- if customer.tags contains evergreen_gwp_customer_group -%}
+        {%- assign evergreen_gwp_allowed = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if evergreen_gwp_enabled and evergreen_gwp_product_1 != blank and evergreen_today_date >= evergreen_start_date and evergreen_today_date < evergreen_end_date and evergreen_gwp_allowed and evergreen_gwp_amount_1 != blank -%}
+  <span id="evergreen-gwp-cart"
+        data-amount-1="{{ evergreen_gwp_amount_1 }}"
+        data-id-1="{{ evergreen_gwp_product_1.selected_or_first_available_variant.id }}"
+        data-exclude-types='{{ evergreen_gwp_exclude_types }}'
+        data-error-message="{{ settings.evergreen_gwp_subtotal_message }}"></span>
+{%- endif -%}
+
+{%- assign gwp_enabled = settings.enable_gwp_subtotal -%}
+{%- assign gwp_amount_1 = settings.gwp_subtotal_amount_1 -%}
+{%- assign gwp_amount_2 = settings.gwp_subtotal_amount_2 -%}
+{%- assign gwp_amount_3 = settings.gwp_subtotal_amount_3 -%}
+{%- assign gwp_amount_4 = settings.gwp_subtotal_amount_4 -%}
+{%- assign gwp_product_1 = all_products[settings.gwp_subtotal_product_1] -%}
+{%- assign gwp_product_2 = all_products[settings.gwp_subtotal_product_2] -%}
+{%- assign gwp_product_3 = all_products[settings.gwp_subtotal_product_3] -%}
+{%- assign gwp_product_4 = all_products[settings.gwp_subtotal_product_4] -%}
+{%- assign gwp_customer_groups = settings.gwp_subtotal_customer_group | split: ',' -%}
+{%- assign gwp_exclude_types = settings.gwp_subtotal_exclude_types | downcase | split: ',' | json -%}
+{%- assign today_date = 'now' | date: '%s' -%}
+{%- assign start_date = settings.gwp_subtotal_start_date | date: '%s' -%}
+{%- assign end_date = settings.gwp_subtotal_end_date | date: '%s' -%}
+{%- assign gwp_allowed = true -%}
+
+{%- if gwp_customer_groups.size > 0 -%}
+  {%- assign gwp_allowed = false -%}
+
+  {%- if customer -%}
+    {%- for gwp_customer_group in gwp_customer_groups -%}
+      {%- if customer.tags contains gwp_customer_group -%}
+        {%- assign gwp_allowed = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if gwp_enabled and gwp_product_1 != blank and today_date >= start_date and today_date < end_date and gwp_allowed and gwp_amount_1 != blank -%}
+  <span id="gwp-cart"
+        data-amount-1="{{ gwp_amount_1 }}"
+        data-id-1="{{ gwp_product_1.selected_or_first_available_variant.id }}"
+        data-amount-2="{{ gwp_amount_2 }}"
+        data-id-2="{{ gwp_product_2.selected_or_first_available_variant.id }}"
+        data-amount-3="{{ gwp_amount_3 }}"
+        data-id-3="{{ gwp_product_3.selected_or_first_available_variant.id }}"
+        data-amount-4="{{ gwp_amount_4 }}"
+        data-id-4="{{ gwp_product_4.selected_or_first_available_variant.id }}"
+        data-exclude-types='{{ gwp_exclude_types }}'
+        data-error-message="{{ settings.gwp_subtotal_message }}"></span>
+{%- endif -%}
+
+{% comment %}
+  GWP Cart "Buy any # of X, get a free Y" functionality
+{% endcomment %}
+
+{%- assign gwp_enabled = settings.enable_gwp_qty -%}
+{%- assign gwp_amount_1 = settings.gwp_qty_amount_1 -%}
+{%- assign gwp_product_1 = all_products[settings.gwp_qty_product_1] -%}
+{%- assign gwp_amount_2 = settings.gwp_qty_amount_2 -%}
+{%- assign gwp_product_2 = all_products[settings.gwp_qty_product_2] -%}
+{%- assign gwp_amount_3 = settings.gwp_qty_amount_3 -%}
+{%- assign gwp_product_3 = all_products[settings.gwp_qty_product_3] -%}
+{%- assign gwp_customer_groups = settings.gwp_qty_customer_group | split: ',' -%}
+{%- assign gwp_exclude_types = settings.gwp_qty_exclude_types_group | downcase | split: ',' | json -%}
+{%- assign today_date = 'now' | date: '%s' -%}
+{%- assign start_date = settings.gwp_qty_start_date | date: '%s' -%}
+{%- assign end_date = settings.gwp_qty_end_date | date: '%s' -%}
+{%- assign gwp_allowed = true -%}
+
+{%- if gwp_customer_groups.size > 0 -%}
+  {%- assign gwp_allowed = false -%}
+
+  {%- if customer -%}
+    {%- for gwp_customer_group in gwp_customer_groups -%}
+      {%- if customer.tags contains gwp_customer_group -%}
+        {%- assign gwp_allowed = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if gwp_enabled and gwp_product_1 != blank and today_date >= start_date and today_date < end_date and gwp_allowed -%}
+  <span id="gwp-cart-quantity"
+        data-id-1="{{ gwp_product_1.selected_or_first_available_variant.id }}"
+        data-amount-1="{{ gwp_amount_1 }}"
+        data-id-2="{{ gwp_product_2.selected_or_first_available_variant.id }}"
+        data-amount-2="{{ gwp_amount_2 }}"
+        data-id-3="{{ gwp_product_3.selected_or_first_available_variant.id }}"
+        data-amount-3="{{ gwp_amount_3 }}"
+        data-exclude-types='{{ gwp_exclude_types }}'
+        data-error-message="{{ settings.gwp_qty_message }}"></span>
+{%- endif -%}
+
+{% comment %}
+  GWP Cart "Buy # products Get # free product" functionality
+{% endcomment %}
+
+{%- assign gwp_enabled = settings.enable_gwp_buy_get -%}
+{%- assign gwp_product_buy_1 = all_products[settings.gwp_buy_get_has_product_1] -%}
+{%- assign gwp_product_buy_2 = all_products[settings.gwp_buy_get_has_product_2] -%}
+{%- assign gwp_product_buy_3 = all_products[settings.gwp_buy_get_has_product_3] -%}
+{%- assign gwp_product_get_1 = all_products[settings.gwp_buy_get_product_1] -%}
+{%- assign gwp_product_get_2 = all_products[settings.gwp_buy_get_product_2] -%}
+{%- assign gwp_product_get_3 = all_products[settings.gwp_buy_get_product_3] -%}
+{%- assign gwp_customer_groups = settings.gwp_buy_get_customer_group | split: ',' -%}
+{%- assign gwp_exclude_types = settings.gwp_buy_get_exclude_types_group | downcase | split: ',' | json -%}
+{%- assign today_date = 'now' | date: '%s' -%}
+{%- assign start_date = settings.gwp_buy_get_start_date | date: '%s' -%}
+{%- assign end_date = settings.gwp_buy_get_end_date | date: '%s' -%}
+{%- assign gwp_allowed = true -%}
+
+{%- if gwp_customer_groups.size > 0 -%}
+  {%- assign gwp_allowed = false -%}
+
+  {%- if customer -%}
+    {%- for gwp_customer_group in gwp_customer_groups -%}
+      {%- if customer.tags contains gwp_customer_group -%}
+        {%- assign gwp_allowed = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if gwp_enabled and gwp_product_buy_1 != blank and gwp_product_get_1 != blank and today_date >= start_date and today_date < end_date and gwp_allowed -%}
+  <span id="gwp-cart-buy-get"
+        data-product-buy-1="{{ gwp_product_buy_1.selected_or_first_available_variant.id }}"
+        data-product-buy-2="{{ gwp_product_buy_2.selected_or_first_available_variant.id }}"
+        data-product-buy-3="{{ gwp_product_buy_3.selected_or_first_available_variant.id }}"
+        data-product-get-1="{{ gwp_product_get_1.selected_or_first_available_variant.id }}"
+        data-product-get-2="{{ gwp_product_get_2.selected_or_first_available_variant.id }}"
+        data-product-get-3="{{ gwp_product_get_3.selected_or_first_available_variant.id }}"
+        data-exclude-types='{{ gwp_exclude_types }}'></span>
+{%- endif -%}
+
+{% comment %}
+  If user reaches GWP product directly we need to make a redirect to the homepage
+{% endcomment %}
+
+{%- if template == 'product' and product.type == 'GWP' or product.type == 'Evergreen GWP' -%}
+  <script>
+    window.location.href = '/';
+  </script>
+{%- endif -%}

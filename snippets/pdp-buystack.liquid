@@ -1,0 +1,180 @@
+<div id="product-buystack"
+	 class="buystack"
+	 style="background-color: {{ buystack_bg_color }}; color: {{ buystack_color }};"
+>
+	{% if promo_text != blank %}
+		<p class="buystack__promo-message" style="color: {{ promo_color }};">
+			{% if promo_icon != blank %}
+				<img class="buystack__promo-icon " width="25px" height="100%" src="{{ promo_icon }}" alt="">
+			{% endif %}
+			{{ promo_text }}</p>
+	{% endif %}
+
+	<h1 class="buystack__title" style="color: {{ product_color }};">{{ product_title }}</h1>
+
+	{% if short_info != blank %}
+		<p class="buystack__subtitle" style="color: {{ sid_color }};">{{ short_info }}</p>
+	{% endif %}
+
+	{%- comment -%}
+		{% include 'okendo-reviews-product-rating-summary' %}
+	{%- endcomment -%}
+
+	<!-- YOTPO STAR RATING | snippets > pdp-buystack.liquid  -->
+	<div style="text-align: center;">
+		<div class="yotpo bottomLine" style="display:inline-block;"
+				 data-product-id="{{ product.id }}">
+		</div>
+	</div>
+
+	<style>
+		.yotpo .text-m { padding-left: 4px; }
+		.yotpo.bottomLine { padding: 4px 0 0 0; }  /* optional top padding */
+	</style>
+	<!-- END | YOTPO STAR RATING -->
+
+	{% if product_weight != blank and product.has_only_default_variant %}
+		<p class="buystack__weight">{{ product_weight }}</p>
+	{% endif %}
+
+	{% if short_description != blank %}
+		<p class="buystack__description">
+			{{- short_description -}}
+		</p>
+	{% endif %}
+
+	{%- if addition_description != blank -%}
+		<div>
+			<p class="buystack__description" id="product-addition-description" style="display: none;">
+				{{- addition_description -}}
+			</p>
+
+			<button type="button" class="buystack__read-button ariaToggleSlideChangeButton" aria-expanded="false"
+			        data-close-label="{{ open_button_label | default: "Read less" }}" data-open-label="{{ close_button_label | default: "Read more" }}"
+			        aria-controls="product-addition-description">
+				<span>{{ open_button_label | default: "Read more" }}</span>
+			</button>
+		</div>
+	{%- endif -%}
+
+	<form class="product__form" action="/cart/add" method="post" enctype="multipart/form-data" data-productid="{{ product.id }}">
+		{% if product.available and settings.enable_recharge %}{% include 'subscription-product' %}{% endif %}
+
+    {%- assign promo = product.metafields.general.promo_message -%}
+
+    {%- if promo != blank -%}
+      <input type="hidden" name="properties[_promo]" value="{{ promo }}"/>
+    {%- endif -%}
+
+			{% if preorder_enable %}
+				<p class="buystack__preorder-text"><strong>{{ 'products.product.pre_order_label' | t }}</strong> {{ preorder_text }}</p>
+			{% endif %}
+
+			{% unless product.has_only_default_variant %}
+				{%- assign product_type_handleize = product.type | handleize -%}
+
+				{%- if product_type_handleize == 'gift-card' -%}
+					{% for product_option in product.options_with_values %}
+						<label for="{{ product_option.name }}" class="gift-select_label gift-select__deliver_every gift-card-label">
+							<span class="gift-card-variant">{{ product_option.name }}</span>
+							<select id="{{ product_option.name }}" name="{{ product_option.name }}" data-single-option-selector data-index="option{{ product_option.position }}" class="select-gift-card gift_select gift_select__frequency styled replaced">
+								{% for value in product_option.values %}
+									<option value="{{ value }}">
+										{{ value }}
+									</option>
+								{% endfor %}
+							</select>
+						</label>
+					{% endfor %}
+				{% else %}
+					{% for product_option in product.options_with_values %}
+						<label for="{{ product_option.name }}" class="gift-select_label gift-select__deliver_every gift-card-label">
+							<span class="gift-card-variant">{{ product_option.name }}</span>
+							<select id="{{ product_option.name }}" name="{{ product_option.name }}" data-single-option-selector
+							        data-index="option{{ product_option.position }}" class="select-gift-card gift_select gift_select__frequency styled replaced">
+								{% for value in product_option.values %}
+									<option {% if product_option.selected_value == value %}selected{% endif %} value="{{ value }}">
+										{{ value }}
+									</option>
+								{% endfor %}
+							</select>
+						</label>
+					{% endfor %}
+				{%- endif -%}
+			{% endunless %}
+
+			<div class="product-action" data-preorder="{{ preorder_enable }}" style="{% unless current_variant.available %}display: none;{% endunless %}">
+				<div class="product-action__qty js-qty-widget">
+					<button class="product-action__qty-button js-qty-minus" type="button">-</button>
+					<input id="Quantity" class="product-action__qty-input" data-product-qty type="text" name="quantity" value="1" min="1" readonly>
+					<button class="product-action__qty-button js-qty-plus" type="button">+</button>
+				</div>
+
+				{% if current_variant.compare_at_price > current_variant.price %}
+					<input type="text" name="properties[_compare_price]" value="{{ current_variant.compare_at_price | money_without_trailing_zeros }}" readonly style="display:none">
+				{% endif %}
+
+				<button class="product-action__button" data-add-to-cart name="add">
+						<span class="product-action__text" data-add-to-cart-text>
+							{% if current_variant.available and preorder_enable %}
+								{{ 'products.product.pre_order' | t }}
+							{% elsif current_variant.available %}
+								{{ 'products.product.add_to_cart' | t }}
+							{% else %}
+								{{ 'products.product.sold_out' | t }}
+							{% endif %}
+						</span>
+						<span data-compare-text data-compare-price="{{ current_variant.compare_at_price | times: 0.01 }}" {% unless current_variant.compare_at_price > current_variant.price %}style="display: none;"{% endunless %}>
+							<span>
+								<s>
+									{%- if current_variant.compare_at_price -%}
+										{{ current_variant.compare_at_price | money_without_trailing_zeros }}
+									{%- endif -%}
+								</s>
+							</span>
+						</span>
+					<span data-product-price> {{ current_variant.price | money_without_trailing_zeros }}</span>
+				</button>
+			</div>
+
+    <span class="sticky-add-to-cart-flag"></span>
+
+		<select name="id" class="no-js hide" data-product-select data-productid="{{ product.id }}">
+			{% for variant in product.variants %}
+				<option
+						{% if variant == current_variant %}selected="selected"{% endif %}
+						{% unless variant.available %}disabled="disabled"{% endunless %}
+						value="{{ variant.id }}">
+					{{ variant.title }}
+				</option>
+			{% endfor %}
+		</select>
+	</form>
+
+	<p class="afterpay-paragraph"></p>
+
+	<div class="buystack__soldout" data-preorder="{{ preorder_enable }}"
+	     style="{% if current_variant.available and preorder_enable != true %}display:none;{% endif %}">
+		<p class="buystack__soldout-text"><strong>{{ 'products.product.sold_out' | t }}</strong> {{ sold_out_text | default: 'Email me when back in stock' }}</p>
+
+		<div class="stock-widget buystack__soldout-form js-custom-BIS-widget">
+			<form action="" class="stock-widget__form">
+				<input type="hidden" class="js-notify-variant-id" value="{{ current_variant.id }}">
+				<input type="hidden" class="js-notify-product-id" value="{{ product.id }}">
+
+				<input type="email" class="stock-widget__form-input input js-notify-email" placeholder="email@address.com" required>
+				<button class="stock-widget__form-button js-bis-submit" type="submit">{% include 'icon-arrow-submit' %}</button>
+			</form>
+
+			<div class="stock-widget__messages js-notify-messages" style="display: none;">
+				<p class="stock-widget__messages-success js-popup-message-success"></p>
+				<p class="stock-widget__messages-error js-popup-message-error"></p>
+			</div>
+		</div>
+	</div>
+
+
+	{% if second_promo_text != blank %}
+		<p class="buystack__save-price" style="color: {{ second_promo_color }};">{{ second_promo_text }}</p>
+	{% endif %}
+</div>

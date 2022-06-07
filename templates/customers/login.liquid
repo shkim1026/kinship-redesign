@@ -1,0 +1,116 @@
+<!-- /templates/customers/login.liquid -->
+
+{% if customer %}
+  <p class="center">Redirecting...</p>
+  <script type="text/javascript">
+    window.location = "/account/";
+  </script>
+{% else %}
+  <section id="Login" class="account{% if shop.checkout.guest_login %} just{% endif %}">
+    <section class="col">
+      <div class="login{% if shop.checkout.guest_login %} align-left{% endif %}">
+        <h2 class="theme">Login</h2>
+        <p>Don't have an account? <a href="/account/register">Sign up here</a>.</p>
+        {% form 'customer_login' %}
+        <div class="input-group">
+          {{ form.errors | default_errors }}
+        </div>
+
+        <div class="input-group">
+          <input type="email" value="" name="customer[email]" id="customer_email"
+            class="input {% if form.errors contains 'email' %}input-error{% endif %}"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            value=""
+            required
+          />
+          <label for="customer_email">{{ 'customer.login.email' | t }}</label>
+        </div>
+        {% if form.password_needed %}
+          <div class="input-group">
+            <input type="password" value="" name="customer[password]" id="customer_password"
+              class="input {% if form.errors contains 'password' %}input-error{% endif %}" autocomplete="off" required/>
+            <label for="customer_password">{{ 'customer.login.password' | t }}</label>
+          </div>
+        {% endif %}
+
+        <button type="submit" class="button button--primary">
+          {{ 'customer.login.sign_in' | t }}
+        </button>
+
+        <div class="action-bottom">
+          <a href="#recover" onclick="showRecoverPasswordForm();">{{ 'customer.login.forgot_password' | t }}</a>
+          <span class="note">&nbsp; <a href="{{ shop.url }}">{{ 'customer.login.cancel' | t }}</a></span>
+        </div>
+        {% endform %}
+      </div>
+
+      <div class="recover-password">
+        <h2 class="theme">{{ 'customer.recover_password.title' | t }}</h2>
+        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+        {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+        <div class="input-group">
+          <input type="email" value="" size="30" name="email" id="recover-email" class="input large" required />
+          <label for="email">{{ 'customer.login.email' | t }}</label>
+        </div>
+        <div class="action-bottom">
+          <button class="button button--primary" type="submit">{{ 'customer.recover_password.submit' | t }}</button>
+          <br>
+          <a href="javascript:void(0)" onclick="hideRecoverPasswordForm();">{{ 'customer.recover_password.cancel' | t }}</a>
+        </div>
+        {% endform %}
+      </div>
+    </section>
+
+    {% if shop.checkout.guest_login %}
+      <section class="col">
+        <div class="guest-checkout">
+          <div class="input-group">
+            <h2 class="theme">{{ 'customer.login.guest_title' | t }}</h2>
+            {% form 'guest_login' %}
+            <button class="button button--primary" type="submit">{{ 'customer.login.guest_continue' | t }}</div>
+            {% endform %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+  </section>
+
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    if (window.location.hash == "#recover") {
+      showRecoverPasswordForm();
+    } else {
+      hideRecoverPasswordForm();
+    }
+
+    function showRecoverPasswordForm() {
+      $(".recover-password").show();
+      $(".login").hide();
+      window.location.hash = "#recover";
+      return false;
+    }
+
+    function hideRecoverPasswordForm() {
+      $(".recover-password").hide();
+      $(".login").show();
+      window.location.hash = "";
+      return false;
+    }
+
+    document.querySelector('#customer_email').addEventListener('animationstart', function (evt) {
+      $('#customer_email').parent().addClass('input-group--label-shifted');
+    });
+
+    document.querySelector('#customer_password').addEventListener('animationstart', function (evt) {
+      $('#customer_password').parent().addClass('input-group--label-shifted');
+    });
+  </script>
+{% endif %}

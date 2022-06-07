@@ -1,0 +1,392 @@
+{% assign details_order = product.metafields.details.section_order %}
+{% assign show_details_section = product.metafields.details.show_section %}
+{% assign details_section_bg = product.metafields.details.section_bg %}
+{% assign details_label = product.metafields.details.label %}
+
+{% assign ingredients_popup_text = product.metafields.general.ingredients_popup_text %}
+{% assign no_list_popup_text = product.metafields.general.no_list_popup_text %}
+
+{% comment %} WHAT'S IN IT {% endcomment %}
+{% assign whats_in_show_section = product.metafields.whats_in.show_block %}
+{% assign whats_in_tab_title = product.metafields.whats_in.tab_heading %}
+{% assign whats_in_tab_anchor = product.metafields.whats_in.tab_anchor | handle %}
+{% assign whats_in_ingredient_icons = product.metafields.whats_in.ingredient_icon %}
+{% assign whats_in_ingredient_icon_alt = product.metafields.whats_in.ingredient_icon_alt %}
+{% assign whats_in_ingredient_text = product.metafields.whats_in.ingredient_text %}
+{% assign full_ingredients_link = product.metafields.whats_in.ingr_list_link_text %}
+{% assign whats_in_secondary_popup_link = product.metafields.whats_in.secondary_popup_link %}
+{% assign whats_in_seconary_text = product.metafields.whats_in.secondary_text_before_link %}
+
+{% comment %} ALL THE FEELS {% endcomment %}
+{% assign feels_show_section = product.metafields.feels.show_section %}
+{% assign feels_tab_title = product.metafields.feels.tab_heading %}
+{% assign feels_tab_anchor = product.metafields.feels.tab_anchor | handle %}
+{% assign feels_image = product.metafields.feels.image %}
+{% assign feels_image_alt = product.metafields.feels.image_alt %}
+{% assign feels_content_titles = product.metafields.feels.feel_title %}
+{% assign feels_content_text =product.metafields.feels.feel_text %}
+
+
+{% comment %} HOW TO USE {% endcomment %}
+{% assign how_to_use_show_section = product.metafields.how_to_use.show_section %}
+{% assign how_to_use_tab_title = product.metafields.how_to_use.tab_heading %}
+{% assign how_to_use_tab_anchor = product.metafields.how_to_use.tab_anchor | handle %}
+{% assign how_to_use_step_titles = product.metafields.how_to_use.step_title %}
+{% assign how_to_use_step_text = product.metafields.how_to_use.step_text %}
+
+
+{% comment %} EARTH FIRST {% endcomment %}
+{% assign ecology_show_section = product.metafields.ecology.show_section %}
+{% assign ecology_tab_title = product.metafields.ecology.tab_heading %}
+{% assign ecology_tab_anchor = product.metafields.ecology.tab_anchor | handle %}
+{% assign ecology_icon_1 = product.metafields.ecology.icon_1 %}
+{% assign ecology_icon_2 = product.metafields.ecology.icon_2 %}
+{% assign ecology_title_1 = product.metafields.ecology.title_1 %}
+{% assign ecology_title_2 = product.metafields.ecology.title_2 %}
+{% assign ecology_text_1 = product.metafields.ecology.text_1 %}
+{% assign ecology_text_2 = product.metafields.ecology.text_2 %}
+
+{% if details_order == '0' or details_order == '1' or details_order == '-1' %}
+	{% assign details_class = 'product-details--first' %}
+{% endif %}
+
+{% if show_details_section %}
+	<div id="product-details" class="product-details {{ details_class }}" style="background-color: {{ details_section_bg }}; {% if details_order != blank %}order: {{ details_order }};{% endif %}">
+		<div class="container">
+			<div class="product-details__container">
+				{% if details_label != blank %}
+					<span class="product-details__label vertical-label">{{ details_label }}</span>
+				{% endif %}
+
+				<div class="product-details__tabs js-animate animate-fade-in-up" data-offset="100" style="color: {{ product_color }};">
+					{% if whats_in_tab_title != blank and whats_in_show_section %}
+						<div>
+							<h2>
+								<a href="#{{ whats_in_tab_anchor | default: 'product-details-ingredients' }}"
+								   class="product-details__tab js-details-tab-link"
+								   style="color: {{ product_color }};">
+									{{- whats_in_tab_title -}}
+								</a>
+							</h2>
+
+							<div class="js-details-accordion-content" data-details-accordion-id="#{{ whats_in_tab_anchor | default: 'product-details-ingredients' }}" style="display: none;">
+								<div class="product-details__accordion-wrapper">
+									{% for ingredient_icon in whats_in_ingredient_icons %}
+										<div class="product-details__ingredient">
+											{% if ingredient_icon != blank %}
+												<img data-src="{{ ingredient_icon }}"
+													 class="product-details__ingredient-icon lazyload"
+											     width="48px"
+											     height="48px"
+													 alt="{{ whats_in_ingredient_icon_alt[forloop.index0] }}">
+											{% endif %}
+
+											{% if whats_in_ingredient_text[forloop.index0] != blank %}
+												<div class="product-details__ingredient-text">{{ whats_in_ingredient_text[forloop.index0] }}</div>
+											{% endif %}
+										</div>
+									{% endfor %}
+
+									{% if full_ingredients_link != blank or whats_in_secondary_popup_link != blank %}
+										<div class="product-details__ingredient__links">
+											{% if full_ingredients_link != blank and ingredients_popup_text != blank %}
+												<a href="#ingredients-popup" class="product-details__popup-link js-open-popup">{{ full_ingredients_link }}</a>
+											{% endif %}
+
+											{% if whats_in_seconary_text != blank or whats_in_secondary_popup_link != blank %}
+												<span>
+													{{ whats_in_seconary_text }}
+
+													{% if whats_in_secondary_popup_link != blank and no_list_popup_text != blank %}
+														<a href="#details-secondary-popup" class="product-details__popup-link js-open-popup">{{ whats_in_secondary_popup_link }}</a>
+													{% endif %}
+												</span>
+											{% endif %}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+					{% if feels_tab_title != bland and feels_show_section %}
+						<div>
+							<h2>
+								<a href="#{{ feels_tab_anchor | default: 'product-details-feels' }}"
+								   class="product-details__tab js-details-tab-link"
+								   style="color: {{ product_color }};">
+									{{- feels_tab_title -}}
+								</a>
+							</h2>
+
+							<div class="js-details-accordion-content" data-details-accordion-id="#{{ feels_tab_anchor | default: 'product-details-feels' }}" style="display: none;">
+								<div class="product-details__accordion-wrapper">
+									<div class="product-details__feels">
+										{% if feels_image != blank %}
+											<img
+										     data-src="{{ feels_image }}"
+									       width="199px"
+									       height="199px"
+												 class="product-details__feels-image lazyload"
+												 alt="{{ feels_image_alt }}">
+										{% endif %}
+
+										{% if feels_content_titles.size > 0 %}
+											<div class="product-details__feels-content">
+												{% for feel_title in feels_content_titles %}
+													<div class="product-details__feels-item">
+														<p class="product-details__feels-title" style="color: {{ product_color }};">{{ feel_title }}</p>
+														{% if feels_content_text[forloop.index0] != blank %}
+															<p class="product-details__feels-text">{{ feels_content_text[forloop.index0] }}</p>
+														{% endif %}
+													</div>
+												{% endfor %}
+											</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+					{% if how_to_use_tab_title != bland and how_to_use_show_section %}
+						<div>
+							<h2>
+								<a href="#{{ how_to_use_tab_anchor | default: 'product-details-how-to-steps' }}"
+								   class="product-details__tab js-details-tab-link"
+								   data-triangle="true"
+								   style="color: {{ product_color }};">
+									{{- how_to_use_tab_title -}}
+								</a>
+							</h2>
+
+							<div class="js-details-accordion-content" data-details-accordion-id="#{{ how_to_use_tab_anchor | default: 'product-details-how-to-steps' }}" style="display: none;">
+								<div class="product-details__accordion-wrapper">
+									<div class="product-details__steps">
+										{% for step_title in how_to_use_step_titles %}
+											<div class="product-details__steps-item">
+												<p class="product-details__steps-title" style="color: {{ product_color }};">{{ step_title }}</p>
+
+												{% if how_to_use_step_text[forloop.index0] != blank %}
+													<p class="product-details__steps-text">{{ how_to_use_step_text[forloop.index0] }}</p>
+												{% endif %}
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+					{% if ecology_tab_title != bland and ecology_show_section %}
+						<div>
+							<h2>
+								<a href="#{{ ecology_tab_anchor | default: 'product-details-ecology' }}"
+								   class="product-details__tab js-details-tab-link"
+								   data-triangle="true"
+								   style="color: {{ product_color }};">
+									{{- ecology_tab_title -}}
+								</a>
+							</h2>
+
+							<div class="js-details-accordion-content" data-details-accordion-id="#{{ ecology_tab_anchor | default: 'product-details-ecology' }}" style="display: none;">
+								<div class="product-details__accordion-wrapper">
+									<div class="product-details__ecology">
+										<div class="product-details__ecology-container">
+											{% if ecology_title_1 != blank or ecology_icon_1 != blank %}
+												<div class="product-details__ecology-col">
+													{% if ecology_icon_1 != blank %}
+														<img src="{{ ecology_icon_1 }}" class="product-details__ecology-icon" alt="">
+													{% endif %}
+
+													{% if ecology_title_1 != blank %}
+														<p class="product-details__ecology-title" style="color: {{ product_color }};">{{ ecology_title_1 }}</p>
+													{% endif %}
+
+													{% if ecology_text_1 != blank %}
+														<div class="product-details__ecology-text">{{- ecology_text_1 -}}</div>
+													{% endif %}
+												</div>
+											{% endif %}
+
+											{% if ecology_title_2 != blank or ecology_icon_2 != blank %}
+												<div class="product-details__ecology-col">
+													{% if ecology_icon_2 != blank %}
+														<img src="{{ ecology_icon_2 }}" class="product-details__ecology-icon" alt="">
+													{% endif %}
+
+													{% if ecology_title_2 != blank %}
+														<p class="product-details__ecology-title" style="color: {{ product_color }};">{{ ecology_title_2 }}</p>
+													{% endif %}
+
+													{% if ecology_text_2 != blank %}
+														<div class="product-details__ecology-text">{{- ecology_text_2 -}}</div>
+													{% endif %}
+												</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+
+				<div class="product-details__content js-animate animate-fade-in-up" data-offset="100">
+					{% if whats_in_show_section %}
+						<div class="js-details-tab-content" data-details-tab-id="#{{ whats_in_tab_anchor | default: 'product-details-ingredients' }}" style="display: none;">
+							{% for ingredient_icon in whats_in_ingredient_icons %}
+								<div class="product-details__ingredient">
+									{% if ingredient_icon != blank %}
+										<img data-src="{{ ingredient_icon }}"
+											 class="product-details__ingredient-icon lazyload"
+										   width="48px"
+										   height="48px"
+											 alt="{{ whats_in_ingredient_icon_alt[forloop.index0] }}">
+									{% endif %}
+
+									{% if whats_in_ingredient_text[forloop.index0] != blank %}
+										<div class="product-details__ingredient-text">{{ whats_in_ingredient_text[forloop.index0] }}</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+
+							{% if full_ingredients_link != blank or whats_in_secondary_popup_link != blank %}
+								<div class="product-details__ingredient__links">
+									{% if full_ingredients_link != blank and ingredients_popup_text != blank %}
+										<a href="#ingredients-popup" class="product-details__popup-link js-open-popup">{{ full_ingredients_link }}</a>
+									{% endif %}
+
+									{% if whats_in_seconary_text != blank or whats_in_secondary_popup_link != blank %}
+										<span>
+											{{- whats_in_seconary_text -}}
+
+											{% if whats_in_secondary_popup_link != blank and no_list_popup_text != blank %}
+												<a href="#details-secondary-popup" class="product-details__popup-link js-open-popup">{{ whats_in_secondary_popup_link }}</a>
+											{% endif %}
+										</span>
+									{% endif %}
+								</div>
+							{% endif %}
+						</div>
+					{% endif %}
+
+					{% if feels_show_section %}
+						<div class="js-details-tab-content" data-details-tab-id="#{{ feels_tab_anchor | default: 'product-details-feels' }}" style="display: none;">
+							<div class="product-details__feels">
+								{% if feels_image != blank %}
+									<img
+								     data-src="{{ feels_image }}"
+										 class="product-details__feels-image lazyload"
+								     width="199px"
+								     height="199px"
+										 alt="{{ feels_image_alt }}">
+								{% endif %}
+
+								{% if feels_content_titles.size > 0 %}
+									<div class="product-details__feels-content">
+										{% for feel_title in feels_content_titles %}
+											<div class="product-details__feels-item">
+												<p class="product-details__feels-title" style="color: {{ product_color }};">{{ feel_title }}</p>
+												{% if feels_content_text[forloop.index0] != blank %}
+													<p class="product-details__feels-text">{{ feels_content_text[forloop.index0] }}</p>
+												{% endif %}
+											</div>
+										{% endfor %}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if how_to_use_show_section %}
+						<div class="js-details-tab-content" data-details-tab-id="#{{ how_to_use_tab_anchor | default: 'product-details-how-to-steps' }}" style="display: none;">
+							<div class="product-details__steps">
+								<span class="product-details__triangle js-details-triangle"></span>
+
+								{% for step_title in how_to_use_step_titles %}
+									<div class="product-details__steps-item">
+										<p class="product-details__steps-title" style="color: {{ product_color }};">{{ step_title }}</p>
+
+										{% if how_to_use_step_text[forloop.index0] != blank %}
+											<p class="product-details__steps-text">{{ how_to_use_step_text[forloop.index0] }}</p>
+										{% endif %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+
+					{% if ecology_show_section %}
+						<div class="js-details-tab-content" data-details-tab-id="#{{ ecology_tab_anchor | default: 'product-details-ecology' }}" style="display: none;">
+							<div class="product-details__ecology">
+								<span class="product-details__triangle js-details-triangle"></span>
+
+								<div class="product-details__ecology-container">
+									{% if ecology_title_1 != blank or ecology_icon_1 != blank %}
+										<div class="product-details__ecology-col">
+											{% if ecology_icon_1 != blank %}
+												<img src="{{ ecology_icon_1 }}" class="product-details__ecology-icon" alt="">
+											{% endif %}
+
+											{% if ecology_title_1 != blank %}
+												<p class="product-details__ecology-title" style="color: {{ product_color }};">{{ ecology_title_1 }}</p>
+											{% endif %}
+
+											{% if ecology_text_1 != blank %}
+												<div class="product-details__ecology-text">{{- ecology_text_1 -}}</div>
+											{% endif %}
+										</div>
+									{% endif %}
+
+									{% if ecology_title_2 != blank or ecology_icon_2 != blank %}
+										<div class="product-details__ecology-col">
+											{% if ecology_icon_2 != blank %}
+												<img src="{{ ecology_icon_2 }}" class="product-details__ecology-icon" alt="">
+											{% endif %}
+
+											{% if ecology_title_2 != blank %}
+												<p class="product-details__ecology-title" style="color: {{ product_color }};">{{ ecology_title_2 }}</p>
+											{% endif %}
+
+											{% if ecology_text_2 != blank %}
+												<div class="product-details__ecology-text">{{- ecology_text_2 -}}</div>
+											{% endif %}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+		{% if ingredients_popup_text != blank %}
+			<div id="ingredients-popup" class="popup popup--text js-popup">
+				<div class="popup__container">
+					<div class="popup__content">
+						<button class="popup__close-button js-close-popup">{% include 'icon-close-2' %}</button>
+						<div class="popup__inner">
+							{{- ingredients_popup_text -}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if no_list_popup_text != blank %}
+			<div id="details-secondary-popup" class="popup popup--text js-popup">
+				<div class="popup__container">
+					<div class="popup__content">
+						<button class="popup__close-button js-close-popup">{% include 'icon-close-2' %}</button>
+						<div class="popup__inner">
+							{{- no_list_popup_text -}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+	</div>
+{% endif %}

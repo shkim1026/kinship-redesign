@@ -1,0 +1,161 @@
+<section class="tonal-text" style="background-color: {{ section.settings.section_bg }}">
+	{% assign desktop_image = section.settings.image_desktop %}
+	{% assign mobile_image = section.settings.image_mobile %}
+	{% assign cta_url = section.settings.cta_url %}
+
+	{% if desktop_image != blank %}
+		{% include 'picture', image_desk: desktop_image, image_mobile: mobile_image, class_name: 'tonal-text__bg', image_attr: , pic_attr: , figcaption: %}
+
+		{% comment %}
+		<picture>
+			{% if mobile_image != blank %}
+				<source srcset="{{ mobile_image | img_url: '767x' }} 1x, {{ mobile_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% else %}
+				<source srcset="{{ desktop_image | img_url: '767x' }} 1x, {{ desktop_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% endif %}
+
+			<img class="tonal-text__bg"
+				 src="{{ desktop_image | img_url: '1920x' }}"
+				 srcset="{{ desktop_image | img_url: '1920x' }} 1x, {{ desktop_image | img_url: '3840x' }}"
+				 alt="{{ desktop_image.alt }}">
+		</picture>
+		{% endcomment %}
+	{% endif %}
+
+	<div class="container">
+		<div class="row">
+			<div class="offset-md-2 col-md-8">
+				{% if section.settings.title != blank %}
+					{% if cta_url != blank %}
+						<h2 class="tonal-text__title">
+							<a href="{{ cta_url }}">{{ section.settings.title }}</a>
+						</h2>
+					{% else %}
+						<h2 class="tonal-text__title">{{ section.settings.title }}</h2>
+					{% endif %}
+				{% endif %}
+
+				{% if section.settings.subtitle != blank %}
+					{% if cta_url != blank %}
+						<h3 class="tonal-text__subtitle"><a href="{{ cta_url }}">{{ section.settings.subtitle }}</a></h3>
+					{% else %}
+						<h3 class="tonal-text__subtitle">{{ section.settings.subtitle }}</h3>
+					{% endif %}
+				{% endif %}
+
+				{% if cta_url != blank and section.settings.cta_text != blank %}
+					<a href="{{ cta_url }}" class="button">{{ section.settings.cta_text }}</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	{% if cta_url != blank %}
+		<a href="{{ cta_url }}" class="tonal-text__link-wrapper"></a>
+	{% endif %}
+</section>
+
+<style>
+	#shopify-section-{{ section.id }} .tonal-text {
+		color: {{ section.settings.text_color }};
+	}
+
+	#shopify-section-{{ section.id }} .tonal-text .tonal-text__title {
+		font-size: {{ section.settings.title_fz }}px;
+	}
+
+	#shopify-section-{{ section.id }} .tonal-text .tonal-text__subtitle {
+		font-size: {{ section.settings.text_fz }}px;
+	}
+
+	#shopify-section-{{ section.id }} .tonal-text .button {
+		background-color: #fff;
+		color: {{ section.settings.text_color }};
+		border-color: {{ section.settings.text_color }};
+	}
+
+	#shopify-section-{{ section.id }} .tonal-text .button:hover {
+		background-color: {{ section.settings.text_color }};
+		color: #fff;
+	}
+</style>
+
+{% schema %}
+{
+	"name": "Tonal text",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Heading",
+			"default": "For All Well Beings"
+		},
+		{
+			"type": "textarea",
+			"id": "subtitle",
+			"label": "Subheading",
+			"default": "We are kind to people + planet with clean, cruelty-free products + conscious packaging."
+		},
+		{
+			"type": "text",
+			"id": "cta_text",
+			"label": "CTA text",
+			"default": "our beliefs"
+		},
+		{
+			"type": "url",
+			"id": "cta_url",
+			"label": "CTA url"
+		},
+		{
+			"type":   "range",
+			"id":     "title_fz",
+			"min":       30,
+			"max":       70,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Heading font size",
+			"default":   60
+		},
+		{
+			"type":   "range",
+			"id":     "text_fz",
+			"min":       18,
+			"max":       35,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Text font size",
+			"default":   26
+		},
+		{
+			"type": "color",
+			"id": "section_bg",
+			"label": "Background color",
+			"info":"Appears if no images are set.",
+			"default": "#ecfcff"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text color",
+			"default": "#18a1c3"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_desktop",
+			"label": "Background image desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_mobile",
+			"label": "Background image mobile"
+		}
+	],
+	"presets": [
+		{
+			"name": "Tonal text",
+			"category": "Content"
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,236 @@
+<div class="product-sliders-container">
+
+	<div id="products-bg-slider" class="products-bg-slider">
+		{% for block in section.blocks %}
+			{% if block.settings.bg_image != blank %}
+				{% assign product = all_products[block.settings.product] %}
+				{% assign preorder_enable = product.metafields.general.preodrder_enable %}
+				{% assign product_color = product.metafields.general.main_color %}
+				{% assign mobile_image = block.settings.bg_image_mob %}
+
+				<div>
+					<div class="products-bg-slider__image-wrapper products-bg-slider__image-wrapper--{{ forloop.index }}">
+						<a href="{{ product.url }}">
+
+							{% include 'picture', image_desk: block.settings.bg_image, image_mobile: mobile_image, class_name: 'products-bg-slider__image', image_attr: , pic_attr: , figcaption:  %}
+						</a>
+
+						{% if product.available and preorder_enable %}
+							<a href="{{ product.url | within: collection }}" class="button preorder">{{ 'products.product.pre_order' | t }} <span class="price"> {{ product.price | money_without_trailing_zeros  }}</span></a>
+							{% elsif product.available %}
+							<a href="{{ product.url | within: collection }}" class="button add-to-cart"
+							   data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+								{% if product.metafields.subscriptions.subscription_id %}
+									data-recharge-original-handle="{{ product.handle | prepend: '/products/' }}"
+								{% endif %}
+								{% if product.compare_at_price_max > product.price %}
+									data-compare-price="{{ product.compare_at_price_max | money_without_trailing_zeros }}"
+								{% endif %}
+								 data-promo="{{ product.metafields.general.promo_message }}">{{ 'products.product.add_to_cart' | t }}
+								{% if product.price_varies %}
+									<span class="price">
+										{{ product.price_min | money_without_trailing_zeros }}
+									</span>
+								{% else %}
+									{% if product.compare_at_price_max > product.price %}
+										<span class="compare-price"><s>{{ product.compare_at_price_max | money_without_trailing_zeros }}</s></span>
+										<span class="price">
+											{{ product.price | money_without_trailing_zeros  }}
+										</span>
+									{% else %}
+										<span class="price">
+											{{ product.price | money_without_trailing_zeros  }}
+										</span>
+									{% endif %}
+								{% endif %}
+							</a>
+						{% else %}
+							<a href="{{ product.url }}" class="button">sold out</a>
+						{% endif %}
+
+						{% comment %}
+							<a href="{{ product.url }}" class="button">{{ 'products.product.shop_now' | t }}</a>
+						{% endcomment %}
+
+						<style>
+							#shopify-section-{{ section.id }} .products-bg-slider__image-wrapper--{{ forloop.index }} .button {
+								color: {{ product_color }};
+								border-color: {{ product_color }};
+							}
+
+							#shopify-section-{{ section.id }} .products-bg-slider__image-wrapper--{{ forloop.index }} .button:hover {
+								color: #fff;
+								background-color: {{ product_color }};
+							}
+						</style>
+					</div>
+				</div>
+
+				{% assign preorder_enable = false %}
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div id="products-slider"
+		 class="products-slider"
+		 data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+	>
+
+		{% for block in section.blocks %}
+			{% if block.settings.product != blank %}
+				{% assign product = all_products[block.settings.product] %}
+
+				{% assign preorder_enable = product.metafields.general.preodrder_enable %}
+				{% assign product_color = product.metafields.general.main_color %}
+				{% assign background_color = block.settings.circle_background_color %}
+				{% assign product_title = product.metafields.general.main_title %}
+				{% assign product_subtitle = product.metafields.general.subtitle %}
+
+				<div data-color="{{ product_color }}" data-background-color="{{ background_color }}">
+					<div class="products-slider__slide products-slider__slide--{{ forloop.index }}"
+						 style="color: {{ product_color }};">
+						<a href="{{ product.url }}">
+							{% include 'picture', image_desk: product.featured_image, image_mobile: , class_name: 'products-slider__image', image_attr: , pic_attr: , figcaption:  %}
+
+							{% comment %}
+							<picture>
+								<img src="{{ product.featured_image | img_url: '317x' }}"
+									 class="products-slider__image"
+									 srcset="{{ product.featured_image | img_url: '317x' }} 1x, {{ product.featured_image | img_url: '634x' }} 2x"
+									 alt="{{ product.featured_image.alt }}">
+							</picture>
+							{% endcomment %}
+						</a>
+
+						{% if product_title != blank %}
+							<h4 class="products-slider__title"><a href="{{ product.url }}">{{ product_title }}</a></h4>
+						{% else %}
+							<h4 class="products-slider__title"><a href="{{ product.url }}">{{ product.title }}</a></h4>
+						{% endif %}
+
+						{% if product_subtitle != blank %}
+							<p class="products-slider__subtitle"><a href="{{ product.url }}">{{ product_subtitle }}</a></p>
+						{% endif %}
+
+						{% if product.available and preorder_enable %}
+							<a href="{{ product.url | within: collection }}" class="button preorder">{{ 'products.product.pre_order' | t }} <span class="price"> {{ product.price | money_without_trailing_zeros  }}</span></a>
+							{% elsif product.available %}
+							<a href="{{ product.url | within: collection }}" class="button add-to-cart"
+							   data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+								{% if product.metafields.subscriptions.subscription_id %}
+									data-recharge-original-handle="{{ product.handle | prepend: '/products/' }}"
+								{% endif %}
+								{% if product.compare_at_price_max > product.price %}
+									data-compare-price="{{ product.compare_at_price_max | money_without_trailing_zeros }}"
+								{% endif %}
+							   data-promo="{{ product.metafields.general.promo_message }}">{{ 'products.product.add_to_cart' | t }}
+								{% if product.selected_or_first_available_variant.price_varies %}
+									<span class="price">
+										{{ product.price_min | money_without_trailing_zeros }}
+									</span>
+								{% else %}
+									{% if product.compare_at_price_max > product.price %}
+										<span class="compare-price"><s>{{ product.compare_at_price_max | money_without_trailing_zeros }}</s></span>
+										<span class="price">
+											{{ product.price | money_without_trailing_zeros  }}
+										</span>
+									{% else %}
+										<span class="price">
+											{{ product.price | money_without_trailing_zeros  }}
+										</span>
+									{% endif %}
+								{% endif %}
+							</a>
+						{% else %}
+							<a href="{{ product.url }}" class="button">sold out</a>
+						{% endif %}
+
+						{% comment %}
+						<a href="{{ product.url }}" class="button">{{ 'products.product.shop_now' | t }}</a>
+						{% endcomment %}
+
+						<style>
+							#shopify-section-{{ section.id }} .products-slider__slide--{{ forloop.index }} .button {
+								color: {{ product_color }};
+								border-color: {{ product_color }};
+							}
+
+							#shopify-section-{{ section.id }} .products-slider__slide--{{ forloop.index }} .button:hover {
+								color: #fff;
+								background-color: {{ product_color }};
+							}
+						</style>
+					</div>
+				</div>
+				{% assign preorder_enable = false %}
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<style>
+		#shopify-section-{{ section.id }} .slick-dots li.slick-active button {
+			background-color: {{ section.settings.dots_color }};
+			border-color: {{ section.settings.dots_color }};
+		}
+	</style>
+</div>
+
+
+{% schema %}
+{
+	"name": "Slideshow",
+	"settings": [
+		{
+			"type":   "range",
+			"id":     "autoplay_speed",
+			"min":       3,
+			"max":       10,
+			"step":      1,
+			"unit":      "sec",
+			"label":     "Autoplay speed (in sec)",
+			"default":   5
+		},
+		{
+			"type": "color",
+			"id": "dots_color",
+			"label": "Active dot background color",
+			"default": "#002798"
+		}
+	],
+	"blocks": [
+		{
+			"type": "product_slide",
+			"name": "Product slide",
+			"settings": [
+				{
+					"type": "product",
+					"id": "product",
+					"label": "Product"
+				},
+				{
+					"type": "color",
+					"id": "circle_background_color",
+					"label": "Circle background color",
+					"default": "#fff"
+				},
+				{
+					"type": "image_picker",
+					"id": "bg_image",
+					"label": "Background image (desktop)"
+				},
+				{
+					"type": "image_picker",
+					"id": "bg_image_mob",
+					"label": "Background image (mobile)"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Slideshow",
+			"category": "Product"
+		}
+	]
+}
+{% endschema %}

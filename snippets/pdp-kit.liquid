@@ -1,0 +1,159 @@
+{% assign kit_order = product.metafields.kit.section_order %}
+{% assign show_section = product.metafields.kit.show_section %}
+{% assign title = product.metafields.kit.heading %}
+{% assign subtitle = product.metafields.kit.subheading %}
+{% assign subtitle_fontsize = product.metafields.kit.subheading_font_size %}
+{% assign bg_color = product.metafields.kit.bg_color %}
+{% assign image_desktop = product.metafields.kit.image_desktop %}
+{% assign image_mobile = product.metafields.kit.image_mobile %}
+{% assign image_alt = product.metafields.kit.image_alt %}
+
+{% assign products_in_kit = product.metafields.kit.product %}
+{% assign are_products_with_links = product.metafields.kit.enable_links_on_products %}
+
+{% assign ingredients_popup_text = product.metafields.general.ingredients_popup_text %}
+{% assign no_list_popup_text = product.metafields.general.no_list_popup_text %}
+
+{% assign ingredients_popup_link = product.metafields.kit.ingredients_list_list %}
+{% assign secondary_popup_link = product.metafields.kit.secondary_popup_link %}
+{% assign secondary_text = product.metafields.kit.popup_link_text %}
+
+{% if products_in_kit.size > 0 and show_section %}
+	<section id="product-kit" class="kit"
+			 style="
+			 {% if kit_order != blank %}order: {{ kit_order }};{% endif %}
+			 {% if bg_color != blank %} background-color: {{ bg_color }};{% endif %}">
+		{% if image_desktop != blank %}
+			<picture>
+				{% if image_mobile != blank %}
+					<source srcset="//images.accentuate.io?c_options=w_400&image={{ image_mobile }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_800&image={{ image_mobile }}&shop={{ shop.name }} 2x"
+							media="(max-width: 400px)">
+
+					<source srcset="//images.accentuate.io?c_options=w_767&image={{ image_mobile }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_1534&image={{ image_mobile }}&shop={{ shop.name }} 2x"
+							media="(max-width: 767px)">
+				{% else %}
+					<source srcset="//images.accentuate.io?c_options=w_400&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_800&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+							media="(max-width: 400px)">
+
+					<source srcset="//images.accentuate.io?c_options=w_767&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+									//images.accentuate.io?c_options=w_1534&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+							media="(max-width: 767px)">
+				{% endif %}
+
+				<img src="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }}"
+					 srcset="//images.accentuate.io?c_options=w_1920&image={{ image_desktop }}&shop={{ shop.name }} 1x,
+							//images.accentuate.io?c_options=w_2840&image={{ image_desktop }}&shop={{ shop.name }} 2x"
+					 class="kit__image"
+					 alt="{{ image_alt }}">
+			</picture>
+		{% endif %}
+
+		<div class="container">
+			<div class="kit__list">
+				<div class="kit__header">
+					<h3 class="kit__title">{{ title }}</h3>
+				</div>
+
+				{% if subtitle != blank %}
+					<p class="kit__subtitle" style="font-size: {{ subtitle_fontsize }}px;">{{ subtitle }}</p>
+				{% endif %}
+
+				<ul class="kit__products">
+					{% for product_handle in products_in_kit limit: 10 %}
+						{% if product_handle != blank %}
+
+							{% assign product = all_products[product_handle] %}
+							{% assign product_title = product.metafields.general.main_title %}
+							{% assign product_subtitle = product.metafields.general.subtitle %}
+							{% assign product_weight = product.metafields.general.weight %}
+							{% assign short_description = product.metafields.general.short_description %}
+
+							<li class="kit-product">
+								<div class="kit-product__thumbnail">
+									{% if are_products_with_links %}
+										<a href="{{ product.url }}">
+									{% endif %}
+									<img class="kit-product__image"
+										 src="{{ product.featured_image | img_url: '120x' }}"
+										 srcset="{{ product.featured_image | img_url: '120x' }} 1x, {{ product.featured_image | img_url: '240x' }} 2x"
+										 alt="{{ product.featured_image.alt }}">
+									{% if are_products_with_links %}
+										</a>
+									{% endif %}
+								</div>
+
+								<div class="kit-product__content">
+									<h5 class="kit-product__title">
+										{% if are_products_with_links %}
+											<a href="{{ product.url }}" class="kit-product__title-text">{{- product_title | default: product.title -}}</a>
+										{% else %}
+											<span class="kit-product__title-text">{{- product_title | default: product.title -}}</span>
+										{% endif %}
+
+										{% if product_weight != blank %}
+											<span class="kit-product__weight">{{- product_weight -}}</span>
+										{% endif %}
+									</h5>
+
+									{% if product_subtitle != blank %}
+										<p class="kit-product__subtitle">{{ product_subtitle }}</p>
+									{% endif %}
+
+									{% if short_description != blank %}
+										<div class="kit-product__description">{{ short_description }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+
+				{% if ingredients_popup_link != blank or secondary_popup_link != blank %}
+					<div class="kit__links">
+						{% if ingredients_popup_link != blank and ingredients_popup_text != blank %}
+							<a href="#kit-ingredients-popup" class="kit__popup-link js-open-popup">{{ ingredients_popup_link }}</a>
+						{% endif %}
+
+						{% if secondary_text != blank %}
+							<span>{{ secondary_text }} </span>
+						{% endif %}
+
+						{% if secondary_popup_link != blank and no_list_popup_text != blank %}
+
+							<a href="#kit-details-secondary-popup" class="js-open-popup">{{ secondary_popup_link }}</a>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+		{% if ingredients_popup_text != blank %}
+			<div id="kit-ingredients-popup" class="popup popup--text js-popup">
+				<div class="popup__container">
+					<div class="popup__content">
+						<button class="popup__close-button js-close-popup">{% render 'icon-close-2' %}</button>
+						<div class="popup__inner">
+							{{- ingredients_popup_text -}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if no_list_popup_text != blank %}
+			<div id="kit-details-secondary-popup" class="popup popup--text js-popup">
+				<div class="popup__container">
+					<div class="popup__content">
+						<button class="popup__close-button js-close-popup">{% render 'icon-close-2' %}</button>
+						<div class="popup__inner">
+							{{- no_list_popup_text -}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</section>
+{% endif %}
