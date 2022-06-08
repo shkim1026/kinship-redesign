@@ -12426,3 +12426,44 @@ body.template-product {
 	}
 
 }
+
+// HP Redesign
+.product-module__header {
+	text-align: center;
+	line-height: 2rem;
+}
+
+.product-module__row {
+	display: grid;
+	grid-gap: 30px;
+	grid-template-columns: repeat(3, minmax(320px, 1fr));
+	overflow-x: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.product-module__row::-webkit-scrollbar {
+	display: none;
+}
+
+@media (max-width: 991px) {
+	.product-module__card-wrapper {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+	.product-module__row {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+
+@media (max-width: 767px) {
+	.product-module__header {
+		padding: 0rem 2rem;
+	}
+	.product-module__row {
+		padding-left: 20px;
+		padding-right: 20px;
+		grid-template-columns: repeat(2,minmax(150px,1fr));
+		grid-gap: 20px;
+	}
+}
