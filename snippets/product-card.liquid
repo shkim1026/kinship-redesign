@@ -16,7 +16,6 @@
 
 {% assign custom_image = custom_image %}
 {% assign extra_class = class %}
-{% assign another_class = class2 %}
 {% assign is_big_card = is_big_card %} {% comment %}It's can be used on homepage (featured products) for NOT to crop image{% endcomment %}
 
 {% if custom_image != blank %}
@@ -32,7 +31,7 @@
 {% endif %}
 
 
-<div class="product-card {{ extra_class }} {{ another_class }} " {% if is_big_card %}data-big="{{ is_big_card }}"{% endif %}>
+<div class="product-card {{ extra_class }}" {% if is_big_card %}data-big="{{ is_big_card }}"{% endif %}>
 	{% comment %}
 		{% include 'gwp-product' %}
 	{% endcomment %}
