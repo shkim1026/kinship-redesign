@@ -1,43 +1,28 @@
-<div class="image-product-module">
-    <div class="image-product-module__header">
+<div class="collections-module>
+    <div class="collections-module__header">
         {% if section.settings.enable_header and section.settings.section_header_text != blank %}
-            <h4 class="image-product-module__header-text">{{ section.settings.section_header_text }}</h4>
+            <h4 class="collections-module__header-text">{{ section.settings.section_header_text }}</h4>
         {% endif %}
 
         {% if section.settings.enable_subhead and section.settings.section_subhead_text != blank %}
-            <p class="image-product-module__subhead-text">{{ section.settings.section_subhead_text }}</p>
+            <p class="collections-module__subhead-text">{{ section.settings.section_subhead_text }}</p>
         {% endif %}
     </div>
 
     <div class="container">
-        <div class="image-product-module__card-wrapper">
-            <div class="image-product-module__row">
+        <div class="collections-module__card-wrapper">
+            <div class="collections-module__row">
 				{% if section.blocks.size > 0 %}
 					{% for block in section.blocks %}
 						{% case block.type %}
                             {% when 'product_card' %}
                             {% assign product = all_products[block.settings.product] %}
-                            {% assign custom_image = block.settings.image %}                        
+                            {% assign custom_image = block.settings.image %}
+                            
 
                             {% if product != blank and product.type != 'GWP' and product.type != 'Evergreen GWP'%}
                                 {% include 'product-card' custom_image: custom_image, class: class %}
                             {% endif %}
-
-                            {% when 'wide-image-card' %}
-                            {% assign product = block.settings.link_to_product %}
-                            {% assign collection = block.settings.link_to_collection %}
-                                <div class="wide-image-card">
-                                    {% if collection != blank and product == blank %}
-                                        <a href="{{ collection.url }}" class="wide-image-card__link-wrapper">
-                                    {% elsif product != blank and collection == blank %}
-                                        <a href="{{ product.url }}" class="wide-image-card__link-wrapper">
-                                    {% endif %}
-                                    <picture>
-                                        <source media="(min-width: 768px)" srcset="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                        <source media="(max-width: 767px)" srcset="{{ block.settings.wide_image_mobile | img_url: 'master' }}">
-                                        <img src="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                    </picture>
-                                </div>
                         {% endcase %}
                     {% endfor %}
                 {% endif %}
@@ -47,76 +32,32 @@
 </div>
 
 <style>
-    #shopify-section-{{ section.id }} .image-product-module {
+    #shopify-section-{{ section.id }} .collections-module {
         background-color: {{ section.settings.section_bg }};
         padding-bottom: {{ section.settings.section_bottom_padding }}px;
     }
-    #shopify-section-{{ section.id }} .image-product-module__header {
+    #shopify-section-{{ section.id }} collections-module__header {
         padding-top: {{ section.settings.header_top_padding_desktop }}px;
         padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
     }
-    #shopify-section-{{ section.id }} .image-product-module__header-text {
+    #shopify-section-{{ section.id }} .collections-module__header-text {
         font-size: {{ section.settings.header_font_size }}px;
         color: {{ section.settings.header_text_color }};
     }
-    #shopify-section-{{ section.id }} .image-product-module__subhead-text {
+    #shopify-section-{{ section.id }} .collections-module__subhead-text {
         font-size: {{ section.settings.subhead_font_size }}px;
         color: {{ section.settings.subhead_text_color }};
     }
-    #shopify-section-{{ section.id }} .wide-image-card {
-        grid-row-start: 1;
-        grid-column: span 2;
-        border-radius: 10px;
-    }
-    #shopify-section-{{ section.id }} .wide-image-card img {
-        border-radius: 10px;
-    }
-    #shopify-section-{{ section.id }} .product-card {
-        grid-row-start: 1;
-    }
 
     @media (max-width: 767px) {
-        #shopify-section-{{ section.id }} .image-product-module__header {
+        #shopify-section-{{ section.id }} .collections-module__header {
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .image-product-module__row {
-            display: flex;
-            flex-direction: column;
-            {% for block in section.blocks %}
-                {% if block.settings.switch_image_order == true %}
-                    flex-direction: column-reverse;
-                {% endif %}
-            {% endfor %}
-        }
-        #shopify-section-{{ section.id }} .product-card__icon img {
-            width: 23px;
-            height: 23px;
-        }
-
-        #shopify-section-{{ section.id }} .product-card__icons {
-            top: 15px;
-            left: 15px;
-        }
-        #shopify-section-{{ section.id }} .product-card__icon+.product-card__icon {
-           margin-left: 5px;
-        }
-        #shopify-section-{{ section.id }} .product-card__title {
-            line-height: 1.59;
-        }
-        #shopify-section-{{ section.id }} .product-card__reviews {
-            margin-top: 10px;
-        }
-        #shopify-section-{{ section.id }} .product-card {
-            padding: 50px;
-            padding-top: 0;
-            padding-bottom: 25px;
-        }
-
-        #shopify-section-{{ section.id }} .image-product-module__header-text {
+        #shopify-section-{{ section.id }} .collections-module__header-text {
             font-size: {{ section.settings.header_font_size_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .image-product-module__subhead-text {
+        #shopify-section-{{ section.id }} .collections-module__subhead-text {
             font-size: {{ section.settings.subhead_font_size_mobile }}px;
             line-height: 1rem;
             padding-top: 1rem;
@@ -124,19 +65,13 @@
                 display: none;
             {% endif %}
         }
-        #shopify-section-{{ section.id }} .yotpo-stars {
-            align-self: center;
-        }
-        #shopify-section-{{ section.id }} .yotpo-icon {
-            font-size: 12.5px;
-        }
     }
 </style>
 
 {% schema %}
 {
-    "name": "Image + Product Module",
-    "max_blocks": 2,
+    "name": "Collections Module",
+    "max_blocks": 3,
     "settings": [
         {
             "type": "header",
@@ -283,13 +218,33 @@
 			"unit":      "px",
 			"label":     "Header bottom padding (mobile)",
 			"default":   50
-		}
+		},
+        {
+            "type": "header",
+            "content": "Product Card Settings"
+        },
+        {
+            "type": "radio",
+            "id": "product_card_grid_col",
+            "label": "Display 2 or 4 Products (mobile)",
+            "options": [
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                }
+            ],
+            "default": "4"
+        }
     ],
     "blocks": [
         {
 			"type": "product_card",
 			"name": "Product card",
-			"limit": 1,
+			"limit": 4,
 			"settings": [
 				{
 					"type": "product",
@@ -303,46 +258,11 @@
 					"info": "Show custom image instead of product image"
 				}
 			]
-		},
-        {
-            "type": "wide-image-card",
-            "name": "Wide image card",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "image_picker",
-                    "id": "wide_image_desktop",
-                    "label": "Wide Image (Desktop)"
-                },
-                {
-                    "type": "image_picker",
-                    "id": "wide_image_mobile",
-                    "label": "Image (Mobile)"
-                },
-                {
-                    "type": "product",
-                    "id": "link_to_product",
-                    "label": "Link to Product",
-                    "info": "Link a product"
-                },
-                {
-                    "type": "collection",
-                    "id": "link_to_collection",
-                    "label": "Link to Collection",
-                    "info": "Or link a collection"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "switch_image_order",
-                    "label": "Switch the order of cards (Mobile)",
-                    "default": false
-                }
-            ]
-        }
+		}
     ],
     "presets": [
         {
-            "name": "Image + Product Module",
+            "name": "Product Module",
             "category": "Product"
         }
     ]
