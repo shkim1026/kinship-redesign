@@ -24,13 +24,20 @@
                             {% endif %}
 
                             {% when 'wide-image-card' %}
-                            <div class="wide-image-card">
-                                <picture>
-                                    <source media="(min-width: 768px)" srcset="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                    <source media="(max-width: 767px)" srcset="{{ block.settings.wide_image_mobile | img_url: 'master' }}">
-                                    <img src="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                </picture>
-                            </div>
+                            {% assign product = block.settings.link_to_product %}
+                            {% assign collection = block.settings.link_to_collection %}
+                                <div class="wide-image-card">
+                                    {% if collection != blank and product == blank %}
+                                        <a href="{{ collection.url }}" class="wide-image-card__link-wrapper">
+                                    {% elsif product != blank and collection == blank %}
+                                        <a href="{{ product.url }}" class="wide-image-card__link-wrapper">
+                                    {% endif %}
+                                    <picture>
+                                        <source media="(min-width: 768px)" srcset="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
+                                        <source media="(max-width: 767px)" srcset="{{ block.settings.wide_image_mobile | img_url: 'master' }}">
+                                        <img src="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
+                                    </picture>
+                                </div>
                         {% endcase %}
                     {% endfor %}
                 {% endif %}
@@ -78,6 +85,30 @@
                 {% endif %}
             {% endfor %}
         }
+        #shopify-section-{{ section.id }} .product-card__icon img {
+            width: 23px;
+            height: 23px;
+        }
+
+        #shopify-section-{{ section.id }} .product-card__icons {
+            top: 15px;
+            left: 15px;
+        }
+        #shopify-section-{{ section.id }} .product-card__icon+.product-card__icon {
+           margin-left: 5px;
+        }
+        #shopify-section-{{ section.id }} .product-card__title {
+            line-height: 1.59;
+        }
+        #shopify-section-{{ section.id }} .product-card__reviews {
+            margin-top: 10px;
+        }
+        #shopify-section-{{ section.id }} .product-card {
+            padding: 50px;
+            padding-top: 0;
+            padding-bottom: 25px;
+        }
+
         #shopify-section-{{ section.id }} .image-product-module__header-text {
             font-size: {{ section.settings.header_font_size_mobile }}px;
         }
