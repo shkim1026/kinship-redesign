@@ -91,9 +91,9 @@
             {% if section.settings.stack_cards_mobile == true %}
                 grid-template-columns: repeat(2,minmax(150px,1fr));
             {% elsif section.settings.stack_cards_mobile == false and section.settings.product_card_grid_col == '2' %}
-                grid-template-columns: repeat(2,minmax(320px,1fr));
+                grid-template-columns: repeat(2,minmax(290px,1fr));
             {% else %}
-                grid-template-columns: repeat(4,minmax(320px,1fr));
+                grid-template-columns: repeat(4,minmax(290px,1fr));
             {% endif %}
             grid-gap: 15px;
         }
