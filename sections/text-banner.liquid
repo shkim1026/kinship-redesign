@@ -1,0 +1,213 @@
+<div class="text-banner">
+    <div class="text-banner__header">
+        {% if section.settings.enable_header and section.settings.section_header_text != blank %}
+            <h4 class="text-banner__header-text">{{ section.settings.section_header_text }}</h4>
+        {% endif %}
+
+        {% if section.settings.enable_subhead and section.settings.section_subhead_text != blank %}
+            <p class="text-banner__subhead-text">{{ section.settings.section_subhead_text }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    #shopify-section-{{ section.id }} .text-banner {
+        background-color: {{ section.settings.section_bg }};
+    }
+    #shopify-section-{{ section.id }} .text-banner__header {
+        text-align: {{ section.settings.text_align }};
+        padding-top: {{ section.settings.header_top_padding_desktop }}px;
+        padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
+        max-width: 1240px;
+        margin: 0 auto;
+    }
+    #shopify-section-{{ section.id }} .text-banner__header-text {
+        font-size: {{ section.settings.header_font_size }}px;
+        color: {{ section.settings.header_text_color }};
+        letter-spacing: 1.07px;
+    }
+    #shopify-section-{{ section.id }} .text-banner__subhead-text {
+        font-size: {{ section.settings.subhead_font_size }}px;
+        color: {{ section.settings.subhead_text_color }};
+        letter-spacing: 0.7px;
+        margin-top: 0.5rem;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 767px) {
+        #shopify-section-{{ section.id }} .text-banner__header {
+            padding-top: {{ section.settings.header_top_padding_mobile }}px;
+            padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .text-banner__header-text {
+            font-size: {{ section.settings.header_font_size_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .text-banner__subhead-text {
+            font-size: {{ section.settings.subhead_font_size_mobile }}px;
+            line-height: 1rem;
+            padding-top: 1rem;
+        }
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Text Banner",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Section settings"
+        },
+        {
+            "type": "color",
+            "id": "section_bg",
+            "label": "Background color",
+            "default": "#ffe5b4"
+        },
+        {
+            "type": "header",
+            "content": "Header settings"
+        },
+        {
+            "type": "radio",
+            "id": "text_align",
+            "label": "Text alignment (left/center/right)",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ],
+            "default": "center"
+        },
+        {
+            "type": "text",
+            "id": "section_header_text",
+            "label": "Header text",
+            "default": "I'M LOOKING FOR..."
+        },
+        {
+			"type":   "range",
+			"id":     "header_font_size",
+			"min":       20,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header font size (desktop)",
+			"default":   30
+		},
+        {
+			"type":   "range",
+			"id":     "header_font_size_mobile",
+			"min":       16,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header font size (mobile)",
+			"default":   25
+		},
+        {
+            "type": "checkbox",
+            "id": "enable_header",
+            "label": "Display header text",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "header_text_color",
+            "label": "Header text color",
+            "default": "#002798"
+        },
+        {
+            "type": "text",
+            "id": "section_subhead_text",
+            "label": "Subhead text"
+        },
+        {
+			"type":   "range",
+			"id":     "subhead_font_size",
+			"min":       16,
+			"max":       32,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Subhead font size (desktop)",
+			"default":   16
+		},
+        {
+			"type":   "range",
+			"id":     "subhead_font_size_mobile",
+			"min":       16,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Subhead font size (mobile)",
+			"default":   16
+		},
+        {
+            "type": "checkbox",
+            "id": "enable_subhead",
+            "label": "Display subhead text",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "subhead_text_color",
+            "label": "Subhead text color",
+            "default": "#002798"
+        },
+        {
+			"type":   "range",
+			"id":     "header_top_padding_desktop",
+			"min":       0,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header top padding (desktop)",
+			"default":   40
+		},
+        {
+			"type":   "range",
+			"id":     "header_bottom_padding_desktop",
+			"min":       0,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header bottom padding (desktop)",
+			"default":   40
+		},
+        {
+			"type":   "range",
+			"id":     "header_top_padding_mobile",
+			"min":       0,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header top padding (mobile)",
+			"default":   50
+		},
+        {
+			"type":   "range",
+			"id":     "header_bottom_padding_mobile",
+			"min":       0,
+			"max":       80,
+			"step":      1,
+			"unit":      "px",
+			"label":     "Header bottom padding (mobile)",
+			"default":   50
+		}
+    ],
+    "presets": [
+        {
+            "name": "Text Banner"
+        }
+    ]
+}
+{% endschema %}
