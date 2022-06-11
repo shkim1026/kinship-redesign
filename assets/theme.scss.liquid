@@ -12429,13 +12429,15 @@ body.template-product {
 
 // HP Redesign
 .product-module__header,
-.image-product-module__header {
+.image-product-module__header,
+.collections-module__header {
 	text-align: center;
 	line-height: 2rem;
 }
 
 .product-module__row,
-.image-product-module__row {
+.image-product-module__row,
+.collections-module__row {
 	display: grid;
 	grid-gap: 30px;
 	grid-template-columns: repeat(3, minmax(320px, 1fr));
@@ -12444,7 +12446,8 @@ body.template-product {
 	scrollbar-width: none;
 }
 .product-module__row::-webkit-scrollbar,
-.image-product-module__row::-webkit-scrollbar {
+.image-product-module__row::-webkit-scrollbar,
+.collections-module__row::-webkit-scrollbar {
 	display: none;
 }
 .product-module__subhead-text {
@@ -12452,6 +12455,19 @@ body.template-product {
 }
 .image-product-module .product-card {
 	padding: 20px 20px 20px;
+}
+
+.collection-card__hyperlink-text {
+	text-align: center;
+	margin-top: 1rem;
+	font-weight: bold;
+    letter-spacing: 1.07px;
+	font-size: 18px;
+	color: $primary;
+}
+.collection-card__hyperlink,
+.collection-card__hyperlink:visited {
+	color: $primary;
 }
 
 
@@ -12476,15 +12492,13 @@ body.template-product {
 		width: 100%;
 		margin: 0 auto;
 	}
-	.product-module__row {
-		padding-left: 9px;
-		padding-right: 9px;
-		grid-template-columns: repeat(2,minmax(150px,1fr));
-		grid-gap: 15px;
-	}
 	.image-product-module__row {
 		padding-left: 24px;
 		padding-right: 24px;
 		grid-gap: 11px;
+	}
+	.collection-card__hyperlink-text {
+		margin-top: 14px;
+		font-size: 14px;
 	}
 }

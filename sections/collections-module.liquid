@@ -1,4 +1,4 @@
-<div class="collections-module>
+<div class="collections-module">
     <div class="collections-module__header">
         {% if section.settings.enable_header and section.settings.section_header_text != blank %}
             <h4 class="collections-module__header-text">{{ section.settings.section_header_text }}</h4>
@@ -14,16 +14,19 @@
             <div class="collections-module__row">
 				{% if section.blocks.size > 0 %}
 					{% for block in section.blocks %}
-						{% case block.type %}
-                            {% when 'product_card' %}
-                            {% assign product = all_products[block.settings.product] %}
-                            {% assign custom_image = block.settings.image %}
-                            
-
-                            {% if product != blank and product.type != 'GWP' and product.type != 'Evergreen GWP'%}
-                                {% include 'product-card' custom_image: custom_image, class: class %}
-                            {% endif %}
-                        {% endcase %}
+                    {% assign collection = block.settings.collection %}
+                        <div class="collection-card">
+                            <a href="{{ collection.url }}" class="collection-card__link-wrapper">
+                                <picture>
+                                    <source media="(min-width: 768px)" srcset="{{ block.settings.image | img_url: 'master' }}">
+                                    <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | img_url: 'master' }}">
+                                    <img src="{{ block.settings.image | img_url: 'master' }}">
+                                </picture>
+                            </a>
+                            <a href="{{ collection.url }}" class="collection-card__hyperlink">
+                                <p class="collection-card__hyperlink-text">{{ block.settings.hyperlink_text }}</p>
+                            </a>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>
@@ -36,7 +39,7 @@
         background-color: {{ section.settings.section_bg }};
         padding-bottom: {{ section.settings.section_bottom_padding }}px;
     }
-    #shopify-section-{{ section.id }} collections-module__header {
+    #shopify-section-{{ section.id }} .collections-module__header {
         padding-top: {{ section.settings.header_top_padding_desktop }}px;
         padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
     }
@@ -48,8 +51,15 @@
         font-size: {{ section.settings.subhead_font_size }}px;
         color: {{ section.settings.subhead_text_color }};
     }
+    #shopify-section-{{ section.id }} .collection-card img {
+        border-radius: 10px;
+    }
 
     @media (max-width: 767px) {
+        #shopify-section-{{ section.id }} .collections-module__row {
+            grid-template-columns: auto;
+            padding: 0 9px;
+        }
         #shopify-section-{{ section.id }} .collections-module__header {
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
@@ -101,7 +111,7 @@
             "type": "text",
             "id": "section_header_text",
             "label": "Header text",
-            "default": "A BETTER PLACE, STARTING WITH UR FACE"
+            "default": "I'M LOOKING FOR..."
         },
         {
 			"type":   "range",
@@ -111,7 +121,7 @@
 			"step":      1,
 			"unit":      "px",
 			"label":     "Header font size (desktop)",
-			"default":   40
+			"default":   30
 		},
         {
 			"type":   "range",
@@ -121,7 +131,7 @@
 			"step":      1,
 			"unit":      "px",
 			"label":     "Header font size (mobile)",
-			"default":   26
+			"default":   25
 		},
         {
             "type": "checkbox",
@@ -138,8 +148,7 @@
         {
             "type": "text",
             "id": "section_subhead_text",
-            "label": "Subhead text",
-            "default": "Kinship was created by scientists + industry experts."
+            "label": "Subhead text"
         },
         {
 			"type":   "range",
@@ -165,7 +174,7 @@
             "type": "checkbox",
             "id": "enable_subhead",
             "label": "Display subhead text",
-            "default": true
+            "default": false
         },
         {
             "type": "checkbox",
@@ -218,52 +227,44 @@
 			"unit":      "px",
 			"label":     "Header bottom padding (mobile)",
 			"default":   50
-		},
-        {
-            "type": "header",
-            "content": "Product Card Settings"
-        },
-        {
-            "type": "radio",
-            "id": "product_card_grid_col",
-            "label": "Display 2 or 4 Products (mobile)",
-            "options": [
-                {
-                    "value": "2",
-                    "label": "2"
-                },
-                {
-                    "value": "4",
-                    "label": "4"
-                }
-            ],
-            "default": "4"
-        }
+		}
     ],
     "blocks": [
         {
-			"type": "product_card",
-			"name": "Product card",
-			"limit": 4,
+			"type": "collection_card",
+			"name": "Collection card",
+			"limit": 3,
 			"settings": [
 				{
-					"type": "product",
-					"id": "product",
-					"label": "Product"
+					"type": "collection",
+					"id": "collection",
+					"label": "Collection"
 				},
 				{
-				"type": "image_picker",
-				"id": "image",
-				"label": "Image",
-					"info": "Show custom image instead of product image"
-				}
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+					"info": "Show custom image (Desktop)"
+				},
+                {
+                    "type": "image_picker",
+                    "id": "image_mobile",
+                    "label": "Image (Mobile)",
+                    "info": "Shows custom image (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "hyperlink_text",
+                    "label": "Hyperlink Text",
+                    "default": "SHOP NOW"
+                }
 			]
 		}
     ],
     "presets": [
         {
-            "name": "Product Module",
-            "category": "Product"
+            "name": "Collections Module",
+            "category": "Collections"
         }
     ]
 }
