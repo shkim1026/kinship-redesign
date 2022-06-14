@@ -1,4 +1,4 @@
-<section class="tonal-text" style="background-color: {{ section.settings.section_bg }}">
+<section class="small-tonal-text" style="background-color: {{ section.settings.section_bg }}">
 	{% assign desktop_image = section.settings.image_desktop %}
 	{% assign mobile_image = section.settings.image_mobile %}
 	{% assign cta_url = section.settings.cta_url %}
@@ -27,19 +27,19 @@
 			<div class="center">
 				{% if section.settings.title != blank %}
 					{% if cta_url != blank %}
-						<h2 class="tonal-text__title">
+						<h2 class="small-tonal-text__title">
 							<a href="{{ cta_url }}">{{ section.settings.title }}</a>
 						</h2>
 					{% else %}
-						<h2 class="tonal-text__title">{{ section.settings.title }}</h2>
+						<h2 class="small-tonal-text__title">{{ section.settings.title }}</h2>
 					{% endif %}
 				{% endif %}
 
 				{% if section.settings.subtitle != blank %}
 					{% if cta_url != blank %}
-						<h3 class="tonal-text__subtitle"><a href="{{ cta_url }}">{{ section.settings.subtitle }}</a></h3>
+						<h3 class="small-tonal-text__subtitle"><a href="{{ cta_url }}">{{ section.settings.subtitle }}</a></h3>
 					{% else %}
-						<h3 class="tonal-text__subtitle offset-md-2 col-md-8">{{ section.settings.subtitle }}</h3>
+						<h3 class="small-tonal-text__subtitle offset-md-2 col-md-8">{{ section.settings.subtitle }}</h3>
 					{% endif %}
 				{% endif %}
 
@@ -51,43 +51,49 @@
 	</div>
 
 	{% if cta_url != blank %}
-		<a href="{{ cta_url }}" class="tonal-text__link-wrapper"></a>
+		<a href="{{ cta_url }}" class="small-tonal-text__link-wrapper"></a>
 	{% endif %}
 </section>
 
 <style>
-	#shopify-section-{{ section.id }} .tonal-text {
+	#shopify-section-{{ section.id }} .small-tonal-text {
 		color: {{ section.settings.text_color }};
 		padding-top: {{ section.settings.top_padding_desktop }}px;
 		padding-bottom: {{ section.settings.bottom_padding_desktop }}px;
 	}
 
-	#shopify-section-{{ section.id }} .tonal-text .tonal-text__title {
+	#shopify-section-{{ section.id }} .small-tonal-text .small-tonal-text__title {
 		font-size: {{ section.settings.title_fz }}px;
 	}
 
-	#shopify-section-{{ section.id }} .tonal-text .tonal-text__subtitle {
+	#shopify-section-{{ section.id }} .small-tonal-text .small-tonal-text__subtitle {
 		font-size: {{ section.settings.text_fz }}px;
 	}
 
-	#shopify-section-{{ section.id }} .tonal-text .button {
+	#shopify-section-{{ section.id }} .small-tonal-text .button {
 		background-color: #fff;
 		color: {{ section.settings.text_color }};
 		border-color: {{ section.settings.text_color }};
 	}
 
-	#shopify-section-{{ section.id }} .tonal-text .button:hover {
+	#shopify-section-{{ section.id }} .small-tonal-text .button:hover {
 		background-color: {{ section.settings.text_color }};
 		color: #fff;
 	}
 	.center {
 		margin: 0 auto;
 	}
+    @media (max-width: 767px) {
+        .small-tonal-text {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 </style>
 
 {% schema %}
 {
-	"name": "Tonal text",
+	"name": "Small tonal text",
 	"settings": [
 		{
 			"type": "text",
@@ -178,7 +184,7 @@
 	],
 	"presets": [
 		{
-			"name": "Tonal text",
+			"name": "Small tonal text",
 			"category": "Content"
 		}
 	]
