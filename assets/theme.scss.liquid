@@ -2783,7 +2783,7 @@ textarea,
 	}
 
 	.product-card__reviews {
-		margin-top: 3px;
+		margin-top: 14px;
 	}
 
 	.product-card__hover {
@@ -12428,12 +12428,14 @@ body.template-product {
 }
 
 // HP Redesign
-.product-module__header {
+.product-module__header,
+.image-product-module__header {
 	text-align: center;
 	line-height: 2rem;
 }
 
-.product-module__row {
+.product-module__row,
+.image-product-module__row {
 	display: grid;
 	grid-gap: 30px;
 	grid-template-columns: repeat(3, minmax(320px, 1fr));
@@ -12441,19 +12443,26 @@ body.template-product {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
-.product-module__row::-webkit-scrollbar {
+.product-module__row::-webkit-scrollbar,
+.image-product-module__row::-webkit-scrollbar {
 	display: none;
 }
 .product-module__subhead-text {
 	margin-top: 0.5rem;
 }
+.image-product-module .product-card {
+	padding: 20px 20px 20px;
+}
+
 
 @media (max-width: 991px) {
-	.product-module__card-wrapper {
+	.product-module__card-wrapper,
+	.image-product-module__card-wrapper {
 		margin-left: -15px;
 		margin-right: -15px;
 	}
-	.product-module__row {
+	.product-module__row,
+	.image-product-module__row {
 		padding-left: 30px;
 		padding-right: 30px;
 	}
@@ -12473,27 +12482,9 @@ body.template-product {
 		grid-template-columns: repeat(2,minmax(150px,1fr));
 		grid-gap: 15px;
 	}
-	.product-card {
-		padding: 30px 15px 47px;
-	}
-	.product-card .product-card__reviews {
-		margin-top: 15px;
-	}
-	.product-card .product-card__icons {
-		top: 5px;
-	}
-	.product-card .product-card__icon img {
-		width: 15px;
-		height: 15px;
-	}
-	.product-card .product-card__icon+.product-card__icon {
-		margin-left: 5px;
-	}
-	.product-card .product-card__title {
-		font-size: 16px;
-	}
-	.round-btn {
-		padding: 13px 20px 17px;
-		min-width: 150px;
+	.image-product-module__row {
+		padding-left: 24px;
+		padding-right: 24px;
+		grid-gap: 11px;
 	}
 }
