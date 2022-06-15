@@ -24,19 +24,9 @@
                             {% endif %}
 
                             {% when 'wide-image-card' %}
-                            {% assign product = block.settings.link_to_product %}
-                            {% assign collection = block.settings.link_to_collection %}
                                 <div class="wide-image-card">
-                                    {% if collection != blank and product == blank %}
-                                        <a href="{{ collection.url }}" class="wide-image-card__link-wrapper">
-                                            <picture>
-                                                <source media="(min-width: 768px)" srcset="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                                <source media="(max-width: 767px)" srcset="{{ block.settings.wide_image_mobile | img_url: 'master' }}">
-                                                <img src="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
-                                            </picture>
-                                        </a>
-                                    {% elsif product != blank and collection == blank %}
-                                        <a href="{{ product.url }}" class="wide-image-card__link-wrapper">
+                                    {% if block.settings.url != blank %}
+                                        <a href="{{ block.settings.url }}" class="wide-image-card__link-wrapper">
                                             <picture>
                                                 <source media="(min-width: 768px)" srcset="{{ block.settings.wide_image_desktop | img_url: 'master' }}">
                                                 <source media="(max-width: 767px)" srcset="{{ block.settings.wide_image_mobile | img_url: 'master' }}">
@@ -91,11 +81,6 @@
         #shopify-section-{{ section.id }} .image-product-module__row {
             display: flex;
             flex-direction: column;
-            {% for block in section.blocks %}
-                {% if block.settings.switch_image_order == true %}
-                    flex-direction: column-reverse;
-                {% endif %}
-            {% endfor %}
         }
         #shopify-section-{{ section.id }} .product-card__icon img {
             width: 23px;
@@ -119,6 +104,7 @@
             padding: 50px;
             padding-top: 0;
             padding-bottom: 25px;
+            order: 2;
         }
 
         #shopify-section-{{ section.id }} .image-product-module__subhead-text {
@@ -322,22 +308,9 @@
                     "label": "Image (Mobile)"
                 },
                 {
-                    "type": "product",
-                    "id": "link_to_product",
-                    "label": "Link to Product",
-                    "info": "Link a product"
-                },
-                {
-                    "type": "collection",
-                    "id": "link_to_collection",
-                    "label": "Link to Collection",
-                    "info": "Or link a collection"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "switch_image_order",
-                    "label": "Switch the order of cards (Mobile)",
-                    "default": false
+                    "type": "url",
+                    "id": "url",
+                    "label": "Link to product/collection/page"
                 }
             ]
         }
