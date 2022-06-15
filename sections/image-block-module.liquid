@@ -23,13 +23,11 @@
 	{% endif %}
 
 	<div class="container">
-		<div>
-			<div>
-				{% if cta_url != blank and section.settings.cta_text != blank %}
-					<a href="{{ cta_url }}" class="button">{{ section.settings.cta_text }}</a>
-				{% endif %}
-			</div>
-		</div>
+        <div>
+            {% if cta_url != blank and section.settings.cta_text != blank %}
+                <a href="{{ cta_url }}" class="button">{{ section.settings.cta_text }}</a>
+            {% endif %}
+        </div>
 	</div>
 
 	{% if cta_url != blank %}
@@ -55,6 +53,7 @@
         top: 50%;
         right: 0;
         transform: translate(0rem, 6vh);
+        z-index: 10;
     }
 	#shopify-section-{{ section.id }} .image-block-module .button {
 		background-color: #fff;
