@@ -68,12 +68,14 @@
 
 	#shopify-section-{{ section.id }} .tonal-text .tonal-text__subtitle {
 		font-size: {{ section.settings.text_fz }}px;
+		padding: 0 15vw;
 	}
 
 	#shopify-section-{{ section.id }} .tonal-text .button {
 		background-color: #fff;
 		color: {{ section.settings.text_color }};
 		border-color: {{ section.settings.text_color }};
+		min-width: 195px;
 	}
 
 	#shopify-section-{{ section.id }} .tonal-text .button:hover {
@@ -82,6 +84,14 @@
 	}
 	.center {
 		margin: 0 auto;
+	}
+	@media (max-width: 767px) {
+		#shopify-section-{{ section.id }} .tonal-text .tonal-text__subtitle {
+			padding: 0;
+		}
+		#shopify-section-{{ section.id }} .tonal-text .button {
+			min-width: 225px;
+		}
 	}
 </style>
 
