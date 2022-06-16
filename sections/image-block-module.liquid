@@ -1,0 +1,118 @@
+<section class="image-block-module" style="background-color: {{ section.settings.section_bg }}">
+	{% assign desktop_image = section.settings.image_desktop %}
+	{% assign mobile_image = section.settings.image_mobile %}
+	{% assign cta_url = section.settings.cta_url %}
+
+	{% if desktop_image != blank %}
+		{% include 'picture', image_desk: desktop_image, image_mobile: mobile_image, class_name: 'image-block__bg', image_attr: , pic_attr: , figcaption: %}
+
+		{% comment %}
+		<picture>
+			{% if mobile_image != blank %}
+				<source srcset="{{ mobile_image | img_url: '767x' }} 1x, {{ mobile_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% else %}
+				<source srcset="{{ desktop_image | img_url: '767x' }} 1x, {{ desktop_image | img_url: '1534x' }} 2x" media="(max-width: 767px)">
+			{% endif %}
+
+			<img class="tonal-text__bg"
+				 src="{{ desktop_image | img_url: '1920x' }}"
+				 srcset="{{ desktop_image | img_url: '1920x' }} 1x, {{ desktop_image | img_url: '3840x' }}"
+				 alt="{{ desktop_image.alt }}">
+		</picture>
+		{% endcomment %}
+	{% endif %}
+
+	<div class="container">
+        <div>
+            {% if cta_url != blank and section.settings.cta_text != blank %}
+                <a href="{{ cta_url }}" class="button">{{ section.settings.cta_text }}</a>
+            {% endif %}
+        </div>
+	</div>
+
+	{% if cta_url != blank %}
+		<a href="{{ cta_url }}" class="image-block-module__link-wrapper"></a>
+	{% endif %}
+</section>
+
+<style>
+	#shopify-section-{{ section.id }} .image-block-module {
+		color: {{ section.settings.text_color }};
+        position: relative;
+	}
+    #shopify-section-{{ section.id }} .image-block-module__link-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+    #shopify-section-{{ section.id }} .image-block-module .container {
+        position: absolute;
+        width: 40%;
+        top: 50%;
+        right: 0;
+        transform: translate(0rem, 6vh);
+        z-index: 10;
+    }
+	#shopify-section-{{ section.id }} .image-block-module .button {
+		background-color: #fff;
+		color: {{ section.settings.text_color }};
+		border-color: {{ section.settings.text_color }};
+	}
+
+	#shopify-section-{{ section.id }} .image-block-module .button:hover {
+		background-color: {{ section.settings.text_color }};
+		color: #fff;
+	}
+
+    @media (max-width: 991px) {
+        #shopify-section-{{ section.id }} .image-block-module .container {
+            width: 100%;
+            top: 29%;
+            text-align: center;
+            transform: translate(0rem, 0rem);
+        }
+    }
+</style>
+
+{% schema %}
+{
+	"name": "Image Block Module",
+	"settings": [
+		{
+			"type": "text",
+			"id": "cta_text",
+			"label": "CTA text",
+			"default": "our beliefs"
+		},
+		{
+			"type": "url",
+			"id": "cta_url",
+			"label": "CTA url"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text color",
+			"default": "#18a1c3"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_desktop",
+			"label": "Background image desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_mobile",
+			"label": "Background image mobile"
+		}
+	],
+	"presets": [
+		{
+			"name": "Image Block Module",
+			"category": "Content"
+		}
+	]
+}
+{% endschema %}
