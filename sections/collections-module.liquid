@@ -44,11 +44,9 @@
         padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
     }
     #shopify-section-{{ section.id }} .collections-module__header-text {
-        font-size: {{ section.settings.header_font_size }}px;
         color: {{ section.settings.header_text_color }};
     }
     #shopify-section-{{ section.id }} .collections-module__subhead-text {
-        font-size: {{ section.settings.subhead_font_size }}px;
         color: {{ section.settings.subhead_text_color }};
     }
     #shopify-section-{{ section.id }} .collection-card img {
@@ -64,13 +62,7 @@
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .collections-module__header-text {
-            font-size: {{ section.settings.header_font_size_mobile }}px;
-        }
         #shopify-section-{{ section.id }} .collections-module__subhead-text {
-            font-size: {{ section.settings.subhead_font_size_mobile }}px;
-            line-height: 1rem;
-            padding-top: 1rem;
             {% if section.settings.enable_subhead_mobile == false %}
                 display: none;
             {% endif %}
@@ -114,26 +106,6 @@
             "default": "I'M LOOKING FOR..."
         },
         {
-			"type":   "range",
-			"id":     "header_font_size",
-			"min":       20,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (desktop)",
-			"default":   30
-		},
-        {
-			"type":   "range",
-			"id":     "header_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (mobile)",
-			"default":   25
-		},
-        {
             "type": "checkbox",
             "id": "enable_header",
             "label": "Display header text",
@@ -150,26 +122,6 @@
             "id": "section_subhead_text",
             "label": "Subhead text"
         },
-        {
-			"type":   "range",
-			"id":     "subhead_font_size",
-			"min":       16,
-			"max":       32,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (desktop)",
-			"default":   16
-		},
-        {
-			"type":   "range",
-			"id":     "subhead_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (mobile)",
-			"default":   16
-		},
         {
             "type": "checkbox",
             "id": "enable_subhead",
