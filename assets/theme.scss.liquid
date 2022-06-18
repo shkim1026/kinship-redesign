@@ -12430,14 +12430,16 @@ body.template-product {
 // HP Redesign
 .product-module__header,
 .image-product-module__header,
-.collections-module__header {
+.collections-module__header,
+.featured-collection__header {
 	text-align: center;
 	line-height: 2rem;
 }
 
 .product-module__row,
 .image-product-module__row,
-.collections-module__row {
+.collections-module__row,
+.featured-collection__row {
 	display: grid;
 	grid-gap: 30px;
 	grid-template-columns: repeat(3, minmax(320px, 1fr));
@@ -12447,7 +12449,8 @@ body.template-product {
 }
 .product-module__row::-webkit-scrollbar,
 .image-product-module__row::-webkit-scrollbar,
-.collections-module__row::-webkit-scrollbar {
+.collections-module__row::-webkit-scrollbar,
+.featured-collection__row::-webkit-scrollbar {
 	display: none;
 }
 .product-module__subhead-text {

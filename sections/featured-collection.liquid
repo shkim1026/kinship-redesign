@@ -1,17 +1,17 @@
-<div class="product-module featured-products--with-animation js-animate animated" data-offset="0">
-    <div class="product-module__header">
+<div class="featured-collection featured-products--with-animation js-animate animated" data-offset="0">
+    <div class="featured-collection__header">
         {% if section.settings.enable_header and section.settings.section_header_text != blank %}
-            <h4 class="product-module__header-text">{{ section.settings.section_header_text }}</h4>
+            <h4 class="featured-collection__header-text">{{ section.settings.section_header_text }}</h4>
         {% endif %}
 
         {% if section.settings.enable_subhead and section.settings.section_subhead_text != blank %}
-            <p class="product-module__subhead-text">{{ section.settings.section_subhead_text }}</p>
+            <p class="featured-collection__subhead-text">{{ section.settings.section_subhead_text }}</p>
         {% endif %}
     </div>
 
     <div class="container">
-        <div class="product-module__card-wrapper">
-            <div class="product-module__row">
+        <div class="featured-collection__card-wrapper">
+            <div class="featured-collection__row">
 				{% if section.blocks.size > 0 %}
 					{% for block in section.blocks %}
 						{% case block.type %}
@@ -53,19 +53,19 @@
 </div>
 
 <style>
-    #shopify-section-{{ section.id }} .product-module {
+    #shopify-section-{{ section.id }} .featured-collection {
         background-color: {{ section.settings.section_bg }};
         padding-bottom: {{ section.settings.section_bottom_padding }}px;
     }
-    #shopify-section-{{ section.id }} .product-module__header {
+    #shopify-section-{{ section.id }} .featured-collection__header {
         padding-top: {{ section.settings.header_top_padding_desktop }}px;
         padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
     }
-    #shopify-section-{{ section.id }} .product-module__header-text {
+    #shopify-section-{{ section.id }} .featured-collection__header-text {
         font-size: {{ section.settings.header_font_size }}px;
         color: {{ section.settings.header_text_color }};
     }
-    #shopify-section-{{ section.id }} .product-module__subhead-text {
+    #shopify-section-{{ section.id }} .featured-collection__subhead-text {
         font-size: {{ section.settings.subhead_font_size }}px;
         color: {{ section.settings.subhead_text_color }};
     }
@@ -83,14 +83,14 @@
     }
 
     @media (max-width: 767px) {
-        #shopify-section-{{ section.id }} .product-module__header {
+        #shopify-section-{{ section.id }} .featured-collection__header {
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .product-module__header-text {
+        #shopify-section-{{ section.id }} .featured-collection__header-text {
             font-size: {{ section.settings.header_font_size_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .product-module__subhead-text {
+        #shopify-section-{{ section.id }} .featured-collection__subhead-text {
             font-size: {{ section.settings.subhead_font_size_mobile }}px;
             line-height: 1rem;
             padding-top: 1rem;
@@ -98,7 +98,7 @@
                 display: none;
             {% endif %}
         }
-         #shopify-section-{{ section.id }} .product-module__row {
+         #shopify-section-{{ section.id }} .featured-collection__row {
             padding-left: 9px;
             padding-right: 9px;
             grid-template-columns: repeat(2,minmax(150px,1fr));
