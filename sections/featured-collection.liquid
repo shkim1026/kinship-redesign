@@ -35,7 +35,7 @@
                                     {% include 'product-card' custom_image: custom_image, class: class %}
                                 {% endif %}
                             {% when 'collection_card' %}
-                                <div class="collection-card">
+                                <div class="featured-collection__collection-card">
                                     <a href="{{ block.settings.url }}" class="collection-card__link-wrapper">
                                         <picture>
                                             <source media="(min-width: 768px)" srcset="{{ block.settings.image_desktop | img_url: 'master' }}">
@@ -67,12 +67,6 @@
     #shopify-section-{{ section.id }} .featured-collection__subhead-text {
         color: {{ section.settings.subhead_text_color }};
     }
-    #shopify-section-{{ section.id }} .hide-card-desktop {
-        display: none !important;
-    }
-    #shopify-section-{{ section.id }} .collection-card__link-wrapper img {
-        height: 100%;
-    }
 
     @media (max-width: 767px) {
         #shopify-section-{{ section.id }} .featured-collection__header {
@@ -94,6 +88,10 @@
         }
         #shopify-section-{{ section.id }} .product-card {
             padding: 30px 5px 30px;
+        }
+        #shopify-section-{{ section.id }} .product-card .product-card__label {
+            right: 15px;
+            width: 28px;
         }
         #shopify-section-{{ section.id }} .product-card .product-card__icons {
             top: 12px;
@@ -132,7 +130,7 @@
         #shopify-section-{{ section.id }} .yotpo-icon {
             font-size: 12.5px;
         }
-        #shopify-section-{{ section.id }} .collection-card {
+        #shopify-section-{{ section.id }} .featured-collection__collection-card {
             order: 0;
             grid-column-start: 1;
             grid-column-end: 3;
