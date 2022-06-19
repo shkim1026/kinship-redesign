@@ -5260,8 +5260,8 @@ p.side-cart__empty {
 // Homepage
 .main-banner {
 	position: relative;
-	padding-top: 40px;
-	padding-top: calc(var(--promo-banner) + var(--promo-bar));
+	// padding-top: 40px;
+	// padding-top: calc(var(--promo-banner) + var(--promo-bar));
 
 	.main-banner__label {
 		position: absolute;
@@ -5737,8 +5737,8 @@ p.side-cart__empty {
 .fashion-testimonials {
     position: relative;
     overflow-x: hidden;
-    padding-top: 100px;
-    padding-bottom: 65px;
+    padding-top: 45px;
+    padding-bottom: 45px;
     background-color: rgba(255, 223, 160, 0.34);
 
     &:before {
@@ -12456,7 +12456,8 @@ body.template-product {
 .product-module__header,
 .image-product-module__header,
 .collections-module__header,
-.featured-collection__header {
+.featured-collection__header,
+.fashion-testimonials__header {
 	text-align: center;
 	line-height: 2rem;
 }
@@ -12481,7 +12482,8 @@ body.template-product {
 .product-module__header-text,
 .image-product-module__header-text,
 .collections-module__header-text,
-.featured-collection__header-text {
+.featured-collection__header-text,
+.fashion-testimonials__header-text {
 	font-size: 30px;
 	letter-spacing: 0.1rem;
 }
@@ -12531,6 +12533,9 @@ body.template-product {
 	grid-column: span 2;
 	border-radius: 10px;
 }
+.fashion-testimonials__header {
+	padding-bottom: 2.5rem;
+}
 
 
 @media (max-width: 991px) {
@@ -12547,6 +12552,9 @@ body.template-product {
 		padding-left: 30px;
 		padding-right: 30px;
 	}
+	.hide-card-desktop {
+		display: block !important;
+	}
 }
 
 @media (max-width: 767px) {
@@ -12556,7 +12564,8 @@ body.template-product {
 	.product-module__header-text,
 	.image-product-module__header-text,
 	.collections-module__header-text,
-	.featured-collection__header-text {
+	.featured-collection__header-text,
+	.fashion-testimonials__header-text {
 		font-size: 25px;
 	}
 	.product-module__subhead-text,

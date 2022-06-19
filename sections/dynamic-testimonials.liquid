@@ -6,6 +6,11 @@
     {% endcomment %}
 
     <section class="fashion-testimonials">
+        {% if section.settings.section_header_text != blank %}
+        <div class="fashion-testimonials__header">
+            <h4 class="fashion-testimonials__header-text">{{ section.settings.section_header_text }}</h4>
+        </div>
+        {% endif %}
         <div class="container">
             {% assign testimonial_text_color = section.settings.testimonial_text_color %}
             {% assign testimonial_text_size = section.settings.testimonial_text_size %}
@@ -17,7 +22,7 @@
                     {% assign brand_icon = block.settings.brand_icon %}
                     {% assign brand_icon_width = block.settings.brand_icon_width %}
 
-                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800">
+                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800 {% if forloop.index > 3 %}hide-card-desktop{% endif %}">
                         {% if text != blank %}
                             <div class="testimonial-card__content"
                                  style="color: {{ testimonial_text_color }}; font-size: {{ testimonial_text_size }}px">
@@ -51,12 +56,33 @@
     </section>
 {% endif %}
 
+<style>
+    #shopify-section-{{ section.id }} .fashion-testimonials__header-text {
+        color: {{ section.settings.header_text_color }}
+    }
+</style>
 
 {% schema %}
 {
     "name": "Testimonials",
-    "max_blocks": 3,
+    "max_blocks": 6,
     "settings": [
+        {
+            "type": "header",
+            "content": "Header Settings"
+        },
+        {
+            "type": "text",
+            "id": "section_header_text",
+            "label": "Header text",
+            "default": "WHAT PPL ARE SAYING..."
+        },
+        {
+            "type": "color",
+            "id": "header_text_color",
+            "label": "Header text color",
+            "default": "#002798"
+        },
         {
             "type": "color",
             "id": "testimonial_text_color",
