@@ -12525,8 +12525,12 @@ body.template-product {
     object-fit: cover;
     object-position: 50% 50%;
 }
-.hide-card-desktop {
+.hide-card-desktop,
+.hide-text-desktop {
 	display: none !important;
+}
+.hide-text-mobile {
+	display: block !important;
 }
 .wide-image-card {
 	grid-row-start: 1;
@@ -12594,5 +12598,12 @@ body.template-product {
 
 	.product-card .product-card__info {
 		margin-top: 0;
+		align-self: center;
+	}
+	.hide-text-mobile {
+		display: none !important;
+	}
+	.hide-text-desktop {
+		display: block !important;
 	}
 }
