@@ -5261,7 +5261,10 @@ p.side-cart__empty {
 .main-banner {
 	position: relative;
 	padding-top: 40px;
-	padding-top: calc(var(--promo-banner) + var(--promo-bar) - 20px);
+	padding-top: calc(var(--promo-banner) + var(--promo-bar));
+	@include breakpoint(large) {
+		padding-top: calc(var(--promo-banner) + var(--promo-bar) - 20px);
+	}
 
 	.main-banner__label {
 		position: absolute;
