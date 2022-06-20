@@ -12529,7 +12529,8 @@ body.template-product {
     object-position: 50% 50%;
 }
 .hide-card-desktop,
-.hide-text-desktop {
+.hide-text-desktop,
+.hide-testimonial-desktop {
 	display: none !important;
 }
 .hide-text-mobile {
@@ -12564,6 +12565,9 @@ body.template-product {
 	.hide-card-desktop {
 		display: flex !important;
 	}
+	.hide-testimonial-desktop {
+		display: block !important;
+	}
 }
 
 @media (max-width: 767px) {
@@ -12584,7 +12588,9 @@ body.template-product {
 		line-height: 1rem;
 		padding-top: 1rem;
 	}
-	.product-module__card-wrapper {
+	.product-module__card-wrapper,
+	.collections-module__card-wrapper,
+	.featured-collection__card-wrapper {
 		width: 100%;
 		margin: 0 auto;
 	}

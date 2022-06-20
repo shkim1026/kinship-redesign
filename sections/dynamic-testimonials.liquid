@@ -22,7 +22,7 @@
                     {% assign brand_icon = block.settings.brand_icon %}
                     {% assign brand_icon_width = block.settings.brand_icon_width %}
 
-                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800 {% if forloop.index > 3 %}hide-card-desktop{% endif %}">
+                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800 {% if forloop.index > 3 %}hide-testimonial-desktop{% endif %}">
                         {% if text != blank %}
                             <div class="testimonial-card__content"
                                  style="color: {{ testimonial_text_color }}; font-size: {{ testimonial_text_size }}px">
