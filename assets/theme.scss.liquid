@@ -2789,6 +2789,9 @@ textarea,
 
 	.product-card__reviews {
 		margin-top: 18px;
+		@include breakpoint(extra-small) {
+			margin-top: 14px;
+		}
 	}
 
 	.product-card__hover {
@@ -12628,7 +12631,6 @@ body.template-product {
 	}
 
 	.product-card .product-card__info {
-		margin-top: 0;
 		align-self: center;
 	}
 	.hide-text-mobile {
