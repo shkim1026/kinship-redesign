@@ -816,7 +816,7 @@
         });
     }
     function initFashionTestimonialsSlider() {
-        $(window).resize($.throttle(100, sliderInitialization));
+        //$(window).resize($.throttle(100, sliderInitialization));
 
         sliderInitialization();
 
@@ -829,28 +829,40 @@
 
             const isSliderInited = slider.classList.contains("slick-initialized");
 
-            if (window.innerWidth > 991) {
-                if (isSliderInited) {
-                    $(slider).slick("unslick");
-                }
+            // if (window.innerWidth > 991) {
+                // if (isSliderInited) {
+                //     $(slider).slick("unslick");
+                // }
 
-                return;
-            }
+                // return;
+            // }
 
             if (!isSliderInited) {
                 $(slider).slick({
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    arrows: false,
+                    // slidesToShow: 2,
+                    // slidesToScroll: 1,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    arrows: true,
                     dots: true,
                     infinite: false,
                     responsive: [
                         {
                             breakpoint: 768,
                             settings: {
-                                slidesToShow: 1
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                arrows: false
                             }
                         },
+                        {
+                            breakpoint: 991,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 1,
+                                arrows: false
+                            }
+                        }
                     ]
                 });
             }

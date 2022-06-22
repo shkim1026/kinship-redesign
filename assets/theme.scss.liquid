@@ -5771,13 +5771,21 @@ p.side-cart__empty {
         position: relative;
         display: flex;
         justify-content: space-between;
-        padding-left: 25px;
-        padding-right: 25px;
+        // padding-left: 25px;
+        // padding-right: 25px;
     }
 
     .testimonial-card {
         width: 30%;
+		margin: 10px;
     }
+
+	.slick-dots {
+		position: absolute;
+		left: 50%;
+		bottom: -47px;
+		transform: translateX(-50%);
+	}
 
     @include breakpoint(medium) {
         .fashion-testimonials__content {
@@ -5809,12 +5817,12 @@ p.side-cart__empty {
             margin-right: 15px;
         }
 
-        .slick-dots {
-            position: absolute;
-            left: 50%;
-            bottom: -47px;
-            transform: translateX(-50%);
-        }
+        // .slick-dots {
+        //     position: absolute;
+        //     left: 50%;
+        //     bottom: -47px;
+        //     transform: translateX(-50%);
+        // }
     }
 
     @include breakpoint(extra-small) {
@@ -12546,8 +12554,7 @@ body.template-product {
     object-position: 50% 50%;
 }
 .hide-card-desktop,
-.hide-text-desktop,
-.hide-testimonial-desktop {
+.hide-text-desktop {
 	display: none !important;
 }
 .hide-text-mobile {
@@ -12584,9 +12591,6 @@ body.template-product {
 	}
 	.hide-card-desktop {
 		display: flex !important;
-	}
-	.hide-testimonial-desktop {
-		display: block !important;
 	}
 }
 
