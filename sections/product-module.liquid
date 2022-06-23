@@ -57,16 +57,13 @@
     #shopify-section-{{ section.id }} .product-module__subhead-text {
         color: {{ section.settings.subhead_text_color }};
     }
-    #shopify-section-{{ section.id }} .product-card {
-        padding: 50px 28px 28px;
+    @media (max-width: 991px) {
+         #shopify-section-{{ section.id }} .product-module__row {
+            {% if section.blocks.size > 3 %}
+                grid-template-columns: repeat(4, minmax(320px, 1fr));
+            {% endif %}
+         }
     }
-    #shopify-section-{{ section.id }} .product-card .product-card-reviews {
-        margin-top: 18px;
-    }
-    #shopify-section-{{ section.id }} .hide-card-desktop {
-        display: none !important;
-    }
-
     @media (max-width: 767px) {
         #shopify-section-{{ section.id }} .product-module__header {
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
@@ -96,8 +93,8 @@
             width: 28px;
         }
         #shopify-section-{{ section.id }} .product-card .product-card__icons {
-            top: 12px;
-            left: 15px
+            top: 5px;
+            left: 10px
         }
         #shopify-section-{{ section.id }} .product-card__icon img {
             width: 15px;
@@ -108,13 +105,12 @@
         }
         #shopify-section-{{ section.id }} .product-card .product-card__title {
             font-size: 14px;
-            line-height: 1.5;
         }
         #shopify-section-{{ section.id }} .product-card .product-card__info {
             margin-top: 4px;
         }
         #shopify-section-{{ section.id }} .product-card .product-card__reviews {
-            margin-top: 15px;
+            margin-top: 12px;
         }
         #shopify-section-{{ section.id }} .round-btn {
             padding: 12px 14px 15px;
@@ -125,12 +121,6 @@
         }
         #shopify-section-{{ section.id }} .hide-card-mobile {
             display: none !important;
-        }
-        #shopify-section-{{ section.id }} .yotpo-stars {
-            align-self: center;
-        }
-        #shopify-section-{{ section.id }} .yotpo-icon {
-            font-size: 12.5px;
         }
     }
 </style>
@@ -148,7 +138,7 @@
             "type": "color",
             "id": "section_bg",
             "label": "Background color",
-            "default": "#ffe5b4"
+            "default": "#fff4df"
         },
         {
 			"type":   "range",

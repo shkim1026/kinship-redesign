@@ -58,14 +58,6 @@
     #shopify-section-{{ section.id }} .image-product-module__subhead-text {
         color: {{ section.settings.subhead_text_color }};
     }
-    #shopify-section-{{ section.id }} .wide-image-card {
-        grid-row-start: 1;
-        grid-column: span 2;
-        border-radius: 10px;
-    }
-    #shopify-section-{{ section.id }} .wide-image-card img {
-        border-radius: 10px;
-    }
     #shopify-section-{{ section.id }} .product-card {
         grid-row-start: 1;
     }
@@ -74,6 +66,9 @@
     }
 
     @media (max-width: 767px) {
+        #shopify-section-{{ section.id }} .image-product-module {
+            padding-bottom: 50px;
+        }
         #shopify-section-{{ section.id }} .image-product-module__header {
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
@@ -112,12 +107,6 @@
                 display: none;
             {% endif %}
         }
-        #shopify-section-{{ section.id }} .yotpo-stars {
-            align-self: center;
-        }
-        #shopify-section-{{ section.id }} .yotpo-icon {
-            font-size: 12.5px;
-        }
     }
 </style>
 
@@ -134,7 +123,7 @@
             "type": "color",
             "id": "section_bg",
             "label": "Background color",
-            "default": "#ffe5b4"
+            "default": "#fff4df"
         },
         {
 			"type":   "range",
@@ -157,26 +146,6 @@
             "default": "A BETTER PLACE, STARTING WITH UR FACE"
         },
         {
-			"type":   "range",
-			"id":     "header_font_size",
-			"min":       20,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (desktop)",
-			"default":   40
-		},
-        {
-			"type":   "range",
-			"id":     "header_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (mobile)",
-			"default":   26
-		},
-        {
             "type": "checkbox",
             "id": "enable_header",
             "label": "Display header text",
@@ -194,26 +163,6 @@
             "label": "Subhead text",
             "default": "Kinship was created by scientists + industry experts."
         },
-        {
-			"type":   "range",
-			"id":     "subhead_font_size",
-			"min":       16,
-			"max":       32,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (desktop)",
-			"default":   16
-		},
-        {
-			"type":   "range",
-			"id":     "subhead_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (mobile)",
-			"default":   16
-		},
         {
             "type": "checkbox",
             "id": "enable_subhead",

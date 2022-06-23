@@ -6,6 +6,11 @@
     {% endcomment %}
 
     <section class="fashion-testimonials">
+        {% if section.settings.section_header_text != blank %}
+        <div class="fashion-testimonials__header">
+            <h4 class="fashion-testimonials__header-text">{{ section.settings.section_header_text }}</h4>
+        </div>
+        {% endif %}
         <div class="container">
             {% assign testimonial_text_color = section.settings.testimonial_text_color %}
             {% assign testimonial_text_size = section.settings.testimonial_text_size %}
@@ -51,12 +56,96 @@
     </section>
 {% endif %}
 
+<style>
+    {% if section.blocks.size <= 3 %}
+        #shopify-section-{{ section.id }} .fashion-testimonials .container {
+            max-width: 1270px;
+        }
+    {% else %}
+        #shopify-section-{{ section.id }} .fashion-testimonials	.container {
+		    max-width: 1406px;
+        }
+    {% endif %}
+    #shopify-section-{{ section.id }} .fashion-testimonials__header-text {
+        color: {{ section.settings.header_text_color }}
+    }
+    #shopify-section-{{ section.id }} .fashion-testimonials {
+        position: relative;
+        overflow-x: initial;
+        padding-top: 45px;
+        padding-bottom: 45px;
+        {% if section.settings.background_picker == 'color' %}
+        background-color: {{ section.settings.background_color }};
+        {% endif %}
+    }
+    {% if section.settings.background_picker == 'default' or section.settings.background_picker == 'image' %}
+        {% if section.settings.background_picker == 'default' %}
+        #shopify-section-{{ section.id }} .fashion-testimonials {
+            background-color: rgba(255, 223, 160, 0.34);
+        }
+        {% endif %}
+        #shopify-section-{{ section.id }} .fashion-testimonials:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            {% if section.settings.background_picker == 'default' %}
+            opacity: 0.07;
+            background-image: linear-gradient(to right, #e02020, #f7b500 33%, #6dd400 50%, #0091ff 67%, #fa6400 80%, #6236ff 83%, #b620e0);
+            {% else %}
+            background-image: url('{{ section.settings.background_image_desktop | img_url: 'original' }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            {% endif %}
+        }
+        {% if section.settings.background_picker == 'default' %}
+        @media (max-width: 991px) {
+            #shopify-section-{{ section.id }} .fashion-testimonials:before {
+                opacity: 0.11;
+            }
+        }
+        {% endif %}
+        @media (max-width: 767px) {
+            #shopify-section-{{ section.id }} .fashion-testimonials:before {
+                {% if section.settings.background_picker == 'default' %}
+                background-image: linear-gradient(to right, #e02020 -6%, #f7b500 44%, #6dd400 69%, #0091ff 94%, #fa6400 114%, #6236ff 119%, #b620e0 144%);
+                {% else %}
+                background-image: url('{{ section.settings.background_image_mobile | img_url: 'original' }}');
+                {% endif %}
+            }
+        }
+    {% endif %}
+
+</style>
 
 {% schema %}
 {
     "name": "Testimonials",
-    "max_blocks": 3,
+    "max_blocks": 6,
     "settings": [
+        {
+            "type": "header",
+            "content": "Header Settings"
+        },
+        {
+            "type": "text",
+            "id": "section_header_text",
+            "label": "Header text",
+            "default": "WHAT PPL ARE SAYING..."
+        },
+        {
+            "type": "color",
+            "id": "header_text_color",
+            "label": "Header text color",
+            "default": "#002798"
+        },
+        {
+            "type": "header",
+            "content": "Testimonial Settings"
+        },
         {
             "type": "color",
             "id": "testimonial_text_color",
@@ -72,6 +161,45 @@
             "unit":    "px",
             "label":   "Text size",
             "default": 14
+        },
+        {
+            "type": "header",
+            "content": "Background Settings"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image_desktop",
+            "label": "Background Image (Desktop)"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image_mobile",
+            "label": "Background Image (Mobile)"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background Color"
+        },
+        {
+            "type": "radio",
+            "id": "background_picker",
+            "label": "Use for background:",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default (Rainbow)"
+                },
+                {
+                    "value": "color",
+                    "label": "Color"
+                },
+                {
+                    "value": "image",
+                    "label": "Image"
+                }
+            ],
+            "default": "default"
         }
     ],
     "blocks": [

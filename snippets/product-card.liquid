@@ -4,6 +4,7 @@
 
 {% assign preorder_enable = product.metafields.general.preodrder_enable %}
 {% assign short_info = product.metafields.general.subtitle %}
+{% assign short_info_mobile = product.metafields.general.subtitle_mobile %}
 {% assign product_icons = product.metafields.product.plp_icon %}
 {% assign product_label = product.metafields.general.label_tag %}
 {% assign product_color = product.metafields.general.main_color %}
@@ -101,8 +102,11 @@
 		{% endunless %}
 	</h4>
 
-	{% if short_info != blank %}
+	{% if short_info != blank and short_info_mobile == blank %}
 		<p class="product-card__info">{{ short_info }}</p>
+	{% elsif short_info != blank and short_info_mobile != blank %}
+		<p class="product-card__info hide-text-mobile">{{ short_info }}</p>
+		<p class="product-card__info hide-text-desktop">{{ short_info_mobile }}</p>
 	{% endif %}
 
 	<div class="product-card__reviews">

@@ -35,7 +35,7 @@
                                     {% include 'product-card' custom_image: custom_image, class: class %}
                                 {% endif %}
                             {% when 'collection_card' %}
-                                <div class="collection-card">
+                                <div class="featured-collection__collection-card">
                                     <a href="{{ block.settings.url }}" class="collection-card__link-wrapper">
                                         <picture>
                                             <source media="(min-width: 768px)" srcset="{{ block.settings.image_desktop | img_url: 'master' }}">
@@ -62,24 +62,10 @@
         padding-bottom: {{ section.settings.header_bottom_padding_desktop }}px;
     }
     #shopify-section-{{ section.id }} .featured-collection__header-text {
-        font-size: {{ section.settings.header_font_size }}px;
         color: {{ section.settings.header_text_color }};
     }
     #shopify-section-{{ section.id }} .featured-collection__subhead-text {
-        font-size: {{ section.settings.subhead_font_size }}px;
         color: {{ section.settings.subhead_text_color }};
-    }
-    #shopify-section-{{ section.id }} .product-card {
-        padding: 28px 28px 28px;
-    }
-    #shopify-section-{{ section.id }} .product-card .product-card-reviews {
-        margin-top: 18px;
-    }
-    #shopify-section-{{ section.id }} .hide-card-desktop {
-        display: none !important;
-    }
-    #shopify-section-{{ section.id }} .collection-card__link-wrapper img {
-        height: 100%;
     }
 
     @media (max-width: 767px) {
@@ -87,11 +73,7 @@
             padding-top: {{ section.settings.header_top_padding_mobile }}px;
             padding-bottom: {{ section.settings.header_bottom_padding_mobile }}px;
         }
-        #shopify-section-{{ section.id }} .featured-collection__header-text {
-            font-size: {{ section.settings.header_font_size_mobile }}px;
-        }
         #shopify-section-{{ section.id }} .featured-collection__subhead-text {
-            font-size: {{ section.settings.subhead_font_size_mobile }}px;
             line-height: 1rem;
             padding-top: 1rem;
             {% if section.settings.enable_subhead_mobile == false %}
@@ -107,9 +89,13 @@
         #shopify-section-{{ section.id }} .product-card {
             padding: 30px 5px 30px;
         }
+        #shopify-section-{{ section.id }} .product-card .product-card__label {
+            right: 15px;
+            width: 28px;
+        }
         #shopify-section-{{ section.id }} .product-card .product-card__icons {
-            top: 12px;
-            left: 15px
+            top: 5px;
+            left: 10px
         }
         #shopify-section-{{ section.id }} .product-card__icon img {
             width: 15px;
@@ -120,7 +106,6 @@
         }
         #shopify-section-{{ section.id }} .product-card .product-card__title {
             font-size: 14px;
-            line-height: 1.5;
         }
         #shopify-section-{{ section.id }} .product-card .product-card__info {
             margin-top: 4px;
@@ -138,13 +123,7 @@
         #shopify-section-{{ section.id }} .hide-card-mobile {
             display: none !important;
         }
-        #shopify-section-{{ section.id }} .yotpo-stars {
-            align-self: center;
-        }
-        #shopify-section-{{ section.id }} .yotpo-icon {
-            font-size: 12.5px;
-        }
-        #shopify-section-{{ section.id }} .collection-card {
+        #shopify-section-{{ section.id }} .featured-collection__collection-card {
             order: 0;
             grid-column-start: 1;
             grid-column-end: 3;
@@ -189,26 +168,6 @@
             "default": "A BETTER PLACE, STARTING WITH UR FACE"
         },
         {
-			"type":   "range",
-			"id":     "header_font_size",
-			"min":       20,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (desktop)",
-			"default":   40
-		},
-        {
-			"type":   "range",
-			"id":     "header_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Header font size (mobile)",
-			"default":   25
-		},
-        {
             "type": "checkbox",
             "id": "enable_header",
             "label": "Display header text",
@@ -225,26 +184,6 @@
             "id": "section_subhead_text",
             "label": "Subhead text"
         },
-        {
-			"type":   "range",
-			"id":     "subhead_font_size",
-			"min":       16,
-			"max":       32,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (desktop)",
-			"default":   16
-		},
-        {
-			"type":   "range",
-			"id":     "subhead_font_size_mobile",
-			"min":       16,
-			"max":       80,
-			"step":      1,
-			"unit":      "px",
-			"label":     "Subhead font size (mobile)",
-			"default":   16
-		},
         {
             "type": "checkbox",
             "id": "enable_subhead",
