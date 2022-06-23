@@ -57,6 +57,15 @@
 {% endif %}
 
 <style>
+    {% if section.blocks.size <= 3 %}
+        #shopify-section-{{ section.id }} .fashion-testimonials .container {
+            max-width: 1270px;
+        }
+    {% else %}
+        #shopify-section-{{ section.id }} .fashion-testimonials	.container {
+		    max-width: 1406px;
+        }
+    {% endif %}
     #shopify-section-{{ section.id }} .fashion-testimonials__header-text {
         color: {{ section.settings.header_text_color }}
     }
