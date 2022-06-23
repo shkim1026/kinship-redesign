@@ -785,7 +785,8 @@
                             \t\tc4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
                             </g>
                             </svg>`;
-
+    const sliderArrowLeft = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 107.12 190.84" style="enable-background:new 0 0 107.12 190.84" xml:space="preserve"><path d="M4.06 101.64c-4-4-4-10 0-14l85-84c4-4 10-4 14 0s4 10 0 14l-78 77 78 78c4 4 4 10 0 14s-10 4-14 0l-85-85z" style="fill:#3c3c3c"/></svg>`;
+    const sliderArrowRight =`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 107.12 190.84" style="enable-background:new 0 0 107.12 190.84" xml:space="preserve"><path d="M18.06 186.64c-4 4-10 4-14 0s-4-10 0-14l78-78-78-77c-4-4-4-10 0-14s10-4 14 0l85 84c4 4 4 10 0 14l-85 85z" style="fill:#3c3c3c"/></svg>`;
     function initPromoSlider() {
         var promobar = $('.promobar'),
             sliderOption = $('#slider-settings');
@@ -844,7 +845,9 @@
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     arrows: true,
-                    dots: true,
+                    prevArrow: "<button class='slick-prev slick-arrow' aria-label='Previous' type='button'>" + sliderArrowLeft + "</button>",
+                    nextArrow: "<button class='slick-next slick-arrow' aria-label='Next' type='button'>" + sliderArrowRight +"</button>",
+                    dots: false,
                     infinite: false,
                     responsive: [
                         {
@@ -852,7 +855,8 @@
                             settings: {
                                 slidesToShow: 1,
                                 slidesToScroll: 1,
-                                arrows: false
+                                arrows: false,
+                                dots: true
                             }
                         },
                         {
@@ -860,7 +864,8 @@
                             settings: {
                                 slidesToShow: 2,
                                 slidesToScroll: 1,
-                                arrows: false
+                                arrows: false,
+                                dots: true
                             }
                         }
                     ]
