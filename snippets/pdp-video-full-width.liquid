@@ -53,6 +53,11 @@
 			     height="100%"
 					 alt="{{ full_video_image_alt }}">
 			</picture>
+			<style>
+				.product-video-wide {
+					max-height: calc(100vh - var(--promo-banner) - var(--promo-bar) - var(--header-height));
+				}
+			</style>
 		{% endif %}
 	</div>
 {% endif %}
