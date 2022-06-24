@@ -5,23 +5,27 @@
 {% assign full_video_image_alt = product.metafields.full_video.image_alt %}
 {% assign full_video_url = product.metafields.full_video.video_url %}
 {% assign full_video_poster = product.metafields.full_video.video_poster %}
+{% assign full_video_background_color = product.metafields.full_video.background_color %}
 
 {% if full_video_show %}
 	<div class="product-video-wide js-animate animate-fade-in-up" data-offset="0" {% if full_video_order != blank %}style="order: {{ full_video_order }};" {% endif %}>
-    {% if full_video_url != blank %}
-      <div class="product-video-wide__wrapper">
-        <video src="{{ full_video_url }}"
-		  poster="{{ full_video_poster }}"
-          class="product-video-wide__video"
-          controls="1"
-        ></video>
+		{% if full_video_url != blank %}
+		<div class="product-video-wide__wrapper">
+			<video src="{{ full_video_url }}"
+			poster="{{ full_video_poster }}"
+			class="product-video-wide__video"
+			controls="1"
+			></video>
+		</div>
 		<style>
+			.product-video-wide {
+				background-color: {{ product.metafields.full_video.background_color }};
+			}
 			.product-video-wide__wrapper {
 				max-width: 1270px;
 				margin: 0 auto;
 			}
 		</style>
-      </div>
 		{% elsif full_video_image_desktop != blank %}
 			<picture>
 				{% if full_video_image_mobile != blank %}
