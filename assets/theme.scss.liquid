@@ -3005,7 +3005,8 @@ textarea,
         margin-top: 40px;
         text-align: center;
         font-family: $basefont;
-        font-size: 37px;
+        // font-size: 37px;
+		font-size: 18px;
         color: #072d9a;
     }
 
@@ -5794,7 +5795,7 @@ p.side-cart__empty {
 	.slick-dots {
 		position: absolute;
 		left: 50%;
-		bottom: -47px;
+		bottom: -25px;
 		transform: translateX(-50%);
 	}
 
@@ -7720,6 +7721,7 @@ p.side-cart__empty {
 		// &.buystack--offset {
 		// 	transform: translateY(calc(50% + 100px));
 		// }
+		max-width: 450px;
 
 		.buystack__title {
 			font-size: 25px;
@@ -12584,6 +12586,18 @@ body.template-product {
 	z-index: 10;
 }
 
+@include breakpoint(extra-small) {
+	.product-card__reviews {
+		.yotpo.bottomLine .yotpo-bottomline .yotpo-icon-star, .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-half-star, .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, .yotpo.bottomline .yotpo-bottomline .yotpo-icon-star, .yotpo.bottomline .yotpo-bottomline .yotpo-icon-half-star, .yotpo.bottomline .yotpo-bottomline .yotpo-icon-empty-star, .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-star, .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-half-star, .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-empty-star {
+			font-size: 13px;
+		}
+	}
+}
+
+
+
+
+
 
 @media (max-width: 991px) {
 	.product-module__card-wrapper,
@@ -12654,5 +12668,9 @@ body.template-product {
 	}
 	.hide-text-desktop {
 		display: block !important;
+	}
+	.wide-image-card img,
+	.featured-collection__collection-card img {
+		height: auto;
 	}
 }
