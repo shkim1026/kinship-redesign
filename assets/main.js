@@ -2777,13 +2777,3 @@ theme.ProductRecommendations = (function () {
         }
     }
 }());
-
-;(function () {
-    initMainMarginTop();
-
-    function initMainMarginTop() {
-      let $main = $('.main-banner').parent();
-      let $nextSection = $main.next();
-      $nextSection.css('margin-top', 'calc(var(--promo-banner) + var(--promo-bar))');
-    }
-}());
