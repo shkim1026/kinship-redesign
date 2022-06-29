@@ -2777,3 +2777,41 @@ theme.ProductRecommendations = (function () {
         }
     }
 }());
+
+;(function () {
+	setCollectionImageCardHeightToMatchProductCard()
+    
+    function setCollectionImageCardHeightToMatchProductCard() {
+    	var imageCard = document.querySelector('.featured-collection__collection-card .collection-card__link-wrapper img')
+    	var productCard = document.querySelector('.featured-collection .featured-collection__row .product-card')
+        if (productCard.offsetHeight > imageCard.offsetHeight) {
+          	imageCard.style.height = 'auto'
+        	imageCard.style.height = productCard.offsetHeight.toString() + 'px'
+        }	
+    }
+  
+  $(window).on('resize', function() {
+    setCollectionImageCardHeightToMatchProductCard()
+  })
+}());
+
+;(function () {
+	setWideImageCardHeightToMatchProductCard()
+    
+    function setWideImageCardHeightToMatchProductCard() {
+      $('.image-product-module .wide-image-card img').each(function() {
+        var productCard = $(this).closest('.image-product-module__row').find('.product-card')
+        if (productCard.outerHeight() > $(this).height()) {
+            console.log('set height!')
+          	$(this).css('height', 'auto');
+            if ($(window).width() > 767) {
+              $(this).css('height', productCard.outerHeight().toString() + 'px');
+            }
+        }	
+      })
+    }
+  
+  $(window).on('resize', function() {
+    setWideImageCardHeightToMatchProductCard()
+  })
+}());

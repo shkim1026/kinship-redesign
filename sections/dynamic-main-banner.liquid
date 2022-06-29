@@ -18,7 +18,7 @@
                 <a href="{{ section.settings.image_url }}" class="main-banner__link-wrapper">
             {% endif %}
 
-        {% include 'picture', image_desk: image_desktop, image_mobile: image_mobile, class_name: 'main-banner__image', image_attr: , pic_attr: , figcaption:  %}
+        {% include 'picture--hero', image_desk: image_desktop, image_mobile: image_mobile, class_name: 'main-banner__image', image_attr: , pic_attr: , figcaption:  %}
 
             {% if section.settings.image_url != blank %}
                 </a>

@@ -1809,9 +1809,13 @@ picture {
 .self-center {
 	align-self: center;
 }
-
-.small--hide {
+.extra-small--hide {
 	@media (max-width: 767px) {
+		display: none !important;
+	}
+}
+.small--hide {
+	@media (max-width: 991px) {
 		display: none !important;
 	}
 }
@@ -12547,15 +12551,16 @@ body.template-product {
 	margin-top: 0.2rem;
 	letter-spacing: 0.05rem;
 }
-.wide-image-card picture,
-.featured-collection picture {
-	display: flex;
-	height: 100%;
-}
 .wide-image-card img,
 .featured-collection__collection-card img {
 	border-radius: 10px;
 	object-fit: cover;
+}
+.wide-image-card img {
+	width: 100%;
+}
+.featured-collection__collection-card img {
+	width: 100%;
 }
 .collection-card__hyperlink-text {
 	text-align: center;

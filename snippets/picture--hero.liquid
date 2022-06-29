@@ -1,0 +1,54 @@
+{% comment %}
+{% include 'picture', image_desk: , image_mobile: , class_name: , image_attr: , pic_attr: , figcaption: %}
+{% endcomment %}
+
+{%- assign alt = image_desk.alt -%}
+{%- assign img_mob_url = image_mobile | img_url: '1x1' -%}
+{%- assign img_desk_url = image_desk | img_url: '1x1' -%}
+
+<link rel="preload" as="image" href="{{ image_desk | img_url: 'original' }}">
+
+<figure {% if class_name != blank %} class="{{ class_name }}" {% endif %} {{ pic_attr }}>
+
+  {%- if image_mobile != blank -%}
+    <link rel="preload" as="image" href="{{ image_mobile | img_url: 'original' }}">
+
+    <img
+      src="{{ img_mob_url }}"
+      width="100%"
+      height="100%"
+      data-sizes="auto"
+      data-src="{{ img_mob_url }}"
+      data-parent-fit="contain"
+      data-srcset="{{ image_mobile | img_url: '360x' }} 360w,
+      {{ image_mobile | img_url: '540x' }} 540w,
+      {{ image_mobile | img_url: '540x' }} 720w" class="lazyload medium-up--hide"
+      alt="{{ alt }}"
+      {{ image_attr }}/>
+  {%- endif -%}
+
+  <img
+    src="{{ img_desk_url }}"
+    width="100%"
+    height="100%"
+    data-sizes="auto"
+    data-src="{{ img_desk_url }}"
+    data-parent-fit="contain"
+    data-srcset="{{ image_desk | img_url: '360x' }} 360w,
+    {{ image_desk | img_url: '540x' }} 720w,
+    {{ image_desk | img_url: '720x' }} 900w,
+    {{ image_desk | img_url: '900x' }} 1080w,
+    {{ image_desk | img_url: '1080x' }} 1296w,
+    {{ image_desk | img_url: '1296x' }} 1512w,
+    {{ image_desk | img_url: '1512x' }} 1728w,
+    {{ image_desk | img_url: '1728x' }} 1920w,
+    {{ image_desk | img_url: '1920x' }} 2560w" class="lazyload {% if image_mobile != blank %}extra-small--hide{% endif %}"
+    alt="{{ alt }}"
+    {{ image_attr }}/>
+
+  {%- if figcaption != blank -%}
+    <figcaption>
+      {{ figcaption }}
+    </figcaption>
+  {%- endif -%}
+</figure>
