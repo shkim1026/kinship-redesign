@@ -7894,14 +7894,17 @@ p.side-cart__empty {
 .okeReviews .okeReviews-review-reviewer-product-details {
 	width: calc(100% - 6em);
 }
-
+.yotpo.yotpo-main-widget {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
 .yotpo.yotpo-display-wrapper.mobile-filters-modal,
 .yotpo.yotpo-main-widget {
 	max-width: 1240px;
 	margin: auto;
 	width: 95%;
-	padding-top: 40px;
-	padding-bottom: 40px;
+	// padding-top: 40px;
+	// padding-bottom: 40px;
 
 	* {
 		font-family: $basefont !important;
@@ -12611,6 +12614,12 @@ body.template-product {
 .small-tonal-text__link-wrapper {
 	z-index: 10;
 }
+.yotpo-display-wrapper {
+	.write-question-review-buttons-container .write-question-review-button .write-question-review-button-text {
+		font-size: 90%;
+		line-height: 0.75;
+	}
+}
 
 @include breakpoint(extra-small) {
 	.product-card__reviews {
@@ -12619,11 +12628,6 @@ body.template-product {
 		}
 	}
 }
-
-
-
-
-
 
 @media (max-width: 991px) {
 	.product-module__card-wrapper,
