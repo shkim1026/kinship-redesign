@@ -816,63 +816,97 @@
             nextArrow: '<button class="slick-arrow slick-next promo-arrows" aria-label="Next">' + sliderArrow + '</button>'
         });
     }
+
     function initFashionTestimonialsSlider() {
-        //$(window).resize($.throttle(100, sliderInitialization));
+      let tallestCard = 0;
+      const container = $('.fashion-testimonials .slick-track');
+      const slider = document.querySelector(".js-fashion-testimonials-slider");
 
-        sliderInitialization();
+      if (!slider) {
+        return;
+      }
 
-        function sliderInitialization() {
-            const slider = document.querySelector(".js-fashion-testimonials-slider");
-
-            if (!slider) {
-                return;
+      const isSliderInited = slider.classList.contains("slick-initialized");
+      // Hides 3rd slide for tablets to get correct height property
+      if ($(window).width() > 767 && $(window).width() < 990) {
+        $('.testimonial-card').eq(2).addClass('hide-init');
+      }
+      if ($(window).width() > 767) {
+        getTallestTestimonialHeight($('.testimonial-card:not(.hide-init)'))
+      }
+      
+      removeHideTestimonials()
+    
+      if (!isSliderInited) {
+        $(slider).slick({
+          // slidesToShow: 2,
+          // slidesToScroll: 1,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          arrows: true,
+          prevArrow: "<button class='slick-prev slick-arrow' aria-label='Previous' type='button'>" + sliderArrowLeft + "</button>",
+          nextArrow: "<button class='slick-next slick-arrow' aria-label='Next' type='button'>" + sliderArrowRight +"</button>",
+          dots: false,
+          infinite: false,
+          waitForAnimate: false,
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 991,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                arrows: false,
+                dots: true
+              }
             }
+          ]
+        });
+      }
 
-            const isSliderInited = slider.classList.contains("slick-initialized");
+      if ($(window).width() < 767) {
+        getTallestTestimonialHeight($('.testimonial-card'))
+      }
 
-            // if (window.innerWidth > 991) {
-                // if (isSliderInited) {
-                //     $(slider).slick("unslick");
-                // }
+      $('.fashion-testimonials .slick-track').css('height', tallestCard.toString() + "px");
+      
+      // Getting height of testimonial-card by adding height of content (quote) and reviewer (icon/name)
+      function getTallestTestimonialHeight(element) {
+        element.each(function(){
 
-                // return;
-            // }
+          const quoteHeight = $(this).find('.testimonial-card__content').height()
+          const reviewerHeight = $(this).find('.testimonial-card__label').height()
+          const combinedHeight = quoteHeight + reviewerHeight;
+          console.log("quoteHeight", quoteHeight)
+          console.log("reviewerHeight", reviewerHeight)
+          console.log("combinedHeight", combinedHeight)
 
-            if (!isSliderInited) {
-                $(slider).slick({
-                    // slidesToShow: 2,
-                    // slidesToScroll: 1,
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    arrows: true,
-                    prevArrow: "<button class='slick-prev slick-arrow' aria-label='Previous' type='button'>" + sliderArrowLeft + "</button>",
-                    nextArrow: "<button class='slick-next slick-arrow' aria-label='Next' type='button'>" + sliderArrowRight +"</button>",
-                    dots: false,
-                    infinite: false,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1,
-                                arrows: false,
-                                dots: true
-                            }
-                        },
-                        {
-                            breakpoint: 991,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 1,
-                                arrows: false,
-                                dots: true
-                            }
-                        }
-                    ]
-                });
-            }
-        }
-    }
+          if (combinedHeight > tallestCard) {
+            tallestCard = combinedHeight
+          }
+          console.log("tallestCard", tallestCard)
+        })
+        
+      }
+      
+      // For desktop: in `dynamic-testimonials.liquid`, adding '.hide-init' on last 3 sliders
+      // so we can only display 3 slides, so we can accurately get height of tallest testimonial
+      // This function removes the '.hide-init' class after we get tallestCard height and before initializing the slider
+      function removeHideTestimonials() {
+        $('.testimonial-card').each(function() {
+            console.log('remove init')
+            $(this).removeClass('hide-init');
+          })
+      }
+    }	
 
     function initHomeProductsSlider() {
         let productBgSlider = $('#products-bg-slider');
@@ -2784,6 +2818,9 @@ theme.ProductRecommendations = (function () {
     function setCollectionImageCardHeightToMatchProductCard() {
     	var imageCard = document.querySelector('.featured-collection__collection-card .collection-card__link-wrapper img')
     	var productCard = document.querySelector('.featured-collection .featured-collection__row .product-card')
+        if (!imageCard) {
+          return;
+        }
         if (productCard.offsetHeight > imageCard.offsetHeight) {
           	imageCard.style.height = 'auto'
         	imageCard.style.height = productCard.offsetHeight.toString() + 'px'

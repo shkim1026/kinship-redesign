@@ -22,7 +22,7 @@
                     {% assign brand_icon = block.settings.brand_icon %}
                     {% assign brand_icon_width = block.settings.brand_icon_width %}
 
-                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800">
+                    <div class="testimonial-card js-animate animate-fade-in-up animate-speed-800 {% if forloop.index0 > 2%}hide-init{% endif %}">
                         {% if text != blank %}
                             <div class="testimonial-card__content"
                                  style="color: {{ testimonial_text_color }}; font-size: {{ testimonial_text_size }}px">
@@ -57,6 +57,9 @@
 {% endif %}
 
 <style>
+    .hide-init {
+        display: none;
+    }
     {% if section.blocks.size <= 3 %}
         #shopify-section-{{ section.id }} .fashion-testimonials .container {
             max-width: 1270px;

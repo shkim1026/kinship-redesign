@@ -7726,8 +7726,10 @@ p.side-cart__empty {
 			text-indent: 40px;
 		}
 	}
-
-	@media (min-width: 1280px) and (max-height: 800px) and (max-width: 1550px) {
+	@media (min-width: 1280px) {
+		max-width: 450px;
+	}
+	@media (min-width: 1280px) and (max-height: 768px) and (max-width: 1600px) {
 		padding-top: 35px;
 		padding-bottom: 40px;
 		padding-left: 20px;
@@ -7738,7 +7740,6 @@ p.side-cart__empty {
 		// &.buystack--offset {
 		// 	transform: translateY(calc(50% + 100px));
 		// }
-		max-width: 450px;
 
 		.buystack__title {
 			font-size: 25px;
@@ -8015,7 +8016,9 @@ p.side-cart__empty {
 			font-size: 36px !important;
 		}
 
-		.yotpo-icon-star {
+		.yotpo-icon-star,
+		.yotpo-icon-empty-star,
+		.yotpo-icon-half-star {
 			font-size: 23px !important;
 		}
 	}
