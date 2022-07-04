@@ -885,14 +885,10 @@
           const quoteHeight = $(this).find('.testimonial-card__content').height()
           const reviewerHeight = $(this).find('.testimonial-card__label').height()
           const combinedHeight = quoteHeight + reviewerHeight;
-          console.log("quoteHeight", quoteHeight)
-          console.log("reviewerHeight", reviewerHeight)
-          console.log("combinedHeight", combinedHeight)
 
           if (combinedHeight > tallestCard) {
             tallestCard = combinedHeight
           }
-          console.log("tallestCard", tallestCard)
         })
         
       }
@@ -902,7 +898,6 @@
       // This function removes the '.hide-init' class after we get tallestCard height and before initializing the slider
       function removeHideTestimonials() {
         $('.testimonial-card').each(function() {
-            console.log('remove init')
             $(this).removeClass('hide-init');
           })
       }
