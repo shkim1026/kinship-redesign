@@ -8042,7 +8042,11 @@ p.side-cart__empty {
 		position: relative;
 		padding-top: 75px;
 		padding-bottom: 56px;
-		padding-left: 120px;
+		// padding-left: 120px;
+		padding-left: 65px;
+		@include breakpoint(small) {
+			padding-left: 120px;
+		}
 	}
 
 	.product-details__label {
@@ -9469,7 +9473,8 @@ p.side-cart__empty {
 
 	.kit__list {
 		position: relative;
-		max-width: 808px;
+		// max-width: 808px;
+		max-width: 780px;
 		margin-top: 34px;
 		padding-top: 83px;
 		padding-left: 45px;

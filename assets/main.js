@@ -876,6 +876,10 @@
         getTallestTestimonialHeight($('.testimonial-card'))
       }
 
+      if (tallestCard < 150) {
+        tallestCard = 267
+      }
+      
       $('.fashion-testimonials .slick-track').css('height', tallestCard.toString() + "px");
       
       // Getting height of testimonial-card by adding height of content (quote) and reviewer (icon/name)
